@@ -1,6 +1,6 @@
 "use client";
 
-import { Portfolio } from '../pages/Portfolio';
+import { Portfolio } from '../views/Portfolio';
 
 export default function Home() {
   return <Portfolio />;
