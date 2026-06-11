@@ -1,11 +1,15 @@
+"use client";
+
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Tag, ArrowRight, Search } from 'lucide-react';
 import { useSiteData } from '../hooks/useSiteData';
 import type { BlogPost as BlogPostType } from '../data/store';
 
-export function Blog() {
-  const { data, loading, error } = useSiteData();
+import { SiteData } from '../data/store';
+
+export function Blog({ initialData }: { initialData?: SiteData }) {
+  const { data, loading, error } = useSiteData(initialData);
   const [search, setSearch] = useState('');
   const [activeTag, setActiveTag] = useState('All');
 

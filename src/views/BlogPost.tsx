@@ -1,12 +1,15 @@
+"use client";
+
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ArrowLeft, Calendar, Tag } from 'lucide-react';
 import { useSiteData } from '../hooks/useSiteData';
+import { SiteData } from '../data/store';
 
-export function BlogPost() {
+export function BlogPost({ initialData, slug: propSlug }: { initialData?: SiteData, slug?: string }) {
   const params = useParams();
-  const slug = params?.slug as string;
-  const { data, loading, error } = useSiteData();
+  const slug = propSlug || (params?.slug as string);
+  const { data, loading, error } = useSiteData(initialData);
   
   if (loading) {
     return (

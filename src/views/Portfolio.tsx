@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 import { Navigation } from '../components/Navigation';
 import { HeroSection } from '../components/HeroSection';
@@ -7,8 +9,10 @@ import { GallerySection } from '../components/GallerySection';
 import { ContactSection } from '../components/ContactSection';
 import { useSiteData } from '../hooks/useSiteData';
 
-export function Portfolio() {
-  const { data, loading, error } = useSiteData();
+import { SiteData } from '../data/store';
+
+export function Portfolio({ initialData }: { initialData?: SiteData }) {
+  const { data, loading, error } = useSiteData(initialData);
 
   if (loading) {
     return (

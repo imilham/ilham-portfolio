@@ -1,7 +1,9 @@
-"use client";
-
 import { Blog } from '../../views/Blog';
+import { loadData } from '../../data/store';
 
-export default function BlogPage() {
-  return <Blog />;
+export const revalidate = 60;
+
+export default async function BlogPage() {
+  const data = await loadData();
+  return <Blog initialData={data} />;
 }

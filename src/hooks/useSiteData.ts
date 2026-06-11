@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { SiteData, loadData } from '../data/store';
 
-export function useSiteData() {
-  const [data, setData] = useState<SiteData | null>(null);
-  const [loading, setLoading] = useState(true);
+export function useSiteData(initialData?: SiteData | null) {
+  const [data, setData] = useState<SiteData | null>(initialData || null);
+  const [loading, setLoading] = useState(!initialData);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export function useSiteData() {
 
     async function fetchData() {
       try {
-        setLoading(true);
+        if (!initialData) setLoading(true);
         const fetchedData = await loadData();
         if (isMounted) {
           setData(fetchedData);
