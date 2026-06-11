@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import {
   ArrowLeft, User, GraduationCap, Briefcase, FolderGit2,
   Image, BookOpen, Plus, Trash2, Save, Eye, EyeOff,
-  ChevronDown, ChevronUp, ExternalLink, X
+  ChevronDown, ChevronUp, ExternalLink, X, FileText
 } from 'lucide-react';
 import {
   loadData, saveData, updateData,
@@ -15,11 +15,12 @@ import { useSiteData } from '../hooks/useSiteData';
 import { auth } from '../lib/firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
-type Tab = 'profile' | 'education' | 'experience' | 'projects' | 'gallery' | 'blog';
+type Tab = 'profile' | 'resume' | 'education' | 'experience' | 'projects' | 'gallery' | 'blog';
 
 const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
-  { id: 'profile', label: 'Profile', icon: <User size={16} /> },
-  { id: 'education', label: 'Education', icon: <GraduationCap size={16} /> },
+  { id: 'profile', label: 'Profile', icon: <User size={18} /> },
+  { id: 'resume', label: 'Manage CV', icon: <FileText size={18} /> },
+  { id: 'education', label: 'Education', icon: <GraduationCap size={18} /> },
   { id: 'experience', label: 'Experience', icon: <Briefcase size={16} /> },
   { id: 'projects', label: 'Projects', icon: <FolderGit2 size={16} /> },
   { id: 'gallery', label: 'Gallery', icon: <Image size={16} /> },
@@ -162,6 +163,7 @@ export function Admin() {
         {/* Content */}
         <main className="flex-1 p-6 pb-20 md:pb-6 overflow-y-auto">
           {activeTab === 'profile' && <ProfileEditor data={data} onSave={save} />}
+          {activeTab === 'resume' && <ResumeEditor data={data} onSave={save} />}
           {activeTab === 'education' && <EducationEditor data={data} onSave={save} />}
           {activeTab === 'experience' && <ExperienceEditor data={data} onSave={save} />}
           {activeTab === 'projects' && <ProjectsEditor data={data} onSave={save} />}
@@ -280,7 +282,6 @@ function ProfileEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData)
           <Field label="LinkedIn URL"><input className={inputCls} value={p.linkedin} onChange={e => set('linkedin', e.target.value)} /></Field>
           <Field label="Twitter URL"><input className={inputCls} value={p.twitter} onChange={e => set('twitter', e.target.value)} /></Field>
           <Field label="Hero Photo URL"><input className={inputCls} value={p.heroPhoto} onChange={e => set('heroPhoto', e.target.value)} /></Field>
-          <Field label="CV/Resume Link (Google Drive URL)"><input className={inputCls} value={p.cvUrl || ''} onChange={e => set('cvUrl', e.target.value)} placeholder="https://drive.google.com/..." /></Field>
         </div>
         <div className="mt-4">
           <Field label="Bio"><textarea className={textareaCls} value={p.bio} onChange={e => set('bio', e.target.value)} /></Field>
@@ -326,7 +327,36 @@ function ProfileEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData)
   );
 }
 
-/* ─── Education ─────────────────────────────────────────────────────────── */
+// -- Resume Editor --
+function ResumeEditor({ data, onSave }: { data: SiteData, onSave: (d: SiteData) => void }) {
+  const [p, setP] = useState<Profile>(data.profile);
+
+  const set = (key: keyof Profile, value: any) => setP({ ...p, [key]: value });
+
+  return (
+    <div className="max-w-2xl space-y-6">
+      <SectionHeader title="Manage CV" action={<SaveBtn onClick={() => onSave({ ...data, profile: p })} />} />
+
+      <Card>
+        <div className="space-y-4">
+          <p className="text-sm text-[#8A8A93]">
+            Upload your CV to Google Drive, make sure the link is set to "Anyone with the link can view", and paste the link below.
+          </p>
+          <Field label="CV/Resume Link (Google Drive URL)">
+            <input 
+              className={inputCls} 
+              value={p.cvUrl || ''} 
+              onChange={e => set('cvUrl', e.target.value)} 
+              placeholder="https://drive.google.com/..." 
+            />
+          </Field>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+// -- Education Editor --─────────────────────────────────────────────────────────── */
 
 function EducationEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData) => void }) {
   const [items, setItems] = useState<Education[]>(data.education);
