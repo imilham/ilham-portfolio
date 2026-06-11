@@ -36,31 +36,27 @@ export function HeroSection({ profile }: HeroSectionProps) {
           >
             <div className="space-y-4">
               <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-                Hi, I'm{' '}
-                {profile.enableCarousel && profile.carouselTexts && profile.carouselTexts.length > 0 ? (
-                  <span className="inline-block relative text-[#AB4AFF] min-w-[200px]">
-                    <AnimatePresence mode="wait">
-                      <motion.span
-                        key={currentTextIndex}
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 30 }}
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                        className="absolute left-0 top-0 whitespace-nowrap"
-                      >
-                        {profile.carouselTexts[currentTextIndex]}
-                      </motion.span>
-                    </AnimatePresence>
-                    {/* Invisible span to keep the layout height/width correct based on longest text */}
-                    <span className="invisible opacity-0" aria-hidden="true">
-                      {profile.carouselTexts.reduce((a, b) => a.length > b.length ? a : b)}
-                    </span>
-                  </span>
-                ) : (
-                  <span className="text-[#AB4AFF]">{profile.name}</span>
-                )}
+                Hi, I'm <span className="text-[#AB4AFF]">{profile.name}</span>
               </h1>
-              <p className="text-2xl lg:text-3xl text-[#8A8A93]">
+              
+              {profile.enableCarousel && profile.carouselTexts && profile.carouselTexts.length > 0 && (
+                <div className="text-2xl lg:text-4xl font-semibold text-[#C4C4CC] relative h-[1.2em] flex items-center mt-2">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentTextIndex}
+                      initial={{ opacity: 0, x: -30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 30 }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      className="absolute left-0 whitespace-nowrap"
+                    >
+                      {profile.carouselTexts[currentTextIndex]}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              )}
+              
+              <p className="text-2xl lg:text-3xl text-[#8A8A93] pt-2">
                 {profile.tagline}
               </p>
             </div>
