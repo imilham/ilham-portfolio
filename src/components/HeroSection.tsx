@@ -1,23 +1,15 @@
 import { ArrowRight, Download } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Profile } from '../data/store';
+import { getDriveViewUrl, getDriveDownloadUrl } from '../lib/drive';
 
 interface HeroSectionProps {
   profile: Profile;
 }
 
 export function HeroSection({ profile }: HeroSectionProps) {
-  // Helper to convert Google Drive link to a direct download link
-  const getDirectDownloadUrl = (url: string) => {
-    if (!url) return url;
-    const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    if (match && match[1]) {
-      return `https://drive.google.com/uc?export=download&id=${match[1]}`;
-    }
-    return url;
-  };
-
-  const downloadUrl = getDirectDownloadUrl(profile.cvUrl);
+  const downloadUrl = getDriveDownloadUrl(profile.cvUrl);
+  const heroPhotoUrl = getDriveViewUrl(profile.heroPhoto);
 
   return (
     <section className="min-h-screen flex items-center justify-center px-6 py-20">
@@ -83,7 +75,7 @@ export function HeroSection({ profile }: HeroSectionProps) {
               <div className="absolute inset-0 bg-gradient-to-br from-[#AB4AFF] to-[#7B2FBF] rounded-3xl blur-3xl opacity-30" />
               {profile.heroPhoto ? (
                 <img
-                  src={profile.heroPhoto}
+                  src={heroPhotoUrl}
                   alt={profile.name}
                   className="relative w-80 h-80 lg:w-96 lg:h-96 object-cover rounded-3xl border-4 border-[#1A1A22] shadow-2xl"
                 />

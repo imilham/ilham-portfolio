@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Code, ExternalLink } from 'lucide-react';
 import { Project } from '../data/store';
+import { getDriveViewUrl } from '../lib/drive';
 
 interface ProjectsSectionProps {
   projects: Project[];
@@ -42,7 +43,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                 {/* Image Placeholder or Actual Image */}
                 <div className="aspect-video bg-gradient-to-br from-[#1A1A22] to-[#121216] flex items-center justify-center text-7xl border-b border-[#1A1A22] group-hover:from-[#AB4AFF]/10 group-hover:to-[#121216] transition-all relative overflow-hidden">
                   {project.image ? (
-                    <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                    <img src={getDriveViewUrl(project.image)} alt={project.title} className="w-full h-full object-cover" />
                   ) : (
                     <span className="text-4xl opacity-50">📱</span>
                   )}

@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { ArrowLeft, Calendar, Tag } from 'lucide-react';
 import { useSiteData } from '../hooks/useSiteData';
 import { SiteData } from '../data/store';
+import { getDriveViewUrl } from '../lib/drive';
 
 export function BlogPost({ initialData, slug: propSlug }: { initialData?: SiteData, slug?: string }) {
   const params = useParams();
@@ -87,7 +88,7 @@ export function BlogPost({ initialData, slug: propSlug }: { initialData?: SiteDa
       {/* Cover Image */}
       {post.coverImage && (
         <div className="w-full h-72 overflow-hidden">
-          <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" />
+          <img src={getDriveViewUrl(post.coverImage)} alt={post.title} className="w-full h-full object-cover" />
         </div>
       )}
 

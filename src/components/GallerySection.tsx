@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Upload } from 'lucide-react';
 import { GalleryPhoto } from '../data/store';
+import { getDriveViewUrl } from '../lib/drive';
 
 interface GallerySectionProps {
   gallery: GalleryPhoto[];
@@ -40,12 +41,12 @@ export function GallerySection({ gallery }: GallerySectionProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
                 className="relative group cursor-pointer break-inside-avoid"
-                onClick={() => setSelectedImage(photo.url)}
+                onClick={() => setSelectedImage(getDriveViewUrl(photo.url))}
               >
                 <div className="relative overflow-hidden rounded-xl bg-[#1A1A22]">
                   {photo.url ? (
                     <img
-                      src={photo.url}
+                      src={getDriveViewUrl(photo.url)}
                       alt={photo.caption}
                       className="w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                     />
