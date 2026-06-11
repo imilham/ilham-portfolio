@@ -248,6 +248,7 @@ function Card({ children }: { children: React.ReactNode }) {
 function ProfileEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData) => void }) {
   const [p, setP] = useState<Profile>(data.profile);
   const [skillInput, setSkillInput] = useState('');
+  const [carouselInput, setCarouselInput] = useState('');
 
   const set = (key: keyof Profile, val: any) => setP(prev => ({ ...prev, [key]: val }));
 
@@ -260,6 +261,17 @@ function ProfileEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData)
   };
 
   const removeSkill = (s: string) => set('skills', p.skills.filter(x => x !== s));
+
+  const addCarouselText = () => {
+    const s = carouselInput.trim();
+    const currentTexts = p.carouselTexts || [];
+    if (s && !currentTexts.includes(s)) {
+      set('carouselTexts', [...currentTexts, s]);
+      setCarouselInput('');
+    }
+  };
+
+  const removeCarouselText = (s: string) => set('carouselTexts', (p.carouselTexts || []).filter(x => x !== s));
 
   const updateStat = (idx: number, key: 'label' | 'value', val: string) => {
     const stats = [...p.stats];
@@ -285,6 +297,48 @@ function ProfileEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData)
         </div>
         <div className="mt-4">
           <Field label="Bio"><textarea className={textareaCls} value={p.bio} onChange={e => set('bio', e.target.value)} /></Field>
+        </div>
+      </Card>
+
+      {/* Name Carousel Settings */}
+      <Card>
+        <p className="text-xs text-[#8A8A93] font-medium uppercase tracking-wide mb-4">Name Animation (Hero Section)</p>
+        <div className="space-y-4">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input 
+              type="checkbox" 
+              className="w-5 h-5 accent-[#AB4AFF] rounded bg-[#1A1A22] border-none"
+              checked={!!p.enableCarousel} 
+              onChange={e => set('enableCarousel', e.target.checked)} 
+            />
+            <span className="text-[#F4F4F6]">Enable animated fading text</span>
+          </label>
+          
+          {p.enableCarousel && (
+            <div className="mt-4 p-4 border border-[#1A1A22] rounded-xl bg-[#0A0A0C]">
+              <p className="text-sm text-[#8A8A93] mb-3">Add texts that will fade in and out (e.g. "Ilham", "a Developer").</p>
+              <div className="flex gap-2 mb-3">
+                <input 
+                  className={inputCls} 
+                  placeholder="Add a name or role" 
+                  value={carouselInput} 
+                  onChange={e => setCarouselInput(e.target.value)} 
+                  onKeyDown={e => e.key === 'Enter' && addCarouselText()} 
+                />
+                <button className="px-4 py-2 bg-[#1A1A22] text-[#F4F4F6] rounded-xl hover:bg-[#AB4AFF] transition-colors" onClick={addCarouselText}>
+                  Add
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {(p.carouselTexts || []).map(t => (
+                  <div key={t} className="flex items-center gap-2 bg-[#1A1A22] px-3 py-1.5 rounded-lg text-sm">
+                    {t}
+                    <button className="text-[#8A8A93] hover:text-red-400" onClick={() => removeCarouselText(t)}><X size={14} /></button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </Card>
 

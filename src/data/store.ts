@@ -57,6 +57,8 @@ export interface Profile {
   heroPhoto: string;
   siteTitle: string;
   cvUrl: string;
+  enableCarousel?: boolean;
+  carouselTexts?: string[];
   skills: string[];
   stats: { label: string; value: string }[];
 }
@@ -85,6 +87,8 @@ export const defaultData: SiteData = {
     heroPhoto: '',
     siteTitle: 'My Portfolio',
     cvUrl: '',
+    enableCarousel: true,
+    carouselTexts: ['Ilham', 'a Developer', 'a Designer'],
     skills: ['React', 'TypeScript', 'Node.js', 'Next.js', 'Tailwind CSS', 'PostgreSQL', 'Docker', 'AWS'],
     stats: [
       { label: 'Projects', value: '20+' },
