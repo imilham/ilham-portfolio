@@ -4,7 +4,8 @@ import { ArrowLeft, Calendar, Tag } from 'lucide-react';
 import { getData } from '../data/store';
 
 export function BlogPost() {
-  const { slug } = useParams<{ slug: string }>();
+  const params = useParams();
+  const slug = params?.slug as string;
   const data = getData();
   const post = data.blog.find(p => p.slug === slug && p.published);
 
