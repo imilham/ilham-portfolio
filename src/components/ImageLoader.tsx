@@ -13,11 +13,9 @@ export function ImageLoader({ containerClassName = '', className = '', src, alt,
 
   return (
     <div className={`relative overflow-hidden ${containerClassName}`}>
-      {/* Skeleton Loader */}
+      {/* Skeleton Loader (No Spinner) */}
       {(!isLoaded && !hasError) && (
-        <div className="absolute inset-0 bg-[#1A1A22] animate-pulse flex items-center justify-center">
-           <div className="w-8 h-8 border-4 border-[#252530] border-t-[#AB4AFF] rounded-full animate-spin"></div>
-        </div>
+        <div className="absolute inset-0 bg-[#121216] animate-pulse rounded-xl"></div>
       )}
       
       {/* Error Fallback */}
