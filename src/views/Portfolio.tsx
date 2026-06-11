@@ -46,7 +46,6 @@ export function Portfolio({ initialData }: { initialData?: SiteData }) {
             <p>© 2026 {data.profile.name} — All rights reserved</p>
             <div className="flex items-center gap-4">
               <Link href="/blog" className="hover:text-[#AB4AFF] transition-colors">Blog</Link>
-              <Link href="/admin" className="hover:text-[#AB4AFF] transition-colors">Admin</Link>
             </div>
           </div>
         </div>

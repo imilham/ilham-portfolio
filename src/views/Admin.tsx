@@ -55,7 +55,7 @@ export function Admin() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
-        router.push('/admin/login');
+        router.push('/adminim/login');
       } else {
         setAuthChecking(false);
       }
@@ -71,7 +71,7 @@ export function Admin() {
 
   const handleLogout = async () => {
     await signOut(auth);
-    router.push('/admin/login');
+    router.push('/adminim/login');
   };
 
   const save = async (updated: SiteData) => {

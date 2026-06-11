@@ -18,7 +18,7 @@ export default function AdminLogin() {
     // If already logged in, redirect to admin
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        router.push('/admin');
+        router.push('/adminim');
       }
     });
     return () => unsubscribe();
