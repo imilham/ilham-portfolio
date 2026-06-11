@@ -56,6 +56,7 @@ export interface Profile {
   twitter: string;
   heroPhoto: string;
   siteTitle: string;
+  cvUrl: string;
   skills: string[];
   stats: { label: string; value: string }[];
 }
@@ -71,9 +72,9 @@ export interface SiteData {
 
 const STORAGE_KEY = 'portfolio_data';
 
-const defaultData: SiteData = {
+export const defaultData: SiteData = {
   profile: {
-    name: 'Your Name',
+    name: 'Ilham',
     tagline: "I build things for the web.",
     bio: "I'm a passionate full-stack developer who loves crafting beautiful, performant web experiences. I specialize in React, TypeScript, and modern web technologies.",
     location: 'Colombo, Sri Lanka',
@@ -83,6 +84,7 @@ const defaultData: SiteData = {
     twitter: 'https://twitter.com',
     heroPhoto: '',
     siteTitle: 'My Portfolio',
+    cvUrl: '',
     skills: ['React', 'TypeScript', 'Node.js', 'Next.js', 'Tailwind CSS', 'PostgreSQL', 'Docker', 'AWS'],
     stats: [
       { label: 'Projects', value: '20+' },

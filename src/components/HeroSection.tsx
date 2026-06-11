@@ -36,10 +36,17 @@ export function HeroSection({ profile }: HeroSectionProps) {
                 Hire Me
                 <ArrowRight className="w-5 h-5" />
               </button>
-              <button className="px-6 py-3 bg-[#1A1A22] text-white rounded-lg hover:bg-[#252530] transition-all flex items-center gap-2 border border-[#1A1A22]">
-                <Download className="w-5 h-5" />
-                Download CV
-              </button>
+              {profile.cvUrl ? (
+                <a href={profile.cvUrl} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[#1A1A22] text-white rounded-lg hover:bg-[#252530] transition-all flex items-center gap-2 border border-[#1A1A22]">
+                  <Download className="w-5 h-5" />
+                  Download CV
+                </a>
+              ) : (
+                <button className="px-6 py-3 bg-[#1A1A22] text-[#8A8A93] rounded-lg flex items-center gap-2 border border-[#1A1A22] cursor-not-allowed opacity-50" title="CV not available yet">
+                  <Download className="w-5 h-5" />
+                  Download CV
+                </button>
+              )}
             </div>
 
             {/* Stats */}

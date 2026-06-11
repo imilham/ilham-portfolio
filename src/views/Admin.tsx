@@ -280,6 +280,7 @@ function ProfileEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData)
           <Field label="LinkedIn URL"><input className={inputCls} value={p.linkedin} onChange={e => set('linkedin', e.target.value)} /></Field>
           <Field label="Twitter URL"><input className={inputCls} value={p.twitter} onChange={e => set('twitter', e.target.value)} /></Field>
           <Field label="Hero Photo URL"><input className={inputCls} value={p.heroPhoto} onChange={e => set('heroPhoto', e.target.value)} /></Field>
+          <Field label="CV/Resume Link (Google Drive URL)"><input className={inputCls} value={p.cvUrl || ''} onChange={e => set('cvUrl', e.target.value)} placeholder="https://drive.google.com/..." /></Field>
         </div>
         <div className="mt-4">
           <Field label="Bio"><textarea className={textareaCls} value={p.bio} onChange={e => set('bio', e.target.value)} /></Field>
