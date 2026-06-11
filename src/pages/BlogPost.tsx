@@ -1,13 +1,22 @@
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ArrowLeft, Calendar, Tag } from 'lucide-react';
-import { getData } from '../data/store';
+import { useSiteData } from '../hooks/useSiteData';
 
 export function BlogPost() {
   const params = useParams();
   const slug = params?.slug as string;
-  const data = getData();
-  const post = data.blog.find(p => p.slug === slug && p.published);
+  const { data, loading, error } = useSiteData();
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0A0A0C] flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-[#1A1A22] border-t-[#AB4AFF] rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  const post = data?.blog.find(p => p.slug === slug && p.published);
 
   if (!post) {
     return (

@@ -1,25 +1,17 @@
-import { motion } from 'motion/react';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, Upload } from 'lucide-react';
-export function GallerySection() {
-  const [photos, setPhotos] = useState<string[]>([]);
-  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
+import { GalleryPhoto } from '../data/store';
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files) return;
+interface GallerySectionProps {
+  gallery: GalleryPhoto[];
+}
 
-    Array.from(files).forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setPhotos((prev) => [...prev, e.target?.result as string]);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
+export function GallerySection({ gallery }: GallerySectionProps) {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
-    <section id="gallery" className="py-20 px-6">
+    <section id="gallery" className="py-20 px-6 bg-[#121216]">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -27,70 +19,91 @@ export function GallerySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Photo <span className="text-[#AB4AFF]">Gallery</span>
-          </h2>
-          <p className="text-[#8A8A93] text-lg mb-12 max-w-2xl">
-            Moments from conferences, hackathons, speaking engagements, and team collaborations.
-          </p>
-
-          {/* Upload Button */}
-          <div className="mb-8">
-            <label className="inline-flex items-center gap-2 px-6 py-3 bg-[#121216] border border-[#1A1A22] rounded-lg text-[#F4F4F6] hover:border-[#AB4AFF] transition-colors cursor-pointer">
-              <Upload className="w-5 h-5" />
-              Upload Photos
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleFileUpload}
-                className="hidden"
-              />
-            </label>
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+                Life & <span className="text-[#AB4AFF]">Moments</span>
+              </h2>
+              <p className="text-[#8A8A93] text-lg max-w-2xl">
+                A glimpse into my life, travels, and the moments that inspire my work.
+                Because life isn't just about writing code.
+              </p>
+            </div>
           </div>
 
-          {/* Photo Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {photos.map((photo, index) => (
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+            {gallery.map((photo, index) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                key={photo.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                onClick={() => setSelectedPhoto(photo)}
-                className="aspect-square rounded-xl overflow-hidden border border-[#1A1A22] hover:border-[#AB4AFF] transition-all cursor-pointer group"
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="relative group cursor-pointer break-inside-avoid"
+                onClick={() => setSelectedImage(photo.url)}
               >
-                <img
-                  src={photo}
-                  alt={`Gallery ${index + 1}`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+                <div className="relative overflow-hidden rounded-xl bg-[#1A1A22]">
+                  {photo.url ? (
+                    <img
+                      src={photo.url}
+                      alt={photo.caption}
+                      className="w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full aspect-[4/5] flex items-center justify-center">
+                      <span className="text-[#8A8A93]">No Image</span>
+                    </div>
+                  )}
+                  
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C]/90 via-[#0A0A0C]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <span className="inline-block px-3 py-1 bg-[#AB4AFF] text-white text-xs font-medium rounded-full mb-2">
+                        {photo.category}
+                      </span>
+                      <p className="text-white font-medium">{photo.caption}</p>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
+
+          {gallery.length === 0 && (
+            <p className="text-[#8A8A93]">No gallery photos available yet.</p>
+          )}
+
         </motion.div>
       </div>
 
       {/* Lightbox */}
-      {selectedPhoto && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm"
-          onClick={() => setSelectedPhoto(null)}
-        >
-          <button
-            onClick={() => setSelectedPhoto(null)}
-            className="absolute top-6 right-6 p-2 bg-[#121216] rounded-lg hover:bg-[#1A1A22] transition-colors"
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A0C]/95 backdrop-blur-xl p-6"
           >
-            <X className="w-6 h-6" />
-          </button>
-          <img
-            src={selectedPhoto}
-            alt="Selected"
-            className="max-w-full max-h-full object-contain rounded-xl"
-          />
-        </div>
-      )}
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-6 right-6 p-2 bg-[#1A1A22] rounded-full text-white hover:bg-[#AB4AFF] transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <motion.img
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              src={selectedImage}
+              alt="Selected"
+              className="max-w-full max-h-full rounded-2xl shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

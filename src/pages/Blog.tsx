@@ -1,24 +1,47 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Tag, ArrowRight, Search } from 'lucide-react';
-import { getData } from '../data/store';
+import { useSiteData } from '../hooks/useSiteData';
 import type { BlogPost as BlogPostType } from '../data/store';
 
 export function Blog() {
-  const data = getData();
-  const published = data.blog.filter(p => p.published);
+  const { data, loading, error } = useSiteData();
   const [search, setSearch] = useState('');
   const [activeTag, setActiveTag] = useState('All');
 
+  const published = useMemo(() => {
+    if (!data) return [];
+    return data.blog.filter(p => p.published);
+  }, [data]);
+
   const allTags = ['All', ...Array.from(new Set(published.flatMap(p => p.tags)))];
 
-  const filtered = published.filter(post => {
-    const matchSearch =
-      post.title.toLowerCase().includes(search.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(search.toLowerCase());
-    const matchTag = activeTag === 'All' || post.tags.includes(activeTag);
-    return matchSearch && matchTag;
-  });
+  const filtered = useMemo(() => {
+    return published.filter(post => {
+      const matchSearch =
+        post.title.toLowerCase().includes(search.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(search.toLowerCase()) ||
+        post.tags.some(t => t.toLowerCase().includes(search.toLowerCase()));
+      const matchTag = activeTag === 'All' || post.tags.includes(activeTag);
+      return matchSearch && matchTag;
+    });
+  }, [published, search, activeTag]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0A0A0C] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-[#1A1A22] border-t-[#AB4AFF] rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="min-h-screen bg-[#0A0A0C] text-white flex items-center justify-center">
+        Error loading blog posts.
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0A0A0C] text-[#F4F4F6]">

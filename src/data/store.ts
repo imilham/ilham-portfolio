@@ -178,25 +178,46 @@ That's all you need to get started!`,
   ],
 };
 
-export function loadData(): SiteData {
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+
+const DOC_ID = 'main';
+const COLLECTION = 'portfolio';
+
+export async function loadData(): Promise<SiteData> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return defaultData;
-    return { ...defaultData, ...JSON.parse(raw) };
-  } catch {
+    const docRef = doc(db, COLLECTION, DOC_ID);
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) {
+      return { ...defaultData, ...(docSnap.data() as SiteData) };
+    } else {
+      // Initialize with default data if it doesn't exist
+      await setDoc(docRef, defaultData);
+      return defaultData;
+    }
+  } catch (error) {
+    console.error("Error loading data from Firestore:", error);
     return defaultData;
   }
 }
 
-export function saveData(data: SiteData): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+export async function saveData(data: SiteData): Promise<void> {
+  try {
+    const docRef = doc(db, COLLECTION, DOC_ID);
+    await setDoc(docRef, data);
+  } catch (error) {
+    console.error("Error saving data to Firestore:", error);
+    throw error;
+  }
 }
 
-export function getData(): SiteData {
+// Keep getData for backwards compatibility but it returns a promise now
+export async function getData(): Promise<SiteData> {
   return loadData();
 }
 
-export function updateData(partial: Partial<SiteData>): void {
-  const current = loadData();
-  saveData({ ...current, ...partial });
+export async function updateData(partial: Partial<SiteData>): Promise<void> {
+  const current = await loadData();
+  await saveData({ ...current, ...partial });
 }

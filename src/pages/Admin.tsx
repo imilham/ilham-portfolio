@@ -7,10 +7,11 @@ import {
   ChevronDown, ChevronUp, ExternalLink, X
 } from 'lucide-react';
 import {
-  loadData, saveData,
+  loadData, saveData, updateData,
   type SiteData, type Education, type Experience, type Project,
   type GalleryPhoto, type BlogPost, type Profile
 } from '../data/store';
+import { useSiteData } from '../hooks/useSiteData';
 
 type Tab = 'profile' | 'education' | 'experience' | 'projects' | 'gallery' | 'blog';
 
@@ -42,9 +43,16 @@ function Toast({ msg, onClose }: { msg: string; onClose: () => void }) {
 
 export function Admin() {
   const [activeTab, setActiveTab] = useState<Tab>('profile');
-  const [data, setData] = useState<SiteData>(loadData());
+  const { data: initialData, loading, error } = useSiteData();
+  const [data, setData] = useState<SiteData | null>(null);
   const [toast, setToast] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    if (initialData && !data) {
+      setData(initialData);
+    }
+  }, [initialData, data]);
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
@@ -52,11 +60,23 @@ export function Admin() {
     router.refresh();
   };
 
-  const save = (updated: SiteData) => {
+  const save = async (updated: SiteData) => {
     setData(updated);
-    saveData(updated);
-    setToast('Saved successfully!');
+    try {
+      await updateData(updated);
+      setToast('Saved successfully!');
+    } catch (err) {
+      setToast('Failed to save data!');
+    }
   };
+
+  if (loading || !data) {
+    return (
+      <div className="min-h-screen bg-[#0A0A0C] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-[#1A1A22] border-t-[#AB4AFF] rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0A0A0C] text-[#F4F4F6] flex flex-col">

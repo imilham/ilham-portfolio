@@ -1,7 +1,12 @@
 import { ArrowRight, Download } from 'lucide-react';
 import { motion } from 'motion/react';
+import { Profile } from '../data/store';
 
-export function HeroSection() {
+interface HeroSectionProps {
+  profile: Profile;
+}
+
+export function HeroSection({ profile }: HeroSectionProps) {
   return (
     <section className="min-h-screen flex items-center justify-center px-6 py-20">
       <div className="max-w-7xl mx-auto w-full">
@@ -15,17 +20,15 @@ export function HeroSection() {
           >
             <div className="space-y-4">
               <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-                Hi, I'm <span className="text-[#AB4AFF]">Imilham</span>
+                Hi, I'm <span className="text-[#AB4AFF]">{profile.name}</span>
               </h1>
               <p className="text-2xl lg:text-3xl text-[#8A8A93]">
-                Flutter Developer & Mobile Architect
+                {profile.tagline}
               </p>
             </div>
 
-            <p className="text-lg text-[#8A8A93] leading-relaxed max-w-xl">
-              I build exceptional mobile experiences and scalable Flutter applications.
-              Specialized in enterprise-grade architecture, performance optimization,
-              and building developer tools that empower teams.
+            <p className="text-lg text-[#8A8A93] leading-relaxed max-w-xl whitespace-pre-line">
+              {profile.bio}
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -41,18 +44,12 @@ export function HeroSection() {
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 pt-8">
-              <div>
-                <div className="text-3xl font-bold text-[#AB4AFF]">12+</div>
-                <div className="text-[#8A8A93]">Projects</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-[#AB4AFF]">250K+</div>
-                <div className="text-[#8A8A93]">Downloads</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-[#AB4AFF]">8+</div>
-                <div className="text-[#8A8A93]">Years Exp</div>
-              </div>
+              {profile.stats.map((stat, i) => (
+                <div key={i}>
+                  <div className="text-3xl font-bold text-[#AB4AFF]">{stat.value}</div>
+                  <div className="text-[#8A8A93]">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </motion.div>
 
@@ -65,11 +62,17 @@ export function HeroSection() {
           >
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-[#AB4AFF] to-[#7B2FBF] rounded-3xl blur-3xl opacity-30" />
-              <img
-                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80"
-                alt="Imilham"
-                className="relative w-80 h-80 lg:w-96 lg:h-96 object-cover rounded-3xl border-4 border-[#1A1A22] shadow-2xl"
-              />
+              {profile.heroPhoto ? (
+                <img
+                  src={profile.heroPhoto}
+                  alt={profile.name}
+                  className="relative w-80 h-80 lg:w-96 lg:h-96 object-cover rounded-3xl border-4 border-[#1A1A22] shadow-2xl"
+                />
+              ) : (
+                <div className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-3xl border-4 border-[#1A1A22] bg-[#121216] shadow-2xl flex items-center justify-center">
+                  <span className="text-[#8A8A93]">No Photo</span>
+                </div>
+              )}
             </div>
           </motion.div>
         </div>
