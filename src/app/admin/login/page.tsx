@@ -1,96 +1,105 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Lock, User } from 'lucide-react';
+import { ArrowLeft, Lock } from 'lucide-react';
+import Link from 'next/link';
+import { auth } from '../../../lib/firebase';
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
-export default function LoginPage() {
+export default function AdminLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  useEffect(() => {
+    // If already logged in, redirect to admin
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push('/admin');
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setIsLoading(true);
+    setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        router.push('/admin');
-        router.refresh(); // Refresh to ensure middleware catches the new cookie properly on client-side navigation
-      } else {
-        setError(data.error || 'Invalid credentials');
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    } finally {
-      setIsLoading(false);
+      await signInWithEmailAndPassword(auth, username, password);
+      // Let the onAuthStateChanged listener handle the redirect
+    } catch (err: any) {
+      setError(err.message || 'Invalid email or password');
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0C] text-[#F4F4F6] flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-md bg-[#121216] border border-[#1A1A22] rounded-2xl p-8 shadow-2xl">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold mb-2">Admin Portal</h1>
-          <p className="text-[#8A8A93] text-sm">Please sign in to access the dashboard</p>
-        </div>
+    <div className="min-h-screen bg-[#0A0A0C] flex flex-col items-center justify-center p-6 text-[#F4F4F6]">
+      <div className="w-full max-w-md">
+        <Link 
+          href="/"
+          className="inline-flex items-center gap-2 text-[#8A8A93] hover:text-[#AB4AFF] transition-colors mb-8"
+        >
+          <ArrowLeft size={16} />
+          Back to Portfolio
+        </Link>
 
-        {error && (
-          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl text-center">
-            {error}
+        <div className="bg-[#121216] border border-[#1A1A22] rounded-2xl p-8 shadow-2xl">
+          <div className="flex flex-col items-center mb-8">
+            <div className="w-12 h-12 bg-[#1A1A22] rounded-full flex items-center justify-center mb-4">
+              <Lock className="text-[#AB4AFF]" size={24} />
+            </div>
+            <h1 className="text-2xl font-bold">Admin Access</h1>
+            <p className="text-[#8A8A93] text-sm mt-2 text-center">
+              Sign in with your Firebase Auth credentials to manage your portfolio.
+            </p>
           </div>
-        )}
 
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-[#8A8A93] mb-2">Username</label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A93]" />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg text-sm text-center">
+                {error}
+              </div>
+            )}
+            
+            <div>
+              <label className="block text-sm font-medium text-[#8A8A93] mb-2">Email</label>
               <input
-                type="text"
+                type="email"
+                required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-[#0A0A0C] border border-[#1A1A22] rounded-xl focus:border-[#AB4AFF] focus:ring-1 focus:ring-[#AB4AFF] transition-all outline-none"
-                placeholder="Enter admin username"
-                required
+                className="w-full px-4 py-3 bg-[#0A0A0C] border border-[#1A1A22] rounded-xl focus:border-[#AB4AFF] focus:ring-1 focus:ring-[#AB4AFF] transition-all outline-none text-[#F4F4F6]"
+                placeholder="admin@example.com"
               />
             </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-[#8A8A93] mb-2">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A93]" />
+            <div>
+              <label className="block text-sm font-medium text-[#8A8A93] mb-2">Password</label>
               <input
                 type="password"
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-[#0A0A0C] border border-[#1A1A22] rounded-xl focus:border-[#AB4AFF] focus:ring-1 focus:ring-[#AB4AFF] transition-all outline-none"
-                placeholder="Enter password"
-                required
+                className="w-full px-4 py-3 bg-[#0A0A0C] border border-[#1A1A22] rounded-xl focus:border-[#AB4AFF] focus:ring-1 focus:ring-[#AB4AFF] transition-all outline-none text-[#F4F4F6]"
+                placeholder="••••••••"
               />
             </div>
-          </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full py-3 bg-[#AB4AFF] text-white font-medium rounded-xl hover:bg-[#9A3FEE] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2"
-          >
-            {isLoading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 bg-[#AB4AFF] text-white font-medium rounded-xl hover:bg-[#9A3FEE] transition-all disabled:opacity-70 disabled:cursor-not-allowed mt-4"
+            >
+              {loading ? 'Authenticating...' : 'Sign In'}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

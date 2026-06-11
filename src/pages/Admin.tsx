@@ -12,6 +12,8 @@ import {
   type GalleryPhoto, type BlogPost, type Profile
 } from '../data/store';
 import { useSiteData } from '../hooks/useSiteData';
+import { auth } from '../lib/firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 type Tab = 'profile' | 'education' | 'experience' | 'projects' | 'gallery' | 'blog';
 
@@ -43,10 +45,22 @@ function Toast({ msg, onClose }: { msg: string; onClose: () => void }) {
 
 export function Admin() {
   const [activeTab, setActiveTab] = useState<Tab>('profile');
-  const { data: initialData, loading, error } = useSiteData();
+  const { data: initialData, loading: dataLoading, error } = useSiteData();
   const [data, setData] = useState<SiteData | null>(null);
   const [toast, setToast] = useState('');
+  const [authChecking, setAuthChecking] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push('/admin/login');
+      } else {
+        setAuthChecking(false);
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
 
   useEffect(() => {
     if (initialData && !data) {
@@ -55,9 +69,8 @@ export function Admin() {
   }, [initialData, data]);
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
+    await signOut(auth);
     router.push('/admin/login');
-    router.refresh();
   };
 
   const save = async (updated: SiteData) => {
@@ -70,7 +83,7 @@ export function Admin() {
     }
   };
 
-  if (loading || !data) {
+  if (authChecking || dataLoading || !data) {
     return (
       <div className="min-h-screen bg-[#0A0A0C] flex items-center justify-center">
         <div className="w-12 h-12 border-4 border-[#1A1A22] border-t-[#AB4AFF] rounded-full animate-spin"></div>
