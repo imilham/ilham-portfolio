@@ -274,6 +274,7 @@ function ProfileEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData)
           <Field label="Name"><input className={inputCls} value={p.name} onChange={e => set('name', e.target.value)} /></Field>
           <Field label="Location"><input className={inputCls} value={p.location} onChange={e => set('location', e.target.value)} /></Field>
           <Field label="Email"><input className={inputCls} value={p.email} onChange={e => set('email', e.target.value)} /></Field>
+          <Field label="Site Title (Browser Tab)"><input className={inputCls} value={p.siteTitle || ''} onChange={e => set('siteTitle', e.target.value)} /></Field>
           <Field label="Tagline"><input className={inputCls} value={p.tagline} onChange={e => set('tagline', e.target.value)} /></Field>
           <Field label="GitHub URL"><input className={inputCls} value={p.github} onChange={e => set('github', e.target.value)} /></Field>
           <Field label="LinkedIn URL"><input className={inputCls} value={p.linkedin} onChange={e => set('linkedin', e.target.value)} /></Field>

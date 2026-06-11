@@ -55,6 +55,7 @@ export interface Profile {
   linkedin: string;
   twitter: string;
   heroPhoto: string;
+  siteTitle: string;
   skills: string[];
   stats: { label: string; value: string }[];
 }
@@ -81,6 +82,7 @@ const defaultData: SiteData = {
     linkedin: 'https://linkedin.com',
     twitter: 'https://twitter.com',
     heroPhoto: '',
+    siteTitle: 'My Portfolio',
     skills: ['React', 'TypeScript', 'Node.js', 'Next.js', 'Tailwind CSS', 'PostgreSQL', 'Docker', 'AWS'],
     stats: [
       { label: 'Projects', value: '20+' },
