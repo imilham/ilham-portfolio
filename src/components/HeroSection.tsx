@@ -7,6 +7,18 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ profile }: HeroSectionProps) {
+  // Helper to convert Google Drive link to a direct download link
+  const getDirectDownloadUrl = (url: string) => {
+    if (!url) return url;
+    const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+      return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+    }
+    return url;
+  };
+
+  const downloadUrl = getDirectDownloadUrl(profile.cvUrl);
+
   return (
     <section className="min-h-screen flex items-center justify-center px-6 py-20">
       <div className="max-w-7xl mx-auto w-full">
@@ -37,7 +49,7 @@ export function HeroSection({ profile }: HeroSectionProps) {
                 <ArrowRight className="w-5 h-5" />
               </button>
               {profile.cvUrl ? (
-                <a href={profile.cvUrl} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-[#1A1A22] text-white rounded-lg hover:bg-[#252530] transition-all flex items-center gap-2 border border-[#1A1A22]">
+                <a href={downloadUrl} download="CV.pdf" className="px-6 py-3 bg-[#1A1A22] text-white rounded-lg hover:bg-[#252530] transition-all flex items-center gap-2 border border-[#1A1A22]">
                   <Download className="w-5 h-5" />
                   Download CV
                 </a>
