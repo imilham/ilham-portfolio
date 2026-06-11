@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   ArrowLeft, User, GraduationCap, Briefcase, FolderGit2,
   Image, BookOpen, Plus, Trash2, Save, Eye, EyeOff,
@@ -43,6 +44,13 @@ export function Admin() {
   const [activeTab, setActiveTab] = useState<Tab>('profile');
   const [data, setData] = useState<SiteData>(loadData());
   const [toast, setToast] = useState('');
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/admin/login');
+    router.refresh();
+  };
 
   const save = (updated: SiteData) => {
     setData(updated);
@@ -67,10 +75,16 @@ export function Admin() {
               Admin Panel
             </span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <Link href="/blog" className="text-xs text-[#8A8A93] hover:text-[#AB4AFF] flex items-center gap-1 transition-colors">
               Blog <ExternalLink size={11} />
             </Link>
+            <button
+              onClick={handleLogout}
+              className="text-xs text-[#8A8A93] hover:text-red-400 flex items-center gap-1 transition-colors border border-[#1A1A22] px-3 py-1.5 rounded-lg hover:border-red-400"
+            >
+              Log Out
+            </button>
           </div>
         </div>
       </header>
