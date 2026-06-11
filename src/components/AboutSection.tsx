@@ -10,14 +10,7 @@ interface AboutSectionProps {
 export function AboutSection({ profile, education }: AboutSectionProps) {
   const [activeTab, setActiveTab] = useState<'skills' | 'education' | 'certifications'>('skills');
 
-  // We are mapping the hardcoded certifications here, as it's not currently in the site data model
-  // If needed, it can be added to the model later.
-  const certifications = [
-    'AWS Certified Solutions Architect',
-    'Google Cloud Professional Developer',
-    'Flutter Development Expert',
-    'Certified Kubernetes Administrator',
-  ];
+  const certifications = profile.certifications || [];
 
   return (
     <section id="about" className="py-20 px-6">

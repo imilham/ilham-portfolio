@@ -60,6 +60,7 @@ export interface Profile {
   enableCarousel?: boolean;
   carouselTexts?: string[];
   skills: string[];
+  certifications?: string[];
   stats: { label: string; value: string }[];
 }
 
@@ -90,6 +91,12 @@ export const defaultData: SiteData = {
     enableCarousel: true,
     carouselTexts: ['Ilham', 'a Developer', 'a Designer'],
     skills: ['React', 'TypeScript', 'Node.js', 'Next.js', 'Tailwind CSS', 'PostgreSQL', 'Docker', 'AWS'],
+    certifications: [
+      'AWS Certified Solutions Architect',
+      'Google Cloud Professional Developer',
+      'Flutter Development Expert',
+      'Certified Kubernetes Administrator',
+    ],
     stats: [
       { label: 'Projects', value: '20+' },
       { label: 'Years Exp.', value: '3+' },

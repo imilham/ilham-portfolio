@@ -248,6 +248,7 @@ function Card({ children }: { children: React.ReactNode }) {
 function ProfileEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData) => void }) {
   const [p, setP] = useState<Profile>(data.profile);
   const [skillInput, setSkillInput] = useState('');
+  const [certInput, setCertInput] = useState('');
   const [carouselInput, setCarouselInput] = useState('');
 
   const set = (key: keyof Profile, val: any) => setP(prev => ({ ...prev, [key]: val }));
@@ -261,6 +262,17 @@ function ProfileEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData)
   };
 
   const removeSkill = (s: string) => set('skills', p.skills.filter(x => x !== s));
+
+  const addCert = () => {
+    const s = certInput.trim();
+    const currentCerts = p.certifications || [];
+    if (s && !currentCerts.includes(s)) {
+      set('certifications', [...currentCerts, s]);
+      setCertInput('');
+    }
+  };
+
+  const removeCert = (s: string) => set('certifications', (p.certifications || []).filter(x => x !== s));
 
   const addCarouselText = () => {
     const s = carouselInput.trim();
@@ -375,6 +387,29 @@ function ProfileEditor({ data, onSave }: { data: SiteData; onSave: (d: SiteData)
             onKeyDown={e => e.key === 'Enter' && addSkill()}
           />
           <button onClick={addSkill} className="bg-[#AB4AFF] hover:bg-[#9933EE] text-white px-4 rounded-xl transition-colors shrink-0 text-sm">Add</button>
+        </div>
+      </Card>
+
+      {/* Certifications */}
+      <Card>
+        <p className="text-xs text-[#8A8A93] font-medium uppercase tracking-wide mb-4">Certifications</p>
+        <div className="flex flex-col gap-2 mb-3">
+          {(p.certifications || []).map(c => (
+            <div key={c} className="flex items-center justify-between bg-[#AB4AFF]/10 text-[#AB4AFF] px-3 py-2 rounded-xl text-sm">
+              <span>{c}</span>
+              <button onClick={() => removeCert(c)} className="hover:text-red-400 transition-colors"><X size={14} /></button>
+            </div>
+          ))}
+        </div>
+        <div className="flex gap-2 mt-4">
+          <input
+            className={inputCls}
+            placeholder="Add a certification..."
+            value={certInput}
+            onChange={e => setCertInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && addCert()}
+          />
+          <button onClick={addCert} className="bg-[#AB4AFF] hover:bg-[#9933EE] text-white px-4 rounded-xl transition-colors shrink-0 text-sm">Add</button>
         </div>
       </Card>
     </div>
