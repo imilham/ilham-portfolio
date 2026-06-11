@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, Upload } from 'lucide-react';
 import { GalleryPhoto } from '../data/store';
 import { getDriveViewUrl } from '../lib/drive';
+import { ImageLoader } from './ImageLoader';
 
 interface GallerySectionProps {
   gallery: GalleryPhoto[];
@@ -45,9 +46,10 @@ export function GallerySection({ gallery }: GallerySectionProps) {
               >
                 <div className="relative overflow-hidden rounded-xl bg-[#1A1A22]">
                   {photo.url ? (
-                    <img
+                    <ImageLoader
                       src={getDriveViewUrl(photo.url)}
                       alt={photo.caption}
+                      containerClassName="w-full"
                       className="w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
@@ -93,14 +95,12 @@ export function GallerySection({ gallery }: GallerySectionProps) {
             >
               <X className="w-6 h-6" />
             </button>
-            <motion.img
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
+            <ImageLoader
               src={selectedImage}
               alt="Selected"
-              className="max-w-full max-h-full rounded-2xl shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
+              containerClassName="max-w-full max-h-[90vh] rounded-2xl shadow-2xl"
+              className="max-w-full max-h-[90vh] object-contain rounded-2xl"
+              onClick={(e: any) => e.stopPropagation()}
             />
           </motion.div>
         )}

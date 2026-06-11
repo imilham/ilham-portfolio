@@ -6,6 +6,7 @@ import { ArrowLeft, Calendar, Tag } from 'lucide-react';
 import { useSiteData } from '../hooks/useSiteData';
 import { SiteData } from '../data/store';
 import { getDriveViewUrl } from '../lib/drive';
+import { ImageLoader } from '../components/ImageLoader';
 
 export function BlogPost({ initialData, slug: propSlug }: { initialData?: SiteData, slug?: string }) {
   const params = useParams();
@@ -88,7 +89,12 @@ export function BlogPost({ initialData, slug: propSlug }: { initialData?: SiteDa
       {/* Cover Image */}
       {post.coverImage && (
         <div className="w-full h-72 overflow-hidden">
-          <img src={getDriveViewUrl(post.coverImage)} alt={post.title} className="w-full h-full object-cover" />
+          <ImageLoader 
+            src={getDriveViewUrl(post.coverImage)} 
+            alt={post.title} 
+            containerClassName="w-full h-full"
+            className="w-full h-full object-cover" 
+          />
         </div>
       )}
 
