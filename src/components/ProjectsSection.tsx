@@ -14,6 +14,14 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
     ? projects.filter(p => p.featured)
     : projects;
 
+  const getValidUrl = (url?: string) => {
+    if (!url || url === '#') return '#';
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return `https://${url}`;
+    }
+    return url;
+  };
+
   return (
     <section id="projects" className="py-20 px-6 bg-[#0A0A0C]">
       <div className="max-w-7xl mx-auto">
@@ -32,35 +40,66 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayProjects.map((project, index) => (
+            {displayProjects.map((project, index) => {
+              const liveUrl = getValidUrl(project.liveUrl);
+              const githubUrl = getValidUrl(project.githubUrl);
+              const hasLiveUrl = liveUrl !== '#';
+              const hasGithubUrl = githubUrl !== '#';
+
+              return (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="bg-[#121216] border border-[#1A1A22] rounded-xl overflow-hidden hover:border-[#AB4AFF] transition-all group"
+                className="bg-[#121216] border border-[#1A1A22] rounded-xl overflow-hidden hover:border-[#AB4AFF] transition-all group flex flex-col"
               >
                 {/* Image Placeholder or Actual Image */}
-                <div className="aspect-video bg-gradient-to-br from-[#1A1A22] to-[#121216] flex items-center justify-center text-7xl border-b border-[#1A1A22] group-hover:from-[#AB4AFF]/10 group-hover:to-[#121216] transition-all relative overflow-hidden">
-                  {project.image ? (
-                    <ImageLoader 
-                      src={getDriveViewUrl(project.image)} 
-                      alt={project.title} 
-                      containerClassName="w-full h-full"
-                      className="w-full h-full object-cover" 
-                    />
-                  ) : (
-                    <span className="text-4xl opacity-50">📱</span>
-                  )}
-                </div>
+                {hasLiveUrl ? (
+                  <a href={liveUrl} target="_blank" rel="noreferrer" className="block w-full aspect-video">
+                    <div className="w-full h-full bg-gradient-to-br from-[#1A1A22] to-[#121216] flex items-center justify-center text-7xl border-b border-[#1A1A22] group-hover:from-[#AB4AFF]/10 group-hover:to-[#121216] transition-all relative overflow-hidden">
+                      {project.image ? (
+                        <ImageLoader 
+                          src={getDriveViewUrl(project.image)} 
+                          alt={project.title} 
+                          containerClassName="w-full h-full"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                        />
+                      ) : (
+                        <span className="text-4xl opacity-50">📱</span>
+                      )}
+                    </div>
+                  </a>
+                ) : (
+                  <div className="aspect-video bg-gradient-to-br from-[#1A1A22] to-[#121216] flex items-center justify-center text-7xl border-b border-[#1A1A22] group-hover:from-[#AB4AFF]/10 group-hover:to-[#121216] transition-all relative overflow-hidden">
+                    {project.image ? (
+                      <ImageLoader 
+                        src={getDriveViewUrl(project.image)} 
+                        alt={project.title} 
+                        containerClassName="w-full h-full"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
+                    ) : (
+                      <span className="text-4xl opacity-50">📱</span>
+                    )}
+                  </div>
+                )}
 
                 {/* Content */}
-                <div className="p-6 space-y-4">
-                  <h3 className="text-xl font-bold group-hover:text-[#AB4AFF] transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-[#8A8A93] text-sm leading-relaxed">
+                <div className="p-6 space-y-4 flex-grow flex flex-col">
+                  {hasLiveUrl ? (
+                    <a href={liveUrl} target="_blank" rel="noreferrer" className="inline-block w-fit">
+                      <h3 className="text-xl font-bold group-hover:text-[#AB4AFF] transition-colors">
+                        {project.title}
+                      </h3>
+                    </a>
+                  ) : (
+                    <h3 className="text-xl font-bold group-hover:text-[#AB4AFF] transition-colors">
+                      {project.title}
+                    </h3>
+                  )}
+                  <p className="text-[#8A8A93] text-sm leading-relaxed flex-grow">
                     {project.description}
                   </p>
 
@@ -77,10 +116,10 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                   </div>
 
                   {/* Links */}
-                  <div className="flex gap-4 pt-2">
-                    {project.githubUrl && project.githubUrl !== '#' && (
+                  <div className="flex gap-4 pt-2 mt-auto">
+                    {hasGithubUrl && (
                       <a
-                        href={project.githubUrl}
+                        href={githubUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="flex items-center gap-2 text-[#8A8A93] hover:text-[#AB4AFF] transition-colors"
@@ -89,9 +128,9 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                         <span className="text-sm">Code</span>
                       </a>
                     )}
-                    {project.liveUrl && project.liveUrl !== '#' && (
+                    {hasLiveUrl && (
                       <a
-                        href={project.liveUrl}
+                        href={liveUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="flex items-center gap-2 text-[#8A8A93] hover:text-[#AB4AFF] transition-colors"
@@ -103,7 +142,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                   </div>
                 </div>
               </motion.div>
-            ))}
+            )})}
           </div>
           
           {displayProjects.length === 0 && (
