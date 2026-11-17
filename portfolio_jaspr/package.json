@@ -1,0 +1,22 @@
+{
+  "name": "portfolio_jaspr",
+  "version": "1.0.0",
+  "description": "A new Jaspr project",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "build:css": "tailwindcss -i ./web/styles.tw.css -o ./web/styles.css --minify",
+    "watch:css": "tailwindcss -i ./web/styles.tw.css -o ./web/styles.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "autoprefixer": "^10.6.2",
+    "postcss": "^8.5.33",
+    "tailwindcss": "^3.4.19"
+  }
+}
