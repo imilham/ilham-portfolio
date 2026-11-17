@@ -15,7 +15,7 @@ class GallerySection extends StatelessComponent {
 
     return section(
       id: 'gallery',
-      classes: 'py-24 px-6 bg-[#0A0A0C] border-t border-[#1A1A22]',
+      classes: 'py-24 px-6 bg-transparent border-t border-[#1A1A22]/60',
       [
         div(classes: 'max-w-7xl mx-auto space-y-16', [
           // Header

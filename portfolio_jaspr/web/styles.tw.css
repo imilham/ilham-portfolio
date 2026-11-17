@@ -11,35 +11,36 @@
   }
 }
 
-/* --- Advanced Background Animations & Tech Patterns --- */
+/* --- High-Visibility Ambient Background Animations --- */
 
-/* Modern Grid & Dot Matrix Overlay */
+/* High-Tech Blueprint Grid */
 .bg-tech-grid {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 90% 60% at 50% 15%, #000 35%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 15%, #000 35%, transparent 100%);
+    linear-gradient(to right, rgba(171, 74, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(171, 74, 255, 0.08) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(ellipse 95% 75% at 50% 20%, #000 65%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 95% 75% at 50% 20%, #000 65%, transparent 100%);
 }
 
+/* Glowing Neon Dot Matrix */
 .bg-tech-dots {
-  background-image: radial-gradient(rgba(171, 74, 255, 0.16) 1.5px, transparent 1.5px);
-  background-size: 32px 32px;
-  mask-image: radial-gradient(ellipse 80% 50% at 50% 10%, #000 30%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 10%, #000 30%, transparent 100%);
+  background-image: radial-gradient(rgba(171, 74, 255, 0.32) 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 15%, #000 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 15%, #000 55%, transparent 100%);
 }
 
-/* Floating Ambient Aurora Orbs */
+/* Dynamic Aurora Orb Movements (Faster & Broader range) */
 @keyframes floatOrb1 {
   0%, 100% {
     transform: translate(0px, 0px) scale(1);
   }
   33% {
-    transform: translate(50px, -70px) scale(1.12);
+    transform: translate(90px, -110px) scale(1.22);
   }
   66% {
-    transform: translate(-40px, 30px) scale(0.92);
+    transform: translate(-70px, 60px) scale(0.9);
   }
 }
 
@@ -48,10 +49,10 @@
     transform: translate(0px, 0px) scale(1);
   }
   33% {
-    transform: translate(-60px, 60px) scale(0.95);
+    transform: translate(-100px, 90px) scale(0.88);
   }
   66% {
-    transform: translate(45px, -45px) scale(1.1);
+    transform: translate(80px, -70px) scale(1.18);
   }
 }
 
@@ -60,51 +61,63 @@
     transform: translate(0px, 0px) scale(1);
   }
   50% {
-    transform: translate(40px, 50px) scale(1.08);
+    transform: translate(80px, 80px) scale(1.15);
   }
 }
 
 .animate-orb-purple {
-  animation: floatOrb1 16s ease-in-out infinite;
+  animation: floatOrb1 10s ease-in-out infinite;
   will-change: transform;
 }
 
 .animate-orb-indigo {
-  animation: floatOrb2 20s ease-in-out infinite;
+  animation: floatOrb2 12s ease-in-out infinite;
   will-change: transform;
 }
 
 .animate-orb-cyan {
-  animation: floatOrb3 14s ease-in-out infinite;
+  animation: floatOrb3 9s ease-in-out infinite;
   will-change: transform;
 }
 
-/* Floating Particles Drift */
+/* High-Visibility Neon Glow Particles */
 @keyframes particleDrift {
   0% {
-    transform: translateY(0px) scale(0.8);
-    opacity: 0.2;
+    transform: translateY(0px) scale(0.85);
+    opacity: 0.4;
   }
   50% {
-    transform: translateY(-25px) scale(1.2);
-    opacity: 0.7;
+    transform: translateY(-50px) scale(1.4);
+    opacity: 1;
   }
   100% {
-    transform: translateY(-50px) scale(0.8);
-    opacity: 0.2;
+    transform: translateY(-100px) scale(0.85);
+    opacity: 0.4;
   }
 }
 
 .animate-particle-1 {
-  animation: particleDrift 6s ease-in-out infinite;
+  animation: particleDrift 5s ease-in-out infinite;
 }
 
 .animate-particle-2 {
-  animation: particleDrift 8s ease-in-out infinite 2s;
+  animation: particleDrift 7s ease-in-out infinite 1.5s;
 }
 
 .animate-particle-3 {
-  animation: particleDrift 7s ease-in-out infinite 4s;
+  animation: particleDrift 6s ease-in-out infinite 3s;
+}
+
+.glow-particle-purple {
+  box-shadow: 0 0 14px 3px rgba(171, 74, 255, 0.85), 0 0 30px 6px rgba(171, 74, 255, 0.4);
+}
+
+.glow-particle-indigo {
+  box-shadow: 0 0 14px 3px rgba(99, 102, 241, 0.85), 0 0 30px 6px rgba(99, 102, 241, 0.4);
+}
+
+.glow-particle-cyan {
+  box-shadow: 0 0 14px 3px rgba(6, 182, 212, 0.85), 0 0 30px 6px rgba(6, 182, 212, 0.4);
 }
 
 /* Shimmering Text Animation */
@@ -121,30 +134,32 @@
   background: linear-gradient(
     90deg,
     #FFFFFF 0%,
-    #E9D5FF 25%,
+    #F3E8FF 20%,
+    #C084FC 40%,
     #AB4AFF 50%,
-    #E9D5FF 75%,
+    #C084FC 60%,
+    #F3E8FF 80%,
     #FFFFFF 100%
   );
   background-size: 200% auto;
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  animation: textShimmer 6s linear infinite;
+  animation: textShimmer 4s linear infinite;
 }
 
 /* Glowing Border Pulse for Featured Cards */
 @keyframes borderGlowPulse {
   0%, 100% {
-    border-color: rgba(171, 74, 255, 0.25);
-    box-shadow: 0 0 25px -5px rgba(171, 74, 255, 0.15);
+    border-color: rgba(171, 74, 255, 0.4);
+    box-shadow: 0 0 25px -2px rgba(171, 74, 255, 0.35);
   }
   50% {
-    border-color: rgba(171, 74, 255, 0.6);
-    box-shadow: 0 0 35px 2px rgba(171, 74, 255, 0.25);
+    border-color: rgba(171, 74, 255, 0.9);
+    box-shadow: 0 0 45px 5px rgba(171, 74, 255, 0.55);
   }
 }
 
 .card-glow-pulse {
-  animation: borderGlowPulse 4s ease-in-out infinite;
+  animation: borderGlowPulse 3s ease-in-out infinite;
 }

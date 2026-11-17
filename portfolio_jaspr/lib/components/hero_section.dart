@@ -16,12 +16,12 @@ class HeroSection extends StatelessComponent {
 
     return section(
       classes:
-          'relative min-h-[92vh] flex items-center justify-center px-6 pt-28 pb-20 bg-[#0A0A0C] overflow-hidden',
+          'relative min-h-[92vh] flex items-center justify-center px-6 pt-28 pb-20 bg-transparent overflow-hidden',
       [
-        // Ambient background glow lights
+        // Subtle local hero spotlight
         div(
           classes:
-              'absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[#AB4AFF]/15 via-[#6366F1]/10 to-transparent blur-[140px] pointer-events-none rounded-full',
+              'absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-[#AB4AFF]/20 via-[#6366F1]/15 to-transparent blur-[140px] pointer-events-none rounded-full',
           [],
         ),
 
@@ -55,7 +55,7 @@ class HeroSection extends StatelessComponent {
                       text("Hi, I'm "),
                       span(
                         classes:
-                            'bg-gradient-to-r from-[#AB4AFF] via-[#C084FC] to-[#818CF8] bg-clip-text text-transparent',
+                            'bg-gradient-to-r from-[#AB4AFF] via-[#D8B4FE] to-[#818CF8] bg-clip-text text-transparent shimmer-gradient',
                         [text(profile.name)],
                       ),
                     ],
@@ -125,14 +125,14 @@ class HeroSection extends StatelessComponent {
                   // Radial Glow Behind Photo Card
                   div(
                     classes:
-                        'absolute -inset-4 bg-gradient-to-tr from-[#AB4AFF]/40 via-[#6366F1]/30 to-[#3B82F6]/25 rounded-[40px] blur-3xl opacity-60 -z-10',
+                        'absolute -inset-6 bg-gradient-to-tr from-[#AB4AFF]/60 via-[#6366F1]/50 to-[#3B82F6]/40 rounded-[44px] blur-2xl opacity-85 -z-10',
                     [],
                   ),
 
-                  // Main Card Frame
+                  // Main Card Frame with Animated Border Glow
                   div(
                     classes:
-                        'relative w-full max-w-[340px] sm:max-w-[380px] rounded-[32px] p-2.5 bg-gradient-to-b from-[#2E2E3E]/70 via-[#1A1A24]/60 to-[#121218]/80 border border-[#2E2E40] shadow-2xl backdrop-blur-sm group',
+                        'relative w-full max-w-[340px] sm:max-w-[380px] rounded-[32px] p-2.5 bg-gradient-to-b from-[#2E2E3E]/70 via-[#1A1A24]/60 to-[#121218]/80 border border-[#AB4AFF]/30 shadow-2xl backdrop-blur-sm card-glow-pulse group',
                     [
                       // Inner Photo Container
                       div(
