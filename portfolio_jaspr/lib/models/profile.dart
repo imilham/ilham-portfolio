@@ -77,6 +77,44 @@ class Profile {
         'certifications': certifications,
         'stats': stats.map((s) => s.toJson()).toList(),
       };
+
+  Profile copyWith({
+    String? name,
+    String? tagline,
+    String? bio,
+    String? location,
+    String? email,
+    String? github,
+    String? linkedin,
+    String? twitter,
+    String? heroPhoto,
+    String? siteTitle,
+    String? cvUrl,
+    bool? enableCarousel,
+    List<String>? carouselTexts,
+    List<String>? skills,
+    List<String>? certifications,
+    List<StatItem>? stats,
+  }) {
+    return Profile(
+      name: name ?? this.name,
+      tagline: tagline ?? this.tagline,
+      bio: bio ?? this.bio,
+      location: location ?? this.location,
+      email: email ?? this.email,
+      github: github ?? this.github,
+      linkedin: linkedin ?? this.linkedin,
+      twitter: twitter ?? this.twitter,
+      heroPhoto: heroPhoto ?? this.heroPhoto,
+      siteTitle: siteTitle ?? this.siteTitle,
+      cvUrl: cvUrl ?? this.cvUrl,
+      enableCarousel: enableCarousel ?? this.enableCarousel,
+      carouselTexts: carouselTexts ?? this.carouselTexts,
+      skills: skills ?? this.skills,
+      certifications: certifications ?? this.certifications,
+      stats: stats ?? this.stats,
+    );
+  }
 }
 
 class StatItem {

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../models/profile.dart';
+import '../../models/education_experience.dart';
+import '../../models/portfolio_items.dart';
 import '../../models/site_data.dart';
 import '../../data/portfolio_data.dart';
 import '../utils/drive_utils.dart';
@@ -14,8 +16,34 @@ class FirebaseService {
   static const String firestoreEndpoint =
       'https://firestore.googleapis.com/v1/projects/$projectId/databases/(default)/documents/$collection/$docId?key=$apiKey';
 
-  /// Fetch the latest site and profile data from Firestore, exactly as implemented
-  /// in the previous Next.js project.
+  static const String authEndpoint =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$apiKey';
+
+  /// Sign in with Firebase email and password via Firebase Auth REST API.
+  /// Returns the idToken on success, or throws an exception on error.
+  static Future<String> signInWithEmailAndPassword(
+      String email, String password) async {
+    final response = await http.post(
+      Uri.parse(authEndpoint),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email.trim(),
+        'password': password,
+        'returnSecureToken': true,
+      }),
+    );
+
+    final data = jsonDecode(response.body) as Map<String, dynamic>;
+    if (response.statusCode == 200 && data.containsKey('idToken')) {
+      return data['idToken'] as String;
+    } else {
+      final errorMap = data['error'] as Map<String, dynamic>?;
+      final message = errorMap?['message']?.toString() ?? 'Invalid credentials';
+      throw Exception(message);
+    }
+  }
+
+  /// Fetch the latest site data from Firestore.
   static Future<SiteData> fetchSiteData() async {
     try {
       final response = await http
@@ -30,11 +58,73 @@ class FirebaseService {
           return _parseSiteDataFromFirestore(fields);
         }
       }
-    } catch (e) {
+    } catch (_) {
       // In case of network timeout or offline mode, fall back safely
       // to the pre-seeded defaultSiteData
     }
     return defaultSiteData;
+  }
+
+  /// Save full SiteData to Firestore via REST PATCH.
+  static Future<bool> saveSiteData(SiteData data, {String? idToken}) async {
+    final fieldsMap = <String, dynamic>{
+      'profile': _toFirestoreValue(data.profile.toJson()),
+      'education': _toFirestoreValue(data.education.map((e) => e.toJson()).toList()),
+      'experience': _toFirestoreValue(data.experience.map((e) => e.toJson()).toList()),
+      'projects': _toFirestoreValue(data.projects.map((p) => p.toJson()).toList()),
+      'gallery': _toFirestoreValue(data.gallery.map((g) => g.toJson()).toList()),
+      'blog': _toFirestoreValue(data.blog.map((b) => b.toJson()).toList()),
+    };
+
+    final headers = <String, String>{
+      'Content-Type': 'application/json',
+    };
+    if (idToken != null && idToken.isNotEmpty) {
+      headers['Authorization'] = 'Bearer $idToken';
+    }
+
+    final response = await http.patch(
+      Uri.parse(firestoreEndpoint),
+      headers: headers,
+      body: jsonEncode({'fields': fieldsMap}),
+    );
+
+    return response.statusCode == 200;
+  }
+
+  static dynamic _toFirestoreValue(dynamic val) {
+    if (val == null) {
+      return {'nullValue': null};
+    }
+    if (val is bool) {
+      return {'booleanValue': val};
+    }
+    if (val is int) {
+      return {'integerValue': val.toString()};
+    }
+    if (val is double) {
+      return {'doubleValue': val};
+    }
+    if (val is String) {
+      return {'stringValue': val};
+    }
+    if (val is List) {
+      return {
+        'arrayValue': {
+          'values': val.map(_toFirestoreValue).toList(),
+        }
+      };
+    }
+    if (val is Map<String, dynamic>) {
+      final fields = <String, dynamic>{};
+      for (final entry in val.entries) {
+        fields[entry.key] = _toFirestoreValue(entry.value);
+      }
+      return {
+        'mapValue': {'fields': fields}
+      };
+    }
+    return {'stringValue': val.toString()};
   }
 
   static dynamic _extractValue(dynamic val) {
@@ -43,6 +133,9 @@ class FirebaseService {
     if (val.containsKey('booleanValue')) return val['booleanValue'];
     if (val.containsKey('integerValue')) {
       return int.tryParse(val['integerValue'].toString()) ?? 0;
+    }
+    if (val.containsKey('doubleValue')) {
+      return (val['doubleValue'] as num?)?.toDouble() ?? 0.0;
     }
     if (val.containsKey('arrayValue')) {
       final values = val['arrayValue']['values'] as List<dynamic>? ?? [];
@@ -60,6 +153,7 @@ class FirebaseService {
   }
 
   static SiteData _parseSiteDataFromFirestore(Map<String, dynamic> fields) {
+    // 1. Profile
     final profileMap = _extractValue(fields['profile']) as Map<String, dynamic>? ?? {};
 
     final rawHeroPhoto = profileMap['heroPhoto']?.toString() ?? '';
@@ -110,13 +204,53 @@ class FirebaseService {
       stats: statsList.isNotEmpty ? statsList : defaultSiteData.profile.stats,
     );
 
+    // 2. Education
+    final rawEducation = _extractValue(fields['education']) as List<dynamic>? ?? [];
+    final education = rawEducation.isNotEmpty
+        ? rawEducation
+            .map((e) => Education.fromJson(Map<String, dynamic>.from(e as Map)))
+            .toList()
+        : defaultSiteData.education;
+
+    // 3. Experience
+    final rawExperience = _extractValue(fields['experience']) as List<dynamic>? ?? [];
+    final experience = rawExperience.isNotEmpty
+        ? rawExperience
+            .map((e) => Experience.fromJson(Map<String, dynamic>.from(e as Map)))
+            .toList()
+        : defaultSiteData.experience;
+
+    // 4. Projects
+    final rawProjects = _extractValue(fields['projects']) as List<dynamic>? ?? [];
+    final projects = rawProjects.isNotEmpty
+        ? rawProjects
+            .map((p) => Project.fromJson(Map<String, dynamic>.from(p as Map)))
+            .toList()
+        : defaultSiteData.projects;
+
+    // 5. Gallery
+    final rawGallery = _extractValue(fields['gallery']) as List<dynamic>? ?? [];
+    final gallery = rawGallery.isNotEmpty
+        ? rawGallery
+            .map((g) => GalleryPhoto.fromJson(Map<String, dynamic>.from(g as Map)))
+            .toList()
+        : defaultSiteData.gallery;
+
+    // 6. Blog
+    final rawBlog = _extractValue(fields['blog']) as List<dynamic>? ?? [];
+    final blog = rawBlog.isNotEmpty
+        ? rawBlog
+            .map((b) => BlogPost.fromJson(Map<String, dynamic>.from(b as Map)))
+            .toList()
+        : defaultSiteData.blog;
+
     return SiteData(
       profile: profile,
-      education: defaultSiteData.education,
-      experience: defaultSiteData.experience,
-      projects: defaultSiteData.projects,
-      gallery: defaultSiteData.gallery,
-      blog: defaultSiteData.blog,
+      education: education,
+      experience: experience,
+      projects: projects,
+      gallery: gallery,
+      blog: blog,
     );
   }
 }

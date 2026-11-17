@@ -42,6 +42,28 @@ class Project {
         'featured': featured,
         'image': image,
       };
+
+  Project copyWith({
+    String? id,
+    String? title,
+    String? description,
+    List<String>? tags,
+    String? liveUrl,
+    String? githubUrl,
+    bool? featured,
+    String? image,
+  }) {
+    return Project(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      tags: tags ?? this.tags,
+      liveUrl: liveUrl ?? this.liveUrl,
+      githubUrl: githubUrl ?? this.githubUrl,
+      featured: featured ?? this.featured,
+      image: image ?? this.image,
+    );
+  }
 }
 
 class GalleryPhoto {
@@ -72,6 +94,20 @@ class GalleryPhoto {
         'caption': caption,
         'category': category,
       };
+
+  GalleryPhoto copyWith({
+    String? id,
+    String? url,
+    String? caption,
+    String? category,
+  }) {
+    return GalleryPhoto(
+      id: id ?? this.id,
+      url: url ?? this.url,
+      caption: caption ?? this.caption,
+      category: category ?? this.category,
+    );
+  }
 }
 
 class BlogPost {
@@ -122,4 +158,28 @@ class BlogPost {
         'publishedAt': publishedAt,
         'published': published,
       };
+
+  BlogPost copyWith({
+    String? id,
+    String? title,
+    String? slug,
+    String? excerpt,
+    String? content,
+    List<String>? tags,
+    String? coverImage,
+    String? publishedAt,
+    bool? published,
+  }) {
+    return BlogPost(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      slug: slug ?? this.slug,
+      excerpt: excerpt ?? this.excerpt,
+      content: content ?? this.content,
+      tags: tags ?? this.tags,
+      coverImage: coverImage ?? this.coverImage,
+      publishedAt: publishedAt ?? this.publishedAt,
+      published: published ?? this.published,
+    );
+  }
 }

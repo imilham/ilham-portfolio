@@ -6,6 +6,8 @@
 
 import 'package:jaspr/client.dart';
 
+import 'package:portfolio_jaspr/pages/admin.dart' deferred as _admin;
+
 /// Default [ClientOptions] for use with your Jaspr project.
 ///
 /// Use this to initialize Jaspr **before** calling [runApp].
@@ -22,4 +24,11 @@ import 'package:jaspr/client.dart';
 ///   runApp(...);
 /// }
 /// ```
-ClientOptions get defaultClientOptions => ClientOptions();
+ClientOptions get defaultClientOptions => ClientOptions(
+  clients: {
+    'admin': ClientLoader(
+      (p) => _admin.AdminPage(),
+      loader: _admin.loadLibrary,
+    ),
+  },
+);

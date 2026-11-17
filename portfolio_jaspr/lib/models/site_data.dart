@@ -53,4 +53,22 @@ class SiteData {
         'gallery': gallery.map((e) => e.toJson()).toList(),
         'blog': blog.map((e) => e.toJson()).toList(),
       };
+
+  SiteData copyWith({
+    Profile? profile,
+    List<Education>? education,
+    List<Experience>? experience,
+    List<Project>? projects,
+    List<GalleryPhoto>? gallery,
+    List<BlogPost>? blog,
+  }) {
+    return SiteData(
+      profile: profile ?? this.profile,
+      education: education ?? this.education,
+      experience: experience ?? this.experience,
+      projects: projects ?? this.projects,
+      gallery: gallery ?? this.gallery,
+      blog: blog ?? this.blog,
+    );
+  }
 }

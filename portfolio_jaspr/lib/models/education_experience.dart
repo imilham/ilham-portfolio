@@ -30,6 +30,22 @@ class Education {
         'year': year,
         'description': description,
       };
+
+  Education copyWith({
+    String? id,
+    String? degree,
+    String? school,
+    String? year,
+    String? description,
+  }) {
+    return Education(
+      id: id ?? this.id,
+      degree: degree ?? this.degree,
+      school: school ?? this.school,
+      year: year ?? this.year,
+      description: description ?? this.description,
+    );
+  }
 }
 
 class Experience {
@@ -68,4 +84,22 @@ class Experience {
         'description': description,
         'technologies': technologies,
       };
+
+  Experience copyWith({
+    String? id,
+    String? role,
+    String? company,
+    String? period,
+    String? description,
+    List<String>? technologies,
+  }) {
+    return Experience(
+      id: id ?? this.id,
+      role: role ?? this.role,
+      company: company ?? this.company,
+      period: period ?? this.period,
+      description: description ?? this.description,
+      technologies: technologies ?? this.technologies,
+    );
+  }
 }
