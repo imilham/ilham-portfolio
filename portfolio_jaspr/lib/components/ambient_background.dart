@@ -6,70 +6,90 @@ class AmbientBackground extends StatelessComponent {
 
   @override
   Component build(BuildContext context) {
+    // Deterministic star field coordinates (percentages) across the cosmos
+    const stars = [
+      (top: 8, left: 12, size: 1.0, type: 'star-slow', color: 'bg-white/80'),
+      (top: 14, left: 28, size: 1.5, type: 'star-fast', color: 'bg-white'),
+      (top: 6, left: 45, size: 1.0, type: 'star-slow', color: 'bg-white/70'),
+      (top: 18, left: 62, size: 2.0, type: 'star-pulse', color: 'bg-[#E9D5FF]'),
+      (top: 10, left: 82, size: 1.2, type: 'star-fast', color: 'bg-white'),
+      (top: 24, left: 8, size: 1.5, type: 'star-fast', color: 'bg-[#C7D2FE]'),
+      (top: 32, left: 22, size: 1.0, type: 'star-slow', color: 'bg-white/60'),
+      (top: 28, left: 38, size: 2.2, type: 'star-pulse', color: 'bg-white'),
+      (top: 36, left: 54, size: 1.2, type: 'star-fast', color: 'bg-white/90'),
+      (top: 22, left: 74, size: 1.0, type: 'star-slow', color: 'bg-white/70'),
+      (top: 30, left: 92, size: 1.5, type: 'star-fast', color: 'bg-[#E9D5FF]'),
+      (top: 42, left: 15, size: 2.0, type: 'star-pulse', color: 'bg-white'),
+      (top: 48, left: 32, size: 1.0, type: 'star-slow', color: 'bg-white/70'),
+      (top: 44, left: 48, size: 1.4, type: 'star-fast', color: 'bg-[#C7D2FE]'),
+      (top: 52, left: 68, size: 1.8, type: 'star-pulse', color: 'bg-white'),
+      (top: 40, left: 85, size: 1.0, type: 'star-slow', color: 'bg-white/60'),
+      (top: 58, left: 6, size: 1.2, type: 'star-fast', color: 'bg-white/80'),
+      (top: 64, left: 25, size: 1.0, type: 'star-slow', color: 'bg-white/70'),
+      (top: 60, left: 42, size: 2.4, type: 'star-pulse', color: 'bg-[#F3E8FF]'),
+      (top: 68, left: 58, size: 1.0, type: 'star-slow', color: 'bg-white/60'),
+      (top: 56, left: 78, size: 1.5, type: 'star-fast', color: 'bg-white'),
+      (top: 66, left: 94, size: 1.0, type: 'star-slow', color: 'bg-white/70'),
+      (top: 76, left: 18, size: 1.6, type: 'star-fast', color: 'bg-[#E0E7FF]'),
+      (top: 82, left: 36, size: 1.0, type: 'star-slow', color: 'bg-white/70'),
+      (top: 74, left: 52, size: 2.0, type: 'star-pulse', color: 'bg-white'),
+      (top: 88, left: 70, size: 1.2, type: 'star-fast', color: 'bg-white/90'),
+      (top: 80, left: 88, size: 1.0, type: 'star-slow', color: 'bg-white/60'),
+      (top: 92, left: 10, size: 1.5, type: 'star-fast', color: 'bg-white'),
+      (top: 94, left: 45, size: 1.0, type: 'star-slow', color: 'bg-white/70'),
+      (top: 90, left: 82, size: 1.8, type: 'star-pulse', color: 'bg-[#E9D5FF]'),
+      // Clusters around right side & hero
+      (top: 16, left: 70, size: 2.2, type: 'star-pulse', color: 'bg-white'),
+      (top: 26, left: 65, size: 1.2, type: 'star-fast', color: 'bg-[#D8B4FE]'),
+      (top: 38, left: 72, size: 1.0, type: 'star-slow', color: 'bg-white/80'),
+      (top: 12, left: 90, size: 2.0, type: 'star-pulse', color: 'bg-white'),
+      (top: 46, left: 96, size: 1.4, type: 'star-fast', color: 'bg-white/90'),
+      (top: 5, left: 20, size: 1.8, type: 'star-pulse', color: 'bg-[#E0E7FF]'),
+      (top: 20, left: 4, size: 1.0, type: 'star-slow', color: 'bg-white/60'),
+      (top: 72, left: 82, size: 1.6, type: 'star-fast', color: 'bg-white'),
+    ];
+
     return div(
       classes:
-          'fixed inset-0 pointer-events-none overflow-hidden z-0 select-none',
+          'fixed inset-0 pointer-events-none overflow-hidden z-0 select-none bg-deep-space',
       [
-        // 1. Subtle, Clean Blueprint Grid
-        div(classes: 'absolute inset-0 bg-tech-grid opacity-80', []),
-
-        // 2. Gentle Dot Matrix overlay
+        // Cosmic Violet Nebula Cloud (Soft glowing space dust on the right side)
         div(
           classes:
-              'absolute top-0 left-0 right-0 h-[700px] bg-tech-dots opacity-70',
+              'absolute top-10 -right-20 w-[750px] h-[750px] rounded-full bg-gradient-to-bl from-[#AB4AFF]/20 via-[#7C3AED]/12 to-transparent blur-[120px] animate-nebula',
           [],
         ),
 
-        // 3. Balanced, Ambient Aurora Glow Orbs (Soft 20-22% opacity, 115px blur)
-        // Violet/Purple Orb (Top-Left)
+        // Distant Indigo Nebula (Left side)
         div(
           classes:
-              'absolute -top-32 -left-24 w-[620px] h-[620px] rounded-full bg-[#AB4AFF]/22 blur-[115px] animate-orb-purple',
+              'absolute top-1/2 -left-32 w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-[#6366F1]/16 via-[#4F46E5]/10 to-transparent blur-[130px] animate-nebula',
           [],
         ),
 
-        // Electric Indigo Orb (Top-Right)
+        // Shooting Stars (Meteors flying across the space background)
         div(
           classes:
-              'absolute top-20 -right-28 w-[560px] h-[560px] rounded-full bg-[#6366F1]/18 blur-[120px] animate-orb-indigo',
+              'absolute top-[18%] right-[10%] w-[180px] h-[1.5px] rounded-full shooting-star-1 opacity-0 pointer-events-none',
+          [],
+        ),
+        div(
+          classes:
+              'absolute top-[45%] right-[25%] w-[160px] h-[1.5px] rounded-full shooting-star-2 opacity-0 pointer-events-none',
           [],
         ),
 
-        // Cyber Purple/Cyan Orb (Mid-Lower Center)
-        div(
-          classes:
-              'absolute top-[520px] left-1/4 w-[480px] h-[480px] rounded-full bg-[#8B5CF6]/16 blur-[110px] animate-orb-cyan',
-          [],
-        ),
-
-        // Lower Ambient Glow
-        div(
-          classes:
-              'absolute top-[1100px] right-12 w-[500px] h-[500px] rounded-full bg-[#AB4AFF]/14 blur-[120px] animate-orb-purple',
-          [],
-        ),
-
-        // 4. Subtle, Tiny Light Specks (twinkling naturally without harsh glow)
-        div(
-          classes:
-              'absolute top-48 left-[16%] w-1.5 h-1.5 rounded-full bg-[#E9D5FF] blur-[0.5px] animate-particle-1',
-          [],
-        ),
-        div(
-          classes:
-              'absolute top-72 right-[20%] w-1.5 h-1.5 rounded-full bg-[#C7D2FE] blur-[0.5px] animate-particle-2',
-          [],
-        ),
-        div(
-          classes:
-              'absolute top-[500px] left-[42%] w-1 h-1 rounded-full bg-white/70 animate-particle-3',
-          [],
-        ),
-        div(
-          classes:
-              'absolute top-[720px] right-[15%] w-1.5 h-1.5 rounded-full bg-[#E9D5FF] blur-[0.5px] animate-particle-1',
-          [],
-        ),
+        // Starfield elements
+        for (var star in stars)
+          div(
+            classes:
+                'absolute rounded-full ${star.color} ${star.type}',
+            attributes: {
+              'style':
+                  'top: ${star.top}%; left: ${star.left}%; width: ${star.size}px; height: ${star.size}px;',
+            },
+            [],
+          ),
       ],
     );
   }

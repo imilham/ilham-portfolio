@@ -4,148 +4,126 @@
 
 @layer base {
   body {
-    background-color: #0A0A0C;
+    background-color: #040407;
     color: #F4F4F6;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     overflow-x: hidden;
   }
 }
 
-/* --- Balanced, Elegant Background Aesthetic --- */
+/* --- Deep Cosmic Space & Starfield Animations --- */
 
-/* Minimal Blueprint Grid */
-.bg-tech-grid {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 90% 65% at 50% 15%, #000 45%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 65% at 50% 15%, #000 45%, transparent 100%);
+/* Cosmic Deep Space Background with Nebulas */
+.bg-deep-space {
+  background: 
+    radial-gradient(circle at 85% 25%, rgba(171, 74, 255, 0.16) 0%, transparent 45%),
+    radial-gradient(circle at 15% 65%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+    #040407;
 }
 
-/* Subtle Dot Matrix */
-.bg-tech-dots {
-  background-image: radial-gradient(rgba(171, 74, 255, 0.20) 1.5px, transparent 1.5px);
-  background-size: 32px 32px;
-  mask-image: radial-gradient(ellipse 85% 60% at 50% 12%, #000 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 85% 60% at 50% 12%, #000 40%, transparent 100%);
-}
-
-/* Smooth, Calm Aurora Orb Float */
-@keyframes floatOrb1 {
+/* Twinkling Stars Animations */
+@keyframes twinkleFast {
   0%, 100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(45px, -55px) scale(1.08);
-  }
-  66% {
-    transform: translate(-35px, 30px) scale(0.95);
-  }
-}
-
-@keyframes floatOrb2 {
-  0%, 100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(-50px, 45px) scale(0.94);
-  }
-  66% {
-    transform: translate(40px, -35px) scale(1.06);
-  }
-}
-
-@keyframes floatOrb3 {
-  0%, 100% {
-    transform: translate(0px, 0px) scale(1);
+    opacity: 0.25;
+    transform: scale(0.8);
   }
   50% {
-    transform: translate(35px, 40px) scale(1.05);
+    opacity: 1;
+    transform: scale(1.3);
   }
 }
 
-.animate-orb-purple {
-  animation: floatOrb1 16s ease-in-out infinite;
-  will-change: transform;
+@keyframes twinkleSlow {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.15);
+  }
 }
 
-.animate-orb-indigo {
-  animation: floatOrb2 20s ease-in-out infinite;
-  will-change: transform;
+@keyframes twinklePulse {
+  0%, 100% {
+    opacity: 0.3;
+    filter: drop-shadow(0 0 1px #fff);
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px #AB4AFF) drop-shadow(0 0 10px #C084FC);
+  }
 }
 
-.animate-orb-cyan {
-  animation: floatOrb3 15s ease-in-out infinite;
-  will-change: transform;
+.star-fast {
+  animation: twinkleFast 2.8s ease-in-out infinite;
 }
 
-/* Subtle Floating Dust/Sparkle Particles */
-@keyframes particleDrift {
+.star-slow {
+  animation: twinkleSlow 4.5s ease-in-out infinite;
+}
+
+.star-pulse {
+  animation: twinklePulse 3.5s ease-in-out infinite;
+}
+
+/* Shooting Stars (Meteors) Across the Night Sky */
+@keyframes shootingStar {
   0% {
-    transform: translateY(0px);
-    opacity: 0.2;
+    transform: translateX(0) translateY(0) rotate(-35deg) scaleX(0);
+    opacity: 0;
   }
-  50% {
-    transform: translateY(-30px);
-    opacity: 0.65;
+  5% {
+    opacity: 1;
+    transform: translateX(-40px) translateY(25px) rotate(-35deg) scaleX(1);
+  }
+  20% {
+    transform: translateX(-350px) translateY(220px) rotate(-35deg) scaleX(1.8);
+    opacity: 0;
   }
   100% {
-    transform: translateY(-60px);
-    opacity: 0.2;
+    transform: translateX(-350px) translateY(220px) rotate(-35deg) scaleX(0);
+    opacity: 0;
   }
 }
 
-.animate-particle-1 {
-  animation: particleDrift 7s ease-in-out infinite;
+.shooting-star-1 {
+  animation: shootingStar 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(171,74,255,0.8), transparent);
 }
 
-.animate-particle-2 {
-  animation: particleDrift 9s ease-in-out infinite 2s;
+.shooting-star-2 {
+  animation: shootingStar 16s cubic-bezier(0.4, 0, 0.2, 1) infinite 6s;
+  background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(129,140,248,0.8), transparent);
 }
 
-.animate-particle-3 {
-  animation: particleDrift 8s ease-in-out infinite 4s;
-}
-
-/* Soft Shimmering Text */
-@keyframes textShimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
-.shimmer-gradient {
-  background: linear-gradient(
-    90deg,
-    #FFFFFF 0%,
-    #E9D5FF 35%,
-    #AB4AFF 50%,
-    #E9D5FF 65%,
-    #FFFFFF 100%
-  );
-  background-size: 200% auto;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: textShimmer 5s linear infinite;
-}
-
-/* Elegant Soft Card Border Glow */
-@keyframes borderGlowPulse {
+/* Floating Space Nebula Clouds */
+@keyframes nebulaDrift {
   0%, 100% {
-    border-color: rgba(171, 74, 255, 0.25);
-    box-shadow: 0 0 20px -3px rgba(171, 74, 255, 0.15);
+    transform: translate(0px, 0px) scale(1);
   }
   50% {
+    transform: translate(40px, -30px) scale(1.08);
+  }
+}
+
+.animate-nebula {
+  animation: nebulaDrift 22s ease-in-out infinite;
+}
+
+/* Glowing Halo around Circular Photo */
+@keyframes circularHaloPulse {
+  0%, 100% {
+    box-shadow: 0 0 50px 10px rgba(171, 74, 255, 0.35), 0 0 100px 25px rgba(171, 74, 255, 0.15);
     border-color: rgba(171, 74, 255, 0.5);
-    box-shadow: 0 0 28px 0px rgba(171, 74, 255, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 75px 18px rgba(171, 74, 255, 0.55), 0 0 130px 35px rgba(171, 74, 255, 0.25);
+    border-color: rgba(192, 132, 252, 0.85);
   }
 }
 
-.card-glow-pulse {
-  animation: borderGlowPulse 4s ease-in-out infinite;
+.circular-photo-glow {
+  animation: circularHaloPulse 4s ease-in-out infinite;
 }
