@@ -107,27 +107,22 @@ class HeroSection extends StatelessComponent {
                 ),
               ]),
 
-              // Right Column: Big Circular Profile Image with Purple Glow Halo (Matching Reference)
+              // Right Column: Seamless Atmospheric Portrait Blend (Natural depth, no hard "moon" circle)
               div(
                 classes:
-                    'lg:col-span-5 flex justify-center lg:justify-end relative',
+                    'lg:col-span-5 flex justify-center lg:justify-end relative items-center',
                 [
-                  // Ambient Purple Glow behind the circle (Subtle, focused halo)
-                  div(
-                    classes:
-                        'absolute -inset-4 bg-gradient-to-tr from-[#AB4AFF]/30 via-[#7C3AED]/20 to-transparent rounded-full blur-2xl opacity-50 -z-10',
-                    [],
-                  ),
+                  // Ambient Atmospheric Aura behind the portrait (Studio Rim Lighting)
+                  div(classes: 'portrait-soft-aura', []),
 
-                  // The Big Circular Image Container
+                  // Seamless Portrait Container with Gentle Top Arch & Soft Dissolving Bottom
                   div(
                     classes:
-                        'relative w-72 h-72 sm:w-88 sm:h-88 lg:w-[410px] lg:h-[410px] rounded-full p-2 bg-gradient-to-b from-[#AB4AFF]/70 via-[#6366F1]/40 to-[#0A0A0E] circular-photo-glow shadow-2xl transition-transform duration-500 hover:scale-[1.02] group',
+                        'relative w-72 sm:w-88 lg:w-[420px] h-[360px] sm:h-[440px] lg:h-[490px] portrait-blend-wrapper transition-transform duration-500 hover:scale-[1.02] group z-10',
                     [
-                      // Inner circle with image
                       div(
                         classes:
-                            'w-full h-full rounded-full overflow-hidden bg-[#0F0F14] relative',
+                            'w-full h-full rounded-t-[140px] sm:rounded-t-[180px] lg:rounded-t-[210px] rounded-b-2xl overflow-hidden bg-transparent relative border-t border-x border-[#AB4AFF]/30',
                         [
                           img(
                             src: photoUrl,
