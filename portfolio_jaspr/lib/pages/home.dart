@@ -1,6 +1,7 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import '../data/portfolio_data.dart';
+import '../components/ambient_background.dart';
 import '../components/navigation.dart';
 import '../components/hero_section.dart';
 import '../components/about_section.dart';
@@ -16,18 +17,27 @@ class Home extends StatelessComponent {
   Component build(BuildContext context) {
     final data = defaultSiteData;
 
-    return div(classes: 'min-h-screen bg-[#0A0A0C] text-[#F4F4F6]', [
-      const Navigation(),
-      HeroSection(profile: data.profile),
-      AboutSection(
-        profile: data.profile,
-        education: data.education,
-        experience: data.experience,
-      ),
-      ProjectsSection(projects: data.projects),
-      GallerySection(gallery: data.gallery),
-      ContactSection(profile: data.profile),
-      const Footer(),
-    ]);
+    return div(
+      classes: 'min-h-screen bg-[#0A0A0C] text-[#F4F4F6] relative selection:bg-[#AB4AFF] selection:text-white',
+      [
+        // Living Ambient Animated Canvas
+        const AmbientBackground(),
+
+        // Foreground Content
+        const Navigation(),
+        div(classes: 'relative z-10', [
+          HeroSection(profile: data.profile),
+          AboutSection(
+            profile: data.profile,
+            education: data.education,
+            experience: data.experience,
+          ),
+          ProjectsSection(projects: data.projects),
+          GallerySection(gallery: data.gallery),
+          ContactSection(profile: data.profile),
+          const Footer(),
+        ]),
+      ],
+    );
   }
 }
