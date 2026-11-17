@@ -22,8 +22,8 @@ class Footer extends StatelessComponent {
                 classes:
                     'text-base font-bold tracking-tight text-white hover:text-[#AB4AFF] transition-colors flex items-center',
                 child: span([
-                  text('imilham'),
-                  span(classes: 'text-[#AB4AFF]', [text('.')]),
+                  Component.text('imilham'),
+                  span(classes: 'text-[#AB4AFF]', [Component.text('.')]),
                 ]),
               ),
             ]),
@@ -33,7 +33,7 @@ class Footer extends StatelessComponent {
               classes:
                   'text-[#8E8EA0] text-center tracking-wide font-normal order-last md:order-none',
               [
-                text('All rights reserved © 2024 - 2026'),
+                Component.text('All rights reserved © 2024 - 2026'),
               ],
             ),
 
@@ -63,7 +63,7 @@ class Footer extends StatelessComponent {
                     span(
                       classes:
                           'text-xs font-medium text-[#D4D4D8] group-hover:text-white transition-colors',
-                      [text('Status')],
+                      [Component.text('Status')],
                     ),
                   ],
                 ),
@@ -73,7 +73,7 @@ class Footer extends StatelessComponent {
                   to: '/privacy',
                   classes:
                       'text-xs text-[#8E8EA0] hover:text-[#AB4AFF] transition-colors font-normal',
-                  child: span([text('Privacy Policy')]),
+                  child: span([Component.text('Privacy Policy')]),
                 ),
 
                 // Terms and Conditions Link
@@ -81,7 +81,7 @@ class Footer extends StatelessComponent {
                   to: '/terms',
                   classes:
                       'text-xs text-[#8E8EA0] hover:text-[#AB4AFF] transition-colors font-normal',
-                  child: span([text('Terms and Conditions')]),
+                  child: span([Component.text('Terms and Conditions')]),
                 ),
               ],
             ),

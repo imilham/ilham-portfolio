@@ -10,8 +10,8 @@ class ProjectsSection extends StatelessComponent {
 
   @override
   Component build(BuildContext context) {
-    final displayProjects = projects.where((p) => p.featured).isNotEmpty
-        ? projects.where((p) => p.featured).toList()
+    final displayProjects = projects.where((proj) => proj.featured).isNotEmpty
+        ? projects.where((proj) => proj.featured).toList()
         : projects;
 
     return section(
@@ -24,20 +24,20 @@ class ProjectsSection extends StatelessComponent {
             span(
               classes:
                   'text-xs font-semibold text-[#AB4AFF] uppercase tracking-wider',
-              [text('Portfolio Showcase')],
+              [Component.text('Portfolio Showcase')],
             ),
             h2(
               classes:
                   'text-3xl sm:text-5xl font-bold tracking-tight text-white',
               [
-                text('Featured '),
-                span(classes: 'text-[#AB4AFF]', [text('Projects')]),
+                Component.text('Featured '),
+                span(classes: 'text-[#AB4AFF]', [Component.text('Projects')]),
               ],
             ),
             p(
               classes: 'text-base sm:text-lg text-[#8A8A93] max-w-2xl',
               [
-                text(
+                Component.text(
                   'A curated collection of mobile applications, web architectures, and open-source contributions.',
                 ),
               ],
@@ -75,7 +75,7 @@ class ProjectsSection extends StatelessComponent {
             div(
               classes:
                   'absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#AB4AFF] text-white shadow-md',
-              [text('Featured')],
+              [Component.text('Featured')],
             ),
         ]),
 
@@ -85,11 +85,11 @@ class ProjectsSection extends StatelessComponent {
             h3(
               classes:
                   'text-xl font-bold text-white group-hover:text-[#AB4AFF] transition-colors',
-              [text(project.title)],
+              [Component.text(project.title)],
             ),
             p(
               classes: 'text-sm text-[#8A8A93] leading-relaxed line-clamp-3',
-              [text(project.description)],
+              [Component.text(project.description)],
             ),
             // Tags
             div(classes: 'flex flex-wrap gap-1.5 pt-2', [
@@ -97,7 +97,7 @@ class ProjectsSection extends StatelessComponent {
                 span(
                   classes:
                       'px-2.5 py-1 rounded-md text-xs font-medium bg-[#1A1A22] text-[#C4C4CC]',
-                  [text(tag)],
+                  [Component.text(tag)],
                 ),
             ]),
           ]),
@@ -110,7 +110,7 @@ class ProjectsSection extends StatelessComponent {
                 target: Target.blank,
                 classes:
                     'inline-flex items-center gap-1.5 text-xs font-semibold text-white px-3 py-2 rounded-lg bg-[#AB4AFF] hover:bg-[#9732f0] transition-colors',
-                [text('View Project ↗')],
+                [Component.text('View Project ↗')],
               ),
             if (project.githubUrl.isNotEmpty && project.githubUrl != '#')
               a(
@@ -118,7 +118,7 @@ class ProjectsSection extends StatelessComponent {
                 target: Target.blank,
                 classes:
                     'inline-flex items-center gap-1.5 text-xs font-semibold text-[#C4C4CC] px-3 py-2 rounded-lg bg-[#1A1A22] hover:bg-[#2A2A36] transition-colors',
-                [text('Source Code')],
+                [Component.text('Source Code')],
               ),
           ]),
         ]),

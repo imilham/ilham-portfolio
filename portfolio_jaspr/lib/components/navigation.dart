@@ -21,8 +21,8 @@ class Navigation extends StatelessComponent {
               classes:
                   'text-2xl font-bold tracking-tight text-white hover:opacity-90 flex items-center gap-1.5',
               child: span([
-                text('imilham'),
-                span(classes: 'text-[#AB4AFF]', [text('.')]),
+                Component.text('imilham'),
+                span(classes: 'text-[#AB4AFF]', [Component.text('.')]),
               ]),
             ),
 
@@ -32,31 +32,31 @@ class Navigation extends StatelessComponent {
                 href: '/#about',
                 classes:
                     'text-sm font-medium text-[#C4C4CC] hover:text-[#AB4AFF] transition-colors',
-                [text('About')],
+                [Component.text('About')],
               ),
               a(
                 href: '/#projects',
                 classes:
                     'text-sm font-medium text-[#C4C4CC] hover:text-[#AB4AFF] transition-colors',
-                [text('Projects')],
+                [Component.text('Projects')],
               ),
               a(
                 href: '/#gallery',
                 classes:
                     'text-sm font-medium text-[#C4C4CC] hover:text-[#AB4AFF] transition-colors',
-                [text('Gallery')],
+                [Component.text('Gallery')],
               ),
               Link(
                 to: '/blog',
                 classes:
                     'text-sm font-medium text-[#C4C4CC] hover:text-[#AB4AFF] transition-colors',
-                child: text('Blog'),
+                child: Component.text('Blog'),
               ),
               a(
                 href: '/#contact',
                 classes:
                     'px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#AB4AFF] hover:bg-[#9732f0] transition-all shadow-lg shadow-[#AB4AFF]/20 hover:shadow-xl hover:shadow-[#AB4AFF]/30',
-                [text('Get in Touch')],
+                [Component.text('Get in Touch')],
               ),
             ]),
 
@@ -65,13 +65,13 @@ class Navigation extends StatelessComponent {
               Link(
                 to: '/blog',
                 classes: 'text-sm font-medium text-[#C4C4CC]',
-                child: text('Blog'),
+                child: Component.text('Blog'),
               ),
               a(
                 href: '/#contact',
                 classes:
                     'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#AB4AFF]',
-                [text('Contact')],
+                [Component.text('Contact')],
               ),
             ]),
           ],

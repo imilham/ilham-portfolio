@@ -21,12 +21,12 @@ class BlogPostPage extends StatelessComponent {
       return div(classes: 'min-h-screen bg-[#0A0A0C] text-[#F4F4F6] flex flex-col justify-between', [
         const Navigation(),
         main_(classes: 'pt-32 pb-24 px-6 text-center space-y-6', [
-          h1(classes: 'text-4xl font-bold text-white', [text('Article Not Found')]),
-          p(classes: 'text-[#8A8A93]', [text('The requested blog post does not exist.')]),
+          h1(classes: 'text-4xl font-bold text-white', [Component.text('Article Not Found')]),
+          p(classes: 'text-[#8A8A93]', [Component.text('The requested blog post does not exist.')]),
           Link(
             to: '/blog',
             classes: 'inline-block px-4 py-2 rounded-lg bg-[#AB4AFF] text-white font-medium',
-            child: text('← Back to Blog'),
+            child: Component.text('← Back to Blog'),
           ),
         ]),
         const Footer(),
@@ -41,25 +41,25 @@ class BlogPostPage extends StatelessComponent {
           Link(
             to: '/blog',
             classes: 'inline-flex items-center gap-2 text-sm text-[#AB4AFF] hover:underline',
-            child: text('← Back to all articles'),
+            child: Component.text('← Back to all articles'),
           ),
 
           // Header
           div(classes: 'space-y-4 border-b border-[#1A1A22] pb-8', [
             div(classes: 'flex flex-wrap items-center gap-3 text-xs text-[#8A8A93]', [
-              span([text(post.publishedAt)]),
-              span([text('•')]),
+              span([Component.text(post.publishedAt)]),
+              span([Component.text('•')]),
               for (var tag in post.tags)
                 span(
                   classes: 'px-2.5 py-0.5 rounded-full bg-[#1A1A22] text-[#C4C4CC] border border-[#2A2A36]',
-                  [text(tag)],
+                  [Component.text(tag)],
                 ),
             ]),
             h1(classes: 'text-3xl sm:text-5xl font-extrabold text-white leading-tight', [
-              text(post.title),
+              Component.text(post.title),
             ]),
             p(classes: 'text-lg text-[#8A8A93] italic', [
-              text(post.excerpt),
+              Component.text(post.excerpt),
             ]),
           ]),
 
@@ -83,18 +83,18 @@ class BlogPostPage extends StatelessComponent {
             for (var paragraph in post.content.split('\n\n'))
               if (paragraph.trim().startsWith('# '))
                 h2(classes: 'text-2xl sm:text-3xl font-bold text-white pt-6 border-b border-[#1A1A22] pb-2', [
-                  text(paragraph.replaceFirst('# ', '').trim()),
+                  Component.text(paragraph.replaceFirst('# ', '').trim()),
                 ])
               else if (paragraph.trim().startsWith('## '))
                 h3(classes: 'text-xl sm:text-2xl font-bold text-white pt-4', [
-                  text(paragraph.replaceFirst('## ', '').trim()),
+                  Component.text(paragraph.replaceFirst('## ', '').trim()),
                 ])
               else if (paragraph.trim().startsWith('```'))
                 pre(classes: 'p-4 rounded-xl bg-[#121216] border border-[#2A2A36] text-xs sm:text-sm font-mono overflow-x-auto text-emerald-400', [
-                  code([text(paragraph.replaceAll('```', '').trim())]),
+                  code([Component.text(paragraph.replaceAll('```', '').trim())]),
                 ])
               else
-                p(classes: 'text-[#C4C4CC]', [text(paragraph.trim())]),
+                p(classes: 'text-[#C4C4CC]', [Component.text(paragraph.trim())]),
           ]),
         ]),
       ]),

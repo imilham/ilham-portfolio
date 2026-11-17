@@ -34,9 +34,9 @@ class PrivacyPage extends StatelessComponent {
                       span(
                         classes:
                             'inline-block transition-transform group-hover:-translate-x-1',
-                        [text('← ')],
+                        [Component.text('← ')],
                       ),
-                      text('Back to Home'),
+                      Component.text('Back to Home'),
                     ]),
                   ),
 
@@ -45,18 +45,18 @@ class PrivacyPage extends StatelessComponent {
                     span(
                       classes:
                           'text-xs font-semibold text-[#AB4AFF] uppercase tracking-widest',
-                      [text('Legal & Transparency')],
+                      [Component.text('Legal & Transparency')],
                     ),
                     h1(
                       classes:
                           'text-4xl sm:text-5xl font-extrabold text-white tracking-tight',
                       [
-                        text('Privacy '),
-                        span(classes: 'text-[#AB4AFF]', [text('Policy')]),
+                        Component.text('Privacy '),
+                        span(classes: 'text-[#AB4AFF]', [Component.text('Policy')]),
                       ],
                     ),
                     p(classes: 'text-sm text-[#A1A1AA]', [
-                      text('Last updated: November 2026'),
+                      Component.text('Last updated: November 2026'),
                     ]),
                   ]),
 
@@ -69,10 +69,10 @@ class PrivacyPage extends StatelessComponent {
                         h2(
                           classes:
                               'text-xl font-bold text-white mb-3 tracking-tight',
-                          [text('1. Overview')],
+                          [Component.text('1. Overview')],
                         ),
                         p([
-                          text(
+                          Component.text(
                             'Your privacy is important. This Privacy Policy outlines the types of information collected when visiting this personal portfolio website and how that information is handled.',
                           ),
                         ]),
@@ -82,10 +82,10 @@ class PrivacyPage extends StatelessComponent {
                         h2(
                           classes:
                               'text-xl font-bold text-white mb-3 tracking-tight',
-                          [text('2. Information We Collect')],
+                          [Component.text('2. Information We Collect')],
                         ),
                         p(classes: 'mb-3', [
-                          text(
+                          Component.text(
                             'This website does not collect personally identifiable information unless you voluntarily provide it, such as when sending a message through the contact form or reaching out directly via email.',
                           ),
                         ]),
@@ -95,17 +95,17 @@ class PrivacyPage extends StatelessComponent {
                           [
                             li([
                               strong(classes: 'text-white', [
-                                text('Contact Details: '),
+                                Component.text('Contact Details: '),
                               ]),
-                              text(
+                              Component.text(
                                 'Name, email address, and message content sent when contacting me.',
                               ),
                             ]),
                             li([
                               strong(classes: 'text-white', [
-                                text('Usage Analytics: '),
+                                Component.text('Usage Analytics: '),
                               ]),
-                              text(
+                              Component.text(
                                 'Anonymous, privacy-first telemetry such as page views and browser device type to optimize site performance.',
                               ),
                             ]),
@@ -117,10 +117,10 @@ class PrivacyPage extends StatelessComponent {
                         h2(
                           classes:
                               'text-xl font-bold text-white mb-3 tracking-tight',
-                          [text('3. How Your Information is Used')],
+                          [Component.text('3. How Your Information is Used')],
                         ),
                         p([
-                          text(
+                          Component.text(
                             'Any information provided is used strictly to respond to inquiries, discuss potential engineering collaborations, and ensure smooth technical operations. Your data will never be sold, rented, or shared with third-party advertisers.',
                           ),
                         ]),
@@ -130,10 +130,10 @@ class PrivacyPage extends StatelessComponent {
                         h2(
                           classes:
                               'text-xl font-bold text-white mb-3 tracking-tight',
-                          [text('4. External Links & Services')],
+                          [Component.text('4. External Links & Services')],
                         ),
                         p([
-                          text(
+                          Component.text(
                             'This website contains links to external platforms (such as GitHub, LinkedIn, and live project deployments). I am not responsible for the privacy practices or content of external sites.',
                           ),
                         ]),
@@ -143,19 +143,19 @@ class PrivacyPage extends StatelessComponent {
                         h2(
                           classes:
                               'text-xl font-bold text-white mb-3 tracking-tight',
-                          [text('5. Contact')],
+                          [Component.text('5. Contact')],
                         ),
                         p([
-                          text(
+                          Component.text(
                             'If you have any questions or requests regarding this Privacy Policy, feel free to reach out via ',
                           ),
                           a(
                             href: '/#contact',
                             classes:
                                 'text-[#AB4AFF] hover:underline font-medium',
-                            [text('the contact form')],
+                            [Component.text('the contact form')],
                           ),
-                          text('.'),
+                          Component.text('.'),
                         ]),
                       ]),
                     ],

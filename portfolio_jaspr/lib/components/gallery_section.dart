@@ -24,14 +24,14 @@ class GallerySection extends StatelessComponent {
             span(
               classes:
                   'text-xs font-semibold text-[#AB4AFF] uppercase tracking-wider',
-              [text('Moments & Visuals')],
+              [Component.text('Moments & Visuals')],
             ),
             h2(
               classes:
                   'text-3xl sm:text-5xl font-bold tracking-tight text-white',
               [
-                text('Photo '),
-                span(classes: 'text-[#AB4AFF]', [text('Gallery')]),
+                Component.text('Photo '),
+                span(classes: 'text-[#AB4AFF]', [Component.text('Gallery')]),
               ],
             ),
           ]),
@@ -61,11 +61,11 @@ class GallerySection extends StatelessComponent {
                       span(
                         classes:
                             'text-xs font-bold text-[#AB4AFF] uppercase tracking-wider',
-                        [text(photo.category)],
+                        [Component.text(photo.category)],
                       ),
                       h4(
                         classes: 'text-base font-semibold text-white',
-                        [text(photo.caption)],
+                        [Component.text(photo.caption)],
                       ),
                     ],
                   ),

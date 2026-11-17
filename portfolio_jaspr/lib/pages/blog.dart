@@ -11,7 +11,7 @@ class Blog extends StatelessComponent {
 
   @override
   Component build(BuildContext context) {
-    final posts = defaultSiteData.blog.where((p) => p.published).toList();
+    final posts = defaultSiteData.blog.where((post) => post.published).toList();
 
     return div(
       classes:
@@ -33,18 +33,18 @@ class Blog extends StatelessComponent {
                     span(
                       classes:
                           'text-xs font-semibold text-[#AB4AFF] uppercase tracking-wider',
-                      [text('Engineering Thoughts & Case Studies')],
+                      [Component.text('Engineering Thoughts & Case Studies')],
                     ),
                     h1(
                       classes:
                           'text-4xl sm:text-6xl font-extrabold text-white',
                       [
-                        text('Articles & '),
-                        span(classes: 'text-[#AB4AFF]', [text('Insights')]),
+                        Component.text('Articles & '),
+                        span(classes: 'text-[#AB4AFF]', [Component.text('Insights')]),
                       ],
                     ),
                     p(classes: 'text-base sm:text-lg text-[#8A8A93]', [
-                      text(
+                      Component.text(
                         'Deep dives into Flutter internals, full-stack Dart architecture, and modern cross-platform engineering.',
                       ),
                     ]),
@@ -84,13 +84,13 @@ class Blog extends StatelessComponent {
                                   classes:
                                       'flex items-center gap-3 text-xs text-[#8A8A93]',
                                   [
-                                    span([text(post.publishedAt)]),
-                                    span([text('•')]),
+                                    span([Component.text(post.publishedAt)]),
+                                    span([Component.text('•')]),
                                     span(
                                       classes:
                                           'text-[#AB4AFF] font-medium',
                                       [
-                                        text(post.tags.isNotEmpty
+                                        Component.text(post.tags.isNotEmpty
                                             ? post.tags.first
                                             : 'Article')
                                       ],
@@ -100,12 +100,12 @@ class Blog extends StatelessComponent {
                                 h2(
                                   classes:
                                       'text-xl font-bold text-white group-hover:text-[#AB4AFF] transition-colors',
-                                  [text(post.title)],
+                                  [Component.text(post.title)],
                                 ),
                                 p(
                                   classes:
                                       'text-sm text-[#8A8A93] leading-relaxed line-clamp-3',
-                                  [text(post.excerpt)],
+                                  [Component.text(post.excerpt)],
                                 ),
                               ]),
                               div(
@@ -115,7 +115,7 @@ class Blog extends StatelessComponent {
                                     to: '/blog/${post.slug}',
                                     classes:
                                         'inline-flex items-center gap-2 text-sm font-semibold text-[#AB4AFF] hover:underline',
-                                    child: text('Read full story →'),
+                                    child: Component.text('Read full story →'),
                                   ),
                                 ],
                               ),

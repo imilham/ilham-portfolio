@@ -34,19 +34,19 @@ class HeroSection extends StatelessComponent {
                   h2(
                     classes:
                         'text-4xl sm:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-[#AB4AFF] via-[#C084FC] to-[#38BDF8] bg-clip-text text-transparent',
-                    [text("Hello, I'm")],
+                    [Component.text("Hello, I'm")],
                   ),
                   // Name in large bold white
                   h1(
                     classes:
                         'text-5xl sm:text-7xl font-extrabold text-white tracking-tight leading-none',
-                    [text(profile.name)],
+                    [Component.text(profile.name)],
                   ),
                   // Subtitle / Specialization
                   h3(
                     classes:
                         'text-xl sm:text-2xl font-bold text-white pt-1 tracking-tight',
-                    [text(profile.tagline)],
+                    [Component.text(profile.tagline)],
                   ),
                 ]),
 
@@ -55,7 +55,7 @@ class HeroSection extends StatelessComponent {
                   classes:
                       'text-base sm:text-lg text-[#A1A1AA] max-w-xl leading-relaxed',
                   [
-                    text(
+                    Component.text(
                       'A Developer based in ${profile.location.isNotEmpty ? profile.location : "Sri Lanka"}, specializing in building exceptional mobile applications, Flutter architectures, and everything in between.',
                     ),
                   ],
@@ -68,7 +68,7 @@ class HeroSection extends StatelessComponent {
                     href: '/#contact',
                     classes:
                         'inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-[#AB4AFF] to-[#8B1FFF] hover:from-[#9732f0] hover:to-[#7812e5] transition-all duration-300 shadow-xl shadow-[#AB4AFF]/30 hover:shadow-2xl hover:shadow-[#AB4AFF]/50 hover:scale-105',
-                    [text('Hire Me')],
+                    [Component.text('Hire Me')],
                   ),
 
                   // "Download CV" Pill Button with Glowing Border (Opens Google Drive View & Download in New Tab)
@@ -78,7 +78,7 @@ class HeroSection extends StatelessComponent {
                     classes:
                         'inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm text-white bg-[#0A0A0E]/80 border-2 border-[#38BDF8]/60 hover:border-[#38BDF8] hover:bg-[#38BDF8]/15 hover:shadow-lg hover:shadow-[#38BDF8]/25 transition-all duration-300 hover:scale-105 cursor-pointer',
                     [
-                      text('Download CV'),
+                      Component.text('Download CV'),
                     ],
                   ),
                 ]),
@@ -93,11 +93,11 @@ class HeroSection extends StatelessComponent {
                         div(
                           classes:
                               'text-2xl sm:text-3xl font-extrabold text-[#AB4AFF]',
-                          [text(stat.value)],
+                          [Component.text(stat.value)],
                         ),
                         div(
                           classes: 'text-xs font-medium text-[#A1A1AA]',
-                          [text(stat.label)],
+                          [Component.text(stat.label)],
                         ),
                       ]),
                   ],

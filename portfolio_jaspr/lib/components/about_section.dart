@@ -27,13 +27,13 @@ class AboutSection extends StatelessComponent {
             span(
               classes:
                   'text-xs font-semibold text-[#AB4AFF] uppercase tracking-wider',
-              [text('Background & Skills')],
+              [Component.text('Background & Skills')],
             ),
             h2(
               classes: 'text-3xl sm:text-5xl font-bold tracking-tight text-white',
               [
-                text('About '),
-                span(classes: 'text-[#AB4AFF]', [text('Me')]),
+                Component.text('About '),
+                span(classes: 'text-[#AB4AFF]', [Component.text('Me')]),
               ],
             ),
           ]),
@@ -44,12 +44,12 @@ class AboutSection extends StatelessComponent {
             div(classes: 'lg:col-span-6 space-y-8', [
               p(
                 classes: 'text-base sm:text-lg text-[#8A8A93] leading-relaxed',
-                [text(profile.bio)],
+                [Component.text(profile.bio)],
               ),
 
               div(classes: 'space-y-4 pt-4', [
                 h3(classes: 'text-lg font-bold text-white', [
-                  text('Core Engineering Values'),
+                  Component.text('Core Engineering Values'),
                 ]),
                 ul(classes: 'space-y-3', [
                   _valueItem(
@@ -76,14 +76,14 @@ class AboutSection extends StatelessComponent {
                     'p-6 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-4',
                 [
                   h3(classes: 'text-lg font-bold text-white', [
-                    text('Technical Skills'),
+                    Component.text('Technical Skills'),
                   ]),
                   div(classes: 'flex flex-wrap gap-2', [
                     for (var skill in profile.skills)
                       span(
                         classes:
                             'px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#1A1A22] text-[#F4F4F6] border border-[#2A2A36]',
-                        [text(skill)],
+                        [Component.text(skill)],
                       ),
                   ]),
                 ],
@@ -95,7 +95,7 @@ class AboutSection extends StatelessComponent {
                     'p-6 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-4',
                 [
                   h3(classes: 'text-lg font-bold text-white', [
-                    text('Certifications & Accreditations'),
+                    Component.text('Certifications & Accreditations'),
                   ]),
                   div(classes: 'space-y-3', [
                     for (var cert in profile.certifications)
@@ -103,11 +103,11 @@ class AboutSection extends StatelessComponent {
                         span(
                           classes:
                               'w-6 h-6 rounded-full bg-[#AB4AFF]/10 text-[#AB4AFF] flex items-center justify-center text-xs font-bold shrink-0',
-                          [text('✓')],
+                          [Component.text('✓')],
                         ),
                         span(
                           classes: 'text-sm font-medium text-[#C4C4CC]',
-                          [text(cert)],
+                          [Component.text(cert)],
                         ),
                       ]),
                   ]),
@@ -124,21 +124,21 @@ class AboutSection extends StatelessComponent {
                   'p-6 sm:p-8 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-6',
               [
                 h3(classes: 'text-xl font-bold text-white flex items-center gap-2', [
-                  text('💼 Experience'),
+                  Component.text('💼 Experience'),
                 ]),
                 for (var exp in experience)
                   div(classes: 'space-y-2 border-l-2 border-[#AB4AFF] pl-4', [
                     div(classes: 'flex justify-between items-baseline', [
                       h4(classes: 'text-base font-semibold text-white', [
-                        text(exp.role),
+                        Component.text(exp.role),
                       ]),
-                      span(classes: 'text-xs text-[#8A8A93]', [text(exp.period)]),
+                      span(classes: 'text-xs text-[#8A8A93]', [Component.text(exp.period)]),
                     ]),
                     div(classes: 'text-sm font-medium text-[#AB4AFF]', [
-                      text(exp.company),
+                      Component.text(exp.company),
                     ]),
                     p(classes: 'text-xs text-[#8A8A93] leading-relaxed', [
-                      text(exp.description),
+                      Component.text(exp.description),
                     ]),
                   ]),
               ],
@@ -150,21 +150,21 @@ class AboutSection extends StatelessComponent {
                   'p-6 sm:p-8 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-6',
               [
                 h3(classes: 'text-xl font-bold text-white flex items-center gap-2', [
-                  text('🎓 Education'),
+                  Component.text('🎓 Education'),
                 ]),
                 for (var edu in education)
                   div(classes: 'space-y-2 border-l-2 border-[#AB4AFF] pl-4', [
                     div(classes: 'flex justify-between items-baseline', [
                       h4(classes: 'text-base font-semibold text-white', [
-                        text(edu.degree),
+                        Component.text(edu.degree),
                       ]),
-                      span(classes: 'text-xs text-[#8A8A93]', [text(edu.year)]),
+                      span(classes: 'text-xs text-[#8A8A93]', [Component.text(edu.year)]),
                     ]),
                     div(classes: 'text-sm font-medium text-[#AB4AFF]', [
-                      text(edu.school),
+                      Component.text(edu.school),
                     ]),
                     p(classes: 'text-xs text-[#8A8A93] leading-relaxed', [
-                      text(edu.description),
+                      Component.text(edu.description),
                     ]),
                   ]),
               ],
@@ -177,10 +177,10 @@ class AboutSection extends StatelessComponent {
 
   Component _valueItem(String title, String desc) {
     return li(classes: 'flex items-start gap-3', [
-      span(classes: 'text-[#AB4AFF] font-bold mt-0.5', [text('▸')]),
+      span(classes: 'text-[#AB4AFF] font-bold mt-0.5', [Component.text('▸')]),
       div([
-        span(classes: 'text-sm font-semibold text-white', [text('$title: ')]),
-        span(classes: 'text-sm text-[#8A8A93]', [text(desc)]),
+        span(classes: 'text-sm font-semibold text-white', [Component.text('$title: ')]),
+        span(classes: 'text-sm text-[#8A8A93]', [Component.text(desc)]),
       ]),
     ]);
   }

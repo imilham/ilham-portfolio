@@ -34,9 +34,9 @@ class TermsPage extends StatelessComponent {
                       span(
                         classes:
                             'inline-block transition-transform group-hover:-translate-x-1',
-                        [text('← ')],
+                        [Component.text('← ')],
                       ),
-                      text('Back to Home'),
+                      Component.text('Back to Home'),
                     ]),
                   ),
 
@@ -45,18 +45,18 @@ class TermsPage extends StatelessComponent {
                     span(
                       classes:
                           'text-xs font-semibold text-[#AB4AFF] uppercase tracking-widest',
-                      [text('Legal & Terms')],
+                      [Component.text('Legal & Terms')],
                     ),
                     h1(
                       classes:
                           'text-4xl sm:text-5xl font-extrabold text-white tracking-tight',
                       [
-                        text('Terms and '),
-                        span(classes: 'text-[#AB4AFF]', [text('Conditions')]),
+                        Component.text('Terms and '),
+                        span(classes: 'text-[#AB4AFF]', [Component.text('Conditions')]),
                       ],
                     ),
                     p(classes: 'text-sm text-[#A1A1AA]', [
-                      text('Last updated: November 2026'),
+                      Component.text('Last updated: November 2026'),
                     ]),
                   ]),
 
@@ -69,10 +69,10 @@ class TermsPage extends StatelessComponent {
                         h2(
                           classes:
                               'text-xl font-bold text-white mb-3 tracking-tight',
-                          [text('1. Acceptance of Terms')],
+                          [Component.text('1. Acceptance of Terms')],
                         ),
                         p([
-                          text(
+                          Component.text(
                             'By accessing and using this portfolio website, you agree to comply with and be bound by the following terms and conditions. If you disagree with any part of these terms, please refrain from using the site.',
                           ),
                         ]),
@@ -82,10 +82,10 @@ class TermsPage extends StatelessComponent {
                         h2(
                           classes:
                               'text-xl font-bold text-white mb-3 tracking-tight',
-                          [text('2. Intellectual Property Rights')],
+                          [Component.text('2. Intellectual Property Rights')],
                         ),
                         p([
-                          text(
+                          Component.text(
                             'All original articles, project showcases, designs, graphics, and source code authored on this site are the property of Mohamed Ilham unless otherwise specified. Open-source repositories linked from this site are governed by their respective licenses (e.g. MIT, Apache 2.0).',
                           ),
                         ]),
@@ -95,10 +95,10 @@ class TermsPage extends StatelessComponent {
                         h2(
                           classes:
                               'text-xl font-bold text-white mb-3 tracking-tight',
-                          [text('3. Permitted Use')],
+                          [Component.text('3. Permitted Use')],
                         ),
                         p([
-                          text(
+                          Component.text(
                             'You may browse, read, and share links to this site for personal, non-commercial, and informational purposes. Re-publishing whole articles or claiming project ownership without explicit written permission is prohibited.',
                           ),
                         ]),
@@ -108,10 +108,10 @@ class TermsPage extends StatelessComponent {
                         h2(
                           classes:
                               'text-xl font-bold text-white mb-3 tracking-tight',
-                          [text('4. Disclaimer of Warranties')],
+                          [Component.text('4. Disclaimer of Warranties')],
                         ),
                         p([
-                          text(
+                          Component.text(
                             'The information, code snippets, and tutorials presented on this site are provided "as is" without warranty of any kind. While I endeavor to keep content accurate and up to date, I make no representations regarding completeness or fitness for a particular purpose.',
                           ),
                         ]),
@@ -121,19 +121,19 @@ class TermsPage extends StatelessComponent {
                         h2(
                           classes:
                               'text-xl font-bold text-white mb-3 tracking-tight',
-                          [text('5. Contact Information')],
+                          [Component.text('5. Contact Information')],
                         ),
                         p([
-                          text(
+                          Component.text(
                             'For inquiries or collaboration discussions concerning these terms, please contact me via ',
                           ),
                           a(
                             href: '/#contact',
                             classes:
                                 'text-[#AB4AFF] hover:underline font-medium',
-                            [text('the contact section')],
+                            [Component.text('the contact section')],
                           ),
-                          text('.'),
+                          Component.text('.'),
                         ]),
                       ]),
                     ],

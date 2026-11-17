@@ -145,37 +145,37 @@ class _AdminPageState extends State<AdminPage> {
   void _addSkill() {
     final s = _newSkillInput.trim();
     if (s.isNotEmpty && !_data.profile.skills.contains(s)) {
-      _updateProfileField((p) => p.copyWith(skills: [...p.skills, s]));
+      _updateProfileField((prof) => prof.copyWith(skills: [...prof.skills, s]));
       setState(() => _newSkillInput = '');
     }
   }
 
   void _removeSkill(String s) {
-    _updateProfileField((p) => p.copyWith(skills: p.skills.where((x) => x != s).toList()));
+    _updateProfileField((prof) => prof.copyWith(skills: prof.skills.where((x) => x != s).toList()));
   }
 
   void _addCert() {
     final c = _newCertInput.trim();
     if (c.isNotEmpty && !_data.profile.certifications.contains(c)) {
-      _updateProfileField((p) => p.copyWith(certifications: [...p.certifications, c]));
+      _updateProfileField((prof) => prof.copyWith(certifications: [...prof.certifications, c]));
       setState(() => _newCertInput = '');
     }
   }
 
   void _removeCert(String c) {
-    _updateProfileField((p) => p.copyWith(certifications: p.certifications.where((x) => x != c).toList()));
+    _updateProfileField((prof) => prof.copyWith(certifications: prof.certifications.where((x) => x != c).toList()));
   }
 
   void _addCarouselText() {
     final t = _newCarouselInput.trim();
     if (t.isNotEmpty && !_data.profile.carouselTexts.contains(t)) {
-      _updateProfileField((p) => p.copyWith(carouselTexts: [...p.carouselTexts, t]));
+      _updateProfileField((prof) => prof.copyWith(carouselTexts: [...prof.carouselTexts, t]));
       setState(() => _newCarouselInput = '');
     }
   }
 
   void _removeCarouselText(String t) {
-    _updateProfileField((p) => p.copyWith(carouselTexts: p.carouselTexts.where((x) => x != t).toList()));
+    _updateProfileField((prof) => prof.copyWith(carouselTexts: prof.carouselTexts.where((x) => x != t).toList()));
   }
 
   void _updateStat(int index, {String? value, String? label}) {
@@ -185,7 +185,7 @@ class _AdminPageState extends State<AdminPage> {
         value: value ?? currentStats[index].value,
         label: label ?? currentStats[index].label,
       );
-      _updateProfileField((p) => p.copyWith(stats: currentStats));
+      _updateProfileField((prof) => prof.copyWith(stats: currentStats));
     }
   }
 
@@ -368,7 +368,7 @@ class _AdminPageState extends State<AdminPage> {
               to: '/',
               classes:
                   'inline-flex items-center gap-2 text-xs font-semibold text-[#8A8A93] hover:text-[#AB4AFF] transition-colors mb-6',
-              child: span([text('← Back to Portfolio')]),
+              child: span([Component.text('← Back to Portfolio')]),
             ),
 
             // Login Box
@@ -394,16 +394,16 @@ class _AdminPageState extends State<AdminPage> {
                     attributes: {
                       'style': 'box-shadow: inset 0 0 12px rgba(171, 74, 255, 0.2);',
                     },
-                    [text('🔒')],
+                    [Component.text('🔒')],
                   ),
                   h1(
                     classes: 'text-xl font-bold tracking-tight text-white',
-                    [text('Admin Console')],
+                    [Component.text('Admin Console')],
                   ),
                   p(
                     classes: 'text-xs text-[#8A8A93] mt-1.5 max-w-xs leading-relaxed',
                     [
-                      text(
+                      Component.text(
                           'Sign in to manage your portfolio, CV, projects, and articles.'),
                     ],
                   ),
@@ -414,7 +414,7 @@ class _AdminPageState extends State<AdminPage> {
                   div(
                     classes:
                         'p-3 mb-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-xs text-center font-medium',
-                    [text(_authError)],
+                    [Component.text(_authError)],
                   ),
 
                 // Form fields
@@ -423,7 +423,7 @@ class _AdminPageState extends State<AdminPage> {
                     label(
                       classes:
                           'block text-[11px] font-bold text-[#A1A1AA] mb-1.5 uppercase tracking-wider',
-                      [text('Admin Email')],
+                      [Component.text('Admin Email')],
                     ),
                     input<String>(
                       type: InputType.email,
@@ -438,7 +438,7 @@ class _AdminPageState extends State<AdminPage> {
                     label(
                       classes:
                           'block text-[11px] font-bold text-[#A1A1AA] mb-1.5 uppercase tracking-wider',
-                      [text('Password')],
+                      [Component.text('Password')],
                     ),
                     input<String>(
                       type: InputType.password,
@@ -454,9 +454,9 @@ class _AdminPageState extends State<AdminPage> {
                   button(
                     [
                       if (_isAuthLoading)
-                        span(classes: 'animate-pulse', [text('Authenticating...')])
+                        span(classes: 'animate-pulse', [Component.text('Authenticating...')])
                       else
-                        text('Sign In to Dashboard →'),
+                        Component.text('Sign In to Dashboard →'),
                     ],
                     onClick: _handleLogin,
                     disabled: _isAuthLoading,
@@ -486,9 +486,9 @@ class _AdminPageState extends State<AdminPage> {
             classes:
                 'fixed bottom-6 right-6 z-[100] bg-[#AB4AFF] text-white px-5 py-3 rounded-xl shadow-2xl text-sm font-semibold flex items-center gap-3 animate-bounce',
             [
-              text(_toastMessage),
+              Component.text(_toastMessage),
               button(
-                [text('✕')],
+                [Component.text('✕')],
                 onClick: () => setState(() => _toastMessage = ''),
                 classes: 'text-xs text-white/80 hover:text-white cursor-pointer ml-2',
               ),
@@ -510,14 +510,14 @@ class _AdminPageState extends State<AdminPage> {
                     to: '/',
                     classes:
                         'flex items-center gap-1.5 text-sm font-medium text-[#8A8A93] hover:text-[#AB4AFF] transition-colors',
-                    child: text('← Portfolio'),
+                    child: Component.text('← Portfolio'),
                   ),
-                  span(classes: 'text-[#2A2A38]', [text('|')]),
+                  span(classes: 'text-[#2A2A38]', [Component.text('|')]),
                   span(
                     classes: 'text-sm font-bold tracking-tight text-white flex items-center gap-1',
                     [
-                      text('Admin Console'),
-                      span(classes: 'text-[#AB4AFF]', [text('•')]),
+                      Component.text('Admin Console'),
+                      span(classes: 'text-[#AB4AFF]', [Component.text('•')]),
                     ],
                   ),
                 ]),
@@ -528,9 +528,9 @@ class _AdminPageState extends State<AdminPage> {
                   button(
                     [
                       if (_isSaving)
-                        span(classes: 'animate-pulse', [text('Saving...')])
+                        span(classes: 'animate-pulse', [Component.text('Saving...')])
                       else
-                        text('💾 Save All Changes'),
+                        Component.text('💾 Save All Changes'),
                     ],
                     onClick: _saveAllChanges,
                     disabled: _isSaving,
@@ -543,12 +543,12 @@ class _AdminPageState extends State<AdminPage> {
                     to: '/blog',
                     classes:
                         'hidden sm:inline-flex items-center gap-1 text-xs text-[#8A8A93] hover:text-white px-3 py-2 rounded-xl border border-[#1A1A22] transition-colors',
-                    child: text('Blog ↗'),
+                    child: Component.text('Blog ↗'),
                   ),
 
                   // Logout Button
                   button(
-                    [text('Log Out')],
+                    [Component.text('Log Out')],
                     onClick: _handleLogout,
                     classes:
                         'text-xs text-[#8A8A93] hover:text-red-400 px-3 py-2 rounded-xl border border-[#1A1A22] hover:border-red-400/50 transition-colors cursor-pointer',
@@ -599,7 +599,7 @@ class _AdminPageState extends State<AdminPage> {
               div(
                 classes:
                     'p-12 text-center text-sm text-[#8A8A93] animate-pulse',
-                [text('Loading Firestore data...')],
+                [Component.text('Loading Firestore data...')],
               )
             else ...[
               if (_activeTab == 'profile') _buildProfileTab(),
@@ -619,7 +619,7 @@ class _AdminPageState extends State<AdminPage> {
   Component _buildTabButton(String tabId, String label) {
     final isActive = _activeTab == tabId;
     return button(
-      [text(label)],
+      [Component.text(label)],
       onClick: () => setState(() => _activeTab = tabId),
       classes:
           'w-full text-left px-4 py-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${isActive ? "bg-[#AB4AFF]/15 text-[#AB4AFF] border border-[#AB4AFF]/30 shadow-sm" : "text-[#8A8A93] hover:text-[#F4F4F6] hover:bg-[#13131A]"}',
@@ -629,7 +629,7 @@ class _AdminPageState extends State<AdminPage> {
   Component _buildMobileTabButton(String tabId, String label) {
     final isActive = _activeTab == tabId;
     return button(
-      [text(label)],
+      [Component.text(label)],
       onClick: () => setState(() => _activeTab = tabId),
       classes:
           'flex-1 text-center py-2 px-1 text-[11px] font-semibold transition-colors cursor-pointer shrink-0 ${isActive ? "text-[#AB4AFF]" : "text-[#8A8A93]"}',
@@ -716,7 +716,7 @@ class _AdminPageState extends State<AdminPage> {
           _buildField(
             'Professional Biography',
             textarea(
-              [text(profile.bio)],
+              [Component.text(profile.bio)],
               onInput: (v) => _updateProfileField((curr) => curr.copyWith(bio: v)),
               classes: '$_inputClass min-h-[110px] resize-y',
             ),
@@ -759,9 +759,9 @@ class _AdminPageState extends State<AdminPage> {
               classes:
                   'inline-flex items-center gap-1.5 px-3 py-1 bg-[#1A1A22] border border-[#2A2A38] rounded-lg text-xs text-white',
               [
-                text(t),
+                Component.text(t),
                 button(
-                  [text('✕')],
+                  [Component.text('✕')],
                   onClick: () => _removeCarouselText(t),
                   classes: 'text-xs text-[#8A8A93] hover:text-red-400 cursor-pointer ml-1',
                 ),
@@ -776,7 +776,7 @@ class _AdminPageState extends State<AdminPage> {
             attributes: {'placeholder': 'Add role (e.g. Mobile Architect)'},
           ),
           button(
-            [text('+ Add')],
+            [Component.text('+ Add')],
             onClick: _addCarouselText,
             classes:
                 'px-4 py-2 bg-[#AB4AFF] hover:bg-[#9732f0] text-white rounded-xl text-xs font-bold cursor-pointer shrink-0',
@@ -793,9 +793,9 @@ class _AdminPageState extends State<AdminPage> {
               classes:
                   'inline-flex items-center gap-1.5 px-3 py-1 bg-[#AB4AFF]/10 border border-[#AB4AFF]/20 text-[#AB4AFF] rounded-full text-xs font-semibold',
               [
-                text(s),
+                Component.text(s),
                 button(
-                  [text('✕')],
+                  [Component.text('✕')],
                   onClick: () => _removeSkill(s),
                   classes: 'text-xs text-[#AB4AFF] hover:text-red-400 cursor-pointer ml-1',
                 ),
@@ -810,7 +810,7 @@ class _AdminPageState extends State<AdminPage> {
             attributes: {'placeholder': 'Add a skill (e.g. Riverpod, GraphQL)'},
           ),
           button(
-            [text('+ Add Skill')],
+            [Component.text('+ Add Skill')],
             onClick: _addSkill,
             classes:
                 'px-4 py-2 bg-[#AB4AFF] hover:bg-[#9732f0] text-white rounded-xl text-xs font-bold cursor-pointer shrink-0',
@@ -827,9 +827,9 @@ class _AdminPageState extends State<AdminPage> {
               classes:
                   'flex items-center justify-between px-3 py-2 bg-[#0A0A0C] border border-[#1A1A22] rounded-xl text-xs text-white',
               [
-                text(c),
+                Component.text(c),
                 button(
-                  [text('✕')],
+                  [Component.text('✕')],
                   onClick: () => _removeCert(c),
                   classes: 'text-xs text-[#8A8A93] hover:text-red-400 cursor-pointer',
                 ),
@@ -844,7 +844,7 @@ class _AdminPageState extends State<AdminPage> {
             attributes: {'placeholder': 'Add certification (e.g. AWS Certified)'},
           ),
           button(
-            [text('+ Add Cert')],
+            [Component.text('+ Add Cert')],
             onClick: _addCert,
             classes:
                 'px-4 py-2 bg-[#AB4AFF] hover:bg-[#9732f0] text-white rounded-xl text-xs font-bold cursor-pointer shrink-0',
@@ -866,7 +866,7 @@ class _AdminPageState extends State<AdminPage> {
           p(
             classes: 'text-xs text-[#8A8A93] leading-relaxed',
             [
-              text(
+              Component.text(
                   'Upload your latest PDF CV to Google Drive, set its sharing permission to "Anyone with the link can view", and paste the link below.'),
             ],
           ),
@@ -888,7 +888,7 @@ class _AdminPageState extends State<AdminPage> {
                 target: Target.blank,
                 classes:
                     'inline-flex items-center gap-1.5 text-xs text-[#AB4AFF] hover:underline font-semibold',
-                [text('Test CV Link in New Tab ↗')],
+                [Component.text('Test CV Link in New Tab ↗')],
               ),
             ]),
         ]),
@@ -904,7 +904,7 @@ class _AdminPageState extends State<AdminPage> {
       div(classes: 'flex items-center justify-between', [
         _buildSectionHeader('Education History'),
         button(
-          [text('+ Add Education')],
+          [Component.text('+ Add Education')],
           onClick: _addEducation,
           classes:
               'px-3 py-1.5 rounded-xl bg-[#1A1A22] border border-[#2A2A38] text-xs font-semibold text-[#AB4AFF] hover:bg-[#AB4AFF] hover:text-white transition-colors cursor-pointer',
@@ -915,10 +915,10 @@ class _AdminPageState extends State<AdminPage> {
           div(classes: 'flex justify-between items-start mb-3', [
             span(
               classes: 'text-xs font-bold text-[#AB4AFF]',
-              [text('Education #${i + 1}')],
+              [Component.text('Education #${i + 1}')],
             ),
             button(
-              [text('Delete')],
+              [Component.text('Delete')],
               onClick: () => _deleteEducation(i),
               classes:
                   'text-xs text-red-400 hover:text-red-300 transition-colors cursor-pointer',
@@ -954,7 +954,7 @@ class _AdminPageState extends State<AdminPage> {
             _buildField(
               'Description',
               textarea(
-                [text(_data.education[i].description)],
+                [Component.text(_data.education[i].description)],
                 onInput: (v) => _updateEducation(i, (e) => e.copyWith(description: v)),
                 classes: '$_inputClass min-h-[70px]',
               ),
@@ -972,7 +972,7 @@ class _AdminPageState extends State<AdminPage> {
       div(classes: 'flex items-center justify-between', [
         _buildSectionHeader('Work Experience'),
         button(
-          [text('+ Add Experience')],
+          [Component.text('+ Add Experience')],
           onClick: _addExperience,
           classes:
               'px-3 py-1.5 rounded-xl bg-[#1A1A22] border border-[#2A2A38] text-xs font-semibold text-[#AB4AFF] hover:bg-[#AB4AFF] hover:text-white transition-colors cursor-pointer',
@@ -983,10 +983,10 @@ class _AdminPageState extends State<AdminPage> {
           div(classes: 'flex justify-between items-start mb-3', [
             span(
               classes: 'text-xs font-bold text-[#AB4AFF]',
-              [text('Position #${i + 1}')],
+              [Component.text('Position #${i + 1}')],
             ),
             button(
-              [text('Delete')],
+              [Component.text('Delete')],
               onClick: () => _deleteExperience(i),
               classes:
                   'text-xs text-red-400 hover:text-red-300 transition-colors cursor-pointer',
@@ -1025,7 +1025,7 @@ class _AdminPageState extends State<AdminPage> {
                   i,
                   (e) => e.copyWith(
                     technologies:
-                        v.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList(),
+                        v.split(',').map((item) => item.trim()).where((item) => item.isNotEmpty).toList(),
                   ),
                 ),
                 classes: _inputClass,
@@ -1036,7 +1036,7 @@ class _AdminPageState extends State<AdminPage> {
             _buildField(
               'Key Responsibilities & Achievements',
               textarea(
-                [text(_data.experience[i].description)],
+                [Component.text(_data.experience[i].description)],
                 onInput: (v) => _updateExperience(i, (e) => e.copyWith(description: v)),
                 classes: '$_inputClass min-h-[80px]',
               ),
@@ -1054,7 +1054,7 @@ class _AdminPageState extends State<AdminPage> {
       div(classes: 'flex items-center justify-between', [
         _buildSectionHeader('Projects Showcase'),
         button(
-          [text('+ Add Project')],
+          [Component.text('+ Add Project')],
           onClick: _addProject,
           classes:
               'px-3 py-1.5 rounded-xl bg-[#1A1A22] border border-[#2A2A38] text-xs font-semibold text-[#AB4AFF] hover:bg-[#AB4AFF] hover:text-white transition-colors cursor-pointer',
@@ -1065,10 +1065,10 @@ class _AdminPageState extends State<AdminPage> {
           div(classes: 'flex justify-between items-start mb-3', [
             span(
               classes: 'text-xs font-bold text-[#AB4AFF]',
-              [text('Project #${i + 1}: ${_data.projects[i].title}')],
+              [Component.text('Project #${i + 1}: ${_data.projects[i].title}')],
             ),
             button(
-              [text('Delete')],
+              [Component.text('Delete')],
               onClick: () => _deleteProject(i),
               classes:
                   'text-xs text-red-400 hover:text-red-300 transition-colors cursor-pointer',
@@ -1079,7 +1079,7 @@ class _AdminPageState extends State<AdminPage> {
               'Project Title',
               input<String>(
                 value: _data.projects[i].title,
-                onInput: (v) => _updateProject(i, (p) => p.copyWith(title: v)),
+                onInput: (v) => _updateProject(i, (prof) => prof.copyWith(title: v)),
                 classes: _inputClass,
               ),
             ),
@@ -1087,7 +1087,7 @@ class _AdminPageState extends State<AdminPage> {
               'Image URL (Drive or Unsplash)',
               input<String>(
                 value: _data.projects[i].image,
-                onInput: (v) => _updateProject(i, (p) => p.copyWith(image: v)),
+                onInput: (v) => _updateProject(i, (prof) => prof.copyWith(image: v)),
                 classes: _inputClass,
               ),
             ),
@@ -1095,7 +1095,7 @@ class _AdminPageState extends State<AdminPage> {
               'Live URL',
               input<String>(
                 value: _data.projects[i].liveUrl,
-                onInput: (v) => _updateProject(i, (p) => p.copyWith(liveUrl: v)),
+                onInput: (v) => _updateProject(i, (prof) => prof.copyWith(liveUrl: v)),
                 classes: _inputClass,
               ),
             ),
@@ -1103,7 +1103,7 @@ class _AdminPageState extends State<AdminPage> {
               'GitHub URL',
               input<String>(
                 value: _data.projects[i].githubUrl,
-                onInput: (v) => _updateProject(i, (p) => p.copyWith(githubUrl: v)),
+                onInput: (v) => _updateProject(i, (prof) => prof.copyWith(githubUrl: v)),
                 classes: _inputClass,
               ),
             ),
@@ -1113,9 +1113,9 @@ class _AdminPageState extends State<AdminPage> {
                 value: _data.projects[i].tags.join(', '),
                 onInput: (v) => _updateProject(
                   i,
-                  (p) => p.copyWith(
+                  (prof) => prof.copyWith(
                     tags:
-                        v.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList(),
+                        v.split(',').map((item) => item.trim()).where((item) => item.isNotEmpty).toList(),
                   ),
                 ),
                 classes: _inputClass,
@@ -1126,10 +1126,10 @@ class _AdminPageState extends State<AdminPage> {
                 input(
                   type: InputType.checkbox,
                   checked: _data.projects[i].featured,
-                  onChange: (val) => _updateProject(i, (p) => p.copyWith(featured: !_data.projects[i].featured)),
+                  onChange: (val) => _updateProject(i, (prof) => prof.copyWith(featured: !_data.projects[i].featured)),
                   classes: 'w-4 h-4 accent-[#AB4AFF]',
                 ),
-                text('Featured on Homepage'),
+                Component.text('Featured on Homepage'),
               ]),
             ]),
           ]),
@@ -1137,8 +1137,8 @@ class _AdminPageState extends State<AdminPage> {
             _buildField(
               'Short Description',
               textarea(
-                [text(_data.projects[i].description)],
-                onInput: (v) => _updateProject(i, (p) => p.copyWith(description: v)),
+                [Component.text(_data.projects[i].description)],
+                onInput: (v) => _updateProject(i, (prof) => prof.copyWith(description: v)),
                 classes: '$_inputClass min-h-[70px]',
               ),
             ),
@@ -1155,7 +1155,7 @@ class _AdminPageState extends State<AdminPage> {
       div(classes: 'flex items-center justify-between', [
         _buildSectionHeader('Photo Gallery'),
         button(
-          [text('+ Add Photo')],
+          [Component.text('+ Add Photo')],
           onClick: _addGalleryPhoto,
           classes:
               'px-3 py-1.5 rounded-xl bg-[#1A1A22] border border-[#2A2A38] text-xs font-semibold text-[#AB4AFF] hover:bg-[#AB4AFF] hover:text-white transition-colors cursor-pointer',
@@ -1166,10 +1166,10 @@ class _AdminPageState extends State<AdminPage> {
           div(classes: 'flex justify-between items-start mb-3', [
             span(
               classes: 'text-xs font-bold text-[#AB4AFF]',
-              [text('Photo #${i + 1}')],
+              [Component.text('Photo #${i + 1}')],
             ),
             button(
-              [text('Delete')],
+              [Component.text('Delete')],
               onClick: () => _deleteGalleryPhoto(i),
               classes:
                   'text-xs text-red-400 hover:text-red-300 transition-colors cursor-pointer',
@@ -1215,7 +1215,7 @@ class _AdminPageState extends State<AdminPage> {
       div(classes: 'flex items-center justify-between', [
         _buildSectionHeader('Technical Articles & Blog'),
         button(
-          [text('+ Add Article')],
+          [Component.text('+ Add Article')],
           onClick: _addBlogPost,
           classes:
               'px-3 py-1.5 rounded-xl bg-[#1A1A22] border border-[#2A2A38] text-xs font-semibold text-[#AB4AFF] hover:bg-[#AB4AFF] hover:text-white transition-colors cursor-pointer',
@@ -1226,10 +1226,10 @@ class _AdminPageState extends State<AdminPage> {
           div(classes: 'flex justify-between items-start mb-3', [
             span(
               classes: 'text-xs font-bold text-[#AB4AFF]',
-              [text('Article #${i + 1}: ${_data.blog[i].title}')],
+              [Component.text('Article #${i + 1}: ${_data.blog[i].title}')],
             ),
             button(
-              [text('Delete')],
+              [Component.text('Delete')],
               onClick: () => _deleteBlogPost(i),
               classes:
                   'text-xs text-red-400 hover:text-red-300 transition-colors cursor-pointer',
@@ -1240,7 +1240,7 @@ class _AdminPageState extends State<AdminPage> {
               'Article Title',
               input<String>(
                 value: _data.blog[i].title,
-                onInput: (v) => _updateBlogPost(i, (b) => b.copyWith(title: v)),
+                onInput: (v) => _updateBlogPost(i, (post) => post.copyWith(title: v)),
                 classes: _inputClass,
               ),
             ),
@@ -1248,7 +1248,7 @@ class _AdminPageState extends State<AdminPage> {
               'Slug (URL Path)',
               input<String>(
                 value: _data.blog[i].slug,
-                onInput: (v) => _updateBlogPost(i, (b) => b.copyWith(slug: v)),
+                onInput: (v) => _updateBlogPost(i, (post) => post.copyWith(slug: v)),
                 classes: _inputClass,
               ),
             ),
@@ -1256,7 +1256,7 @@ class _AdminPageState extends State<AdminPage> {
               'Cover Image URL',
               input<String>(
                 value: _data.blog[i].coverImage,
-                onInput: (v) => _updateBlogPost(i, (b) => b.copyWith(coverImage: v)),
+                onInput: (v) => _updateBlogPost(i, (post) => post.copyWith(coverImage: v)),
                 classes: _inputClass,
               ),
             ),
@@ -1264,7 +1264,7 @@ class _AdminPageState extends State<AdminPage> {
               'Publication Date (YYYY-MM-DD)',
               input<String>(
                 value: _data.blog[i].publishedAt,
-                onInput: (v) => _updateBlogPost(i, (b) => b.copyWith(publishedAt: v)),
+                onInput: (v) => _updateBlogPost(i, (post) => post.copyWith(publishedAt: v)),
                 classes: _inputClass,
               ),
             ),
@@ -1274,9 +1274,9 @@ class _AdminPageState extends State<AdminPage> {
                 value: _data.blog[i].tags.join(', '),
                 onInput: (v) => _updateBlogPost(
                   i,
-                  (b) => b.copyWith(
+                  (post) => post.copyWith(
                     tags:
-                        v.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList(),
+                        v.split(',').map((item) => item.trim()).where((item) => item.isNotEmpty).toList(),
                   ),
                 ),
                 classes: _inputClass,
@@ -1287,8 +1287,8 @@ class _AdminPageState extends State<AdminPage> {
             _buildField(
               'Article Excerpt',
               textarea(
-                [text(_data.blog[i].excerpt)],
-                onInput: (v) => _updateBlogPost(i, (b) => b.copyWith(excerpt: v)),
+                [Component.text(_data.blog[i].excerpt)],
+                onInput: (v) => _updateBlogPost(i, (post) => post.copyWith(excerpt: v)),
                 classes: '$_inputClass min-h-[60px]',
               ),
             ),
@@ -1297,8 +1297,8 @@ class _AdminPageState extends State<AdminPage> {
             _buildField(
               'Full Content (Markdown or Text)',
               textarea(
-                [text(_data.blog[i].content)],
-                onInput: (v) => _updateBlogPost(i, (b) => b.copyWith(content: v)),
+                [Component.text(_data.blog[i].content)],
+                onInput: (v) => _updateBlogPost(i, (post) => post.copyWith(content: v)),
                 classes: '$_inputClass min-h-[160px] font-mono text-xs',
               ),
             ),
@@ -1314,14 +1314,14 @@ class _AdminPageState extends State<AdminPage> {
   Component _buildSectionHeader(String title) {
     return h2(
       classes: 'text-lg font-bold text-white tracking-tight',
-      [text(title)],
+      [Component.text(title)],
     );
   }
 
   Component _buildSubTitle(String title) {
     return p(
       classes: 'text-xs font-bold text-[#8A8A93] uppercase tracking-wider',
-      [text(title)],
+      [Component.text(title)],
     );
   }
 
@@ -1329,7 +1329,7 @@ class _AdminPageState extends State<AdminPage> {
     return div(classes: 'flex flex-col gap-1.5', [
       label(
         classes: 'text-[11px] font-semibold text-[#8A8A93] uppercase tracking-wide',
-        [text(labelText)],
+        [Component.text(labelText)],
       ),
       fieldWidget,
     ]);
