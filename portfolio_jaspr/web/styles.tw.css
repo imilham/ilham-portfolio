@@ -9,228 +9,223 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     overflow-x: hidden;
   }
+
+  /* GPU-Accelerate Offscreen Rendering for Silky-Smooth Scrolling */
+  section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 600px;
+  }
 }
 
-/* --- Deep Cosmic Space & Starfield Animations --- */
+/* --- Deep Cosmic Space & Starfield (GPU Hardware-Accelerated 60/120 FPS) --- */
 
-/* Cosmic Deep Space Background - Dark Void with Subtle Ambient Depth */
+/* Cosmic Deep Space Background with Hardware Isolation */
 .bg-deep-space {
   background: 
     radial-gradient(circle at 85% 25%, rgba(171, 74, 255, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 15% 65%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 15% 65%, rgba(99, 102, 241, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
     #020204;
+  contain: strict;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
-/* Twinkling & Floating Stars Animations - Crisp, Pinpoint Shimmer */
+/* Pure GPU-composited animations (Only transform3d and opacity, zero layout/paint thrash) */
 @keyframes starDriftFast {
   0%, 100% {
     opacity: 0.45;
-    transform: translate(0px, 0px) scale(0.9);
+    transform: translate3d(0, 0, 0) scale(0.9);
   }
   50% {
     opacity: 1;
-    transform: translate(-12px, 14px) scale(1.35);
-    filter: drop-shadow(0 0 2px #fff);
+    transform: translate3d(-10px, 12px, 0) scale(1.35);
   }
 }
 
 @keyframes starDriftSlow {
   0%, 100% {
     opacity: 0.35;
-    transform: translate(0px, 0px) scale(0.95);
+    transform: translate3d(0, 0, 0) scale(0.95);
   }
   50% {
     opacity: 0.95;
-    transform: translate(10px, -12px) scale(1.25);
-    filter: drop-shadow(0 0 1.5px #fff);
+    transform: translate3d(10px, -10px, 0) scale(1.25);
   }
 }
 
 @keyframes starDriftPulse {
   0%, 100% {
     opacity: 0.5;
-    transform: translate(0px, 0px) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
     opacity: 1;
-    transform: translate(8px, 10px) scale(1.45);
-    filter: drop-shadow(0 0 4px #AB4AFF) drop-shadow(0 0 8px #C084FC);
+    transform: translate3d(8px, 10px, 0) scale(1.5);
   }
 }
 
 @keyframes starSparkle {
   0%, 100% {
     opacity: 0.4;
-    transform: scale(0.8) rotate(0deg);
+    transform: translate3d(0, 0, 0) scale(0.85) rotate(0deg);
   }
   50% {
     opacity: 1;
-    transform: scale(1.5) rotate(45deg);
-    filter: drop-shadow(0 0 4px #fff) drop-shadow(0 0 8px #38BDF8);
+    transform: translate3d(0, 0, 0) scale(1.6) rotate(45deg);
   }
 }
 
+/* Pre-cached static glows using lightweight box-shadow instead of dynamic CPU filter */
 .star-fast {
   animation: starDriftFast 2.4s ease-in-out infinite;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+  will-change: transform, opacity;
 }
 
 .star-slow {
   animation: starDriftSlow 3.8s ease-in-out infinite;
+  box-shadow: 0 0 1.5px rgba(255, 255, 255, 0.7);
+  will-change: transform, opacity;
 }
 
 .star-pulse {
   animation: starDriftPulse 2.8s ease-in-out infinite;
+  box-shadow: 0 0 4px rgba(171, 74, 255, 0.8), 0 0 8px rgba(192, 132, 252, 0.5);
+  will-change: transform, opacity;
 }
 
 .star-sparkle {
   animation: starSparkle 2.2s ease-in-out infinite;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.9), 0 0 8px rgba(56, 189, 248, 0.6);
+  will-change: transform, opacity;
 }
 
 /* Floating Stardust Motes Rising Upward */
 @keyframes dustFloat1 {
   0% {
-    transform: translateY(0px) translateX(0px);
+    transform: translate3d(0, 0, 0);
     opacity: 0;
   }
   15% {
-    opacity: 0.9;
+    opacity: 0.85;
   }
   85% {
-    opacity: 0.9;
+    opacity: 0.85;
   }
   100% {
-    transform: translateY(-340px) translateX(50px);
+    transform: translate3d(40px, -300px, 0);
     opacity: 0;
   }
 }
 
 @keyframes dustFloat2 {
   0% {
-    transform: translateY(0px) translateX(0px);
+    transform: translate3d(0, 0, 0);
     opacity: 0;
   }
   15% {
-    opacity: 0.85;
+    opacity: 0.8;
   }
   85% {
-    opacity: 0.85;
+    opacity: 0.8;
   }
   100% {
-    transform: translateY(-300px) translateX(-45px);
+    transform: translate3d(-35px, -260px, 0);
     opacity: 0;
   }
 }
 
 .dust-mote-1 {
   animation: dustFloat1 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
 }
 
 .dust-mote-2 {
   animation: dustFloat2 13s cubic-bezier(0.4, 0, 0.2, 1) infinite 3s;
+  will-change: transform, opacity;
 }
 
 .dust-mote-3 {
   animation: dustFloat1 16s cubic-bezier(0.4, 0, 0.2, 1) infinite 6s;
+  will-change: transform, opacity;
 }
 
 /* Shooting Stars (Meteors) Streaking Across the Cosmos */
 @keyframes shootingStar1 {
   0% {
-    transform: translateX(0) translateY(0) rotate(-35deg) scaleX(0);
+    transform: translate3d(0, 0, 0) rotate(-35deg) scaleX(0);
     opacity: 0;
   }
   5% {
     opacity: 1;
-    transform: translateX(-50px) translateY(32px) rotate(-35deg) scaleX(1);
+    transform: translate3d(-50px, 32px, 0) rotate(-35deg) scaleX(1);
   }
   22% {
-    transform: translateX(-550px) translateY(355px) rotate(-35deg) scaleX(2);
+    transform: translate3d(-500px, 320px, 0) rotate(-35deg) scaleX(1.8);
     opacity: 0;
   }
   100% {
-    transform: translateX(-550px) translateY(355px) rotate(-35deg) scaleX(0);
+    transform: translate3d(-500px, 320px, 0) rotate(-35deg) scaleX(0);
     opacity: 0;
   }
 }
 
 @keyframes shootingStar2 {
   0% {
-    transform: translateX(0) translateY(0) rotate(-42deg) scaleX(0);
+    transform: translate3d(0, 0, 0) rotate(-42deg) scaleX(0);
     opacity: 0;
   }
   5% {
     opacity: 1;
-    transform: translateX(-60px) translateY(45px) rotate(-42deg) scaleX(1);
+    transform: translate3d(-60px, 45px, 0) rotate(-42deg) scaleX(1);
   }
   24% {
-    transform: translateX(-580px) translateY(435px) rotate(-42deg) scaleX(2.2);
+    transform: translate3d(-520px, 390px, 0) rotate(-42deg) scaleX(2);
     opacity: 0;
   }
   100% {
-    transform: translateX(-580px) translateY(435px) rotate(-42deg) scaleX(0);
+    transform: translate3d(-520px, 390px, 0) rotate(-42deg) scaleX(0);
     opacity: 0;
   }
 }
 
 @keyframes shootingStar3 {
   0% {
-    transform: translateX(0) translateY(0) rotate(-28deg) scaleX(0);
+    transform: translate3d(0, 0, 0) rotate(-28deg) scaleX(0);
     opacity: 0;
   }
   6% {
     opacity: 1;
-    transform: translateX(-40px) translateY(22px) rotate(-28deg) scaleX(1);
+    transform: translate3d(-40px, 22px, 0) rotate(-28deg) scaleX(1);
   }
   25% {
-    transform: translateX(-480px) translateY(260px) rotate(-28deg) scaleX(1.8);
+    transform: translate3d(-440px, 240px, 0) rotate(-28deg) scaleX(1.6);
     opacity: 0;
   }
   100% {
-    transform: translateX(-480px) translateY(260px) rotate(-28deg) scaleX(0);
+    transform: translate3d(-440px, 240px, 0) rotate(-28deg) scaleX(0);
     opacity: 0;
   }
 }
 
 .shooting-star-1 {
   animation: shootingStar1 5.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite 0.5s;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(171, 74, 255, 0.9), transparent);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(171, 74, 255, 0.85), transparent);
+  will-change: transform, opacity;
 }
 
 .shooting-star-2 {
   animation: shootingStar2 7.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite 2.5s;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(56, 189, 248, 0.9), transparent);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(56, 189, 248, 0.85), transparent);
+  will-change: transform, opacity;
 }
 
 .shooting-star-3 {
   animation: shootingStar3 9.0s cubic-bezier(0.25, 0.1, 0.25, 1) infinite 4.5s;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(216, 180, 254, 0.9), transparent);
-}
-
-/* Floating Space Nebula Clouds with Dynamic Drift and Rotation */
-@keyframes nebulaDrift {
-  0%, 100% {
-    transform: translate(0px, 0px) scale(1) rotate(0deg);
-  }
-  50% {
-    transform: translate(65px, -45px) scale(1.18) rotate(4deg);
-  }
-}
-
-@keyframes nebulaDriftAlt {
-  0%, 100% {
-    transform: translate(0px, 0px) scale(1) rotate(0deg);
-  }
-  50% {
-    transform: translate(-55px, 50px) scale(1.14) rotate(-3deg);
-  }
-}
-
-.animate-nebula {
-  animation: nebulaDrift 16s ease-in-out infinite;
-}
-
-.animate-nebula-alt {
-  animation: nebulaDriftAlt 20s ease-in-out infinite;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(216, 180, 254, 0.85), transparent);
+  will-change: transform, opacity;
 }
 
 /* Glowing Halo around Circular Photo */
@@ -247,4 +242,5 @@
 
 .circular-photo-glow {
   animation: circularHaloPulse 4s ease-in-out infinite;
+  will-change: box-shadow, border-color;
 }

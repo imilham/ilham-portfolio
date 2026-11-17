@@ -67,6 +67,11 @@ class Blog extends StatelessComponent {
                                   alt: post.title,
                                   classes:
                                       'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500',
+                                  attributes: {
+                                    'loading': 'lazy',
+                                    'decoding': 'async',
+                                    'referrerpolicy': 'no-referrer',
+                                  },
                                 ),
                               ],
                             ),

@@ -1,6 +1,7 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import '../models/portfolio_items.dart';
+import '../core/utils/drive_utils.dart';
 
 class GallerySection extends StatelessComponent {
   final List<GalleryPhoto> gallery;
@@ -43,10 +44,15 @@ class GallerySection extends StatelessComponent {
                     'group relative rounded-2xl overflow-hidden bg-[#121216] border border-[#1A1A22] aspect-[4/3] shadow-lg',
                 [
                   img(
-                    src: photo.url,
+                    src: getDriveViewUrl(photo.url, width: 600),
                     alt: photo.caption,
                     classes:
                         'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500',
+                    attributes: {
+                      'loading': 'lazy',
+                      'decoding': 'async',
+                      'referrerpolicy': 'no-referrer',
+                    },
                   ),
                   div(
                     classes:

@@ -2,7 +2,7 @@
 /// exactly matching the implementation in `src/lib/drive.ts` of the original Next.js project.
 library;
 
-String getDriveViewUrl(String? url) {
+String getDriveViewUrl(String? url, {int width = 800}) {
   if (url == null || url.trim().isEmpty) return '';
   final trimmed = url.trim();
 
@@ -13,8 +13,8 @@ String getDriveViewUrl(String? url) {
 
   if (match != null && match.group(1) != null) {
     final id = match.group(1)!;
-    // Direct Google UserContent CDN link or thumbnail endpoint
-    return 'https://lh3.googleusercontent.com/d/$id=w1200';
+    // Direct Google UserContent CDN link with optimized resolution
+    return 'https://lh3.googleusercontent.com/d/$id=w$width';
   }
   return trimmed;
 }

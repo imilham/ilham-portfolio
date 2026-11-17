@@ -133,6 +133,7 @@ class HeroSection extends StatelessComponent {
                                 'w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.05] group-hover:scale-105 transition-transform duration-700',
                             attributes: {
                               'loading': 'eager',
+                              'decoding': 'async',
                               'referrerpolicy': 'no-referrer',
                             },
                           ),

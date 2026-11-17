@@ -118,20 +118,6 @@ class AmbientBackground extends StatelessComponent {
       classes:
           'fixed inset-0 pointer-events-none overflow-hidden z-0 select-none bg-deep-space',
       [
-        // Cosmic Violet Nebula Cloud (Very subtle, deep space glow)
-        div(
-          classes:
-              'absolute top-10 -right-20 w-[550px] h-[550px] rounded-full bg-gradient-to-bl from-[#AB4AFF]/08 via-[#7C3AED]/04 to-transparent blur-[140px] animate-nebula pointer-events-none',
-          [],
-        ),
-
-        // Distant Indigo Nebula (Left side, very faint)
-        div(
-          classes:
-              'absolute top-1/2 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[#6366F1]/06 via-[#4F46E5]/03 to-transparent blur-[140px] animate-nebula-alt pointer-events-none',
-          [],
-        ),
-
         // Shooting Stars (Meteors flying across the space background)
         div(
           classes:
@@ -154,11 +140,11 @@ class AmbientBackground extends StatelessComponent {
           [],
         ),
 
-        // Floating Stardust Motes
+        // Floating Stardust Motes (GPU compositor accelerated)
         for (var mote in dustMotes)
           div(
             classes:
-                'absolute rounded-full blur-[0.4px] ${mote.color} ${mote.type}',
+                'absolute rounded-full ${mote.color} ${mote.type}',
             attributes: {
               'style':
                   'bottom: ${mote.bottom}%; left: ${mote.left}%; width: ${mote.size}px; height: ${mote.size}px;',

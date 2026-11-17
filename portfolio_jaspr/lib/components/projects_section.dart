@@ -61,12 +61,13 @@ class ProjectsSection extends StatelessComponent {
         // Image
         div(classes: 'relative h-48 w-full overflow-hidden bg-[#1A1A22]', [
           img(
-            src: getDriveViewUrl(project.image),
+            src: getDriveViewUrl(project.image, width: 700),
             alt: project.title,
             classes:
                 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500',
             attributes: {
               'loading': 'lazy',
+              'decoding': 'async',
               'referrerpolicy': 'no-referrer',
             },
           ),

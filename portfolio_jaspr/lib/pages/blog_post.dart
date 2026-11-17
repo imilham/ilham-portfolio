@@ -70,6 +70,11 @@ class BlogPostPage extends StatelessComponent {
                 src: post.coverImage,
                 alt: post.title,
                 classes: 'w-full h-auto max-h-[480px] object-cover',
+                attributes: {
+                  'loading': 'lazy',
+                  'decoding': 'async',
+                  'referrerpolicy': 'no-referrer',
+                },
               ),
             ]),
 
