@@ -16,9 +16,7 @@ class HeroSection extends StatelessComponent {
         ? resolvedPhoto
         : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&auto=format&fit=crop&q=80';
 
-    final cvDownloadUrl = getDriveDownloadUrl(profile.cvUrl);
-    final cvPreviewUrl = getDrivePreviewUrl(profile.cvUrl);
-    final cvExternalViewUrl = getDriveExternalViewUrl(profile.cvUrl);
+    final cvViewUrl = getDriveExternalViewUrl(profile.cvUrl);
 
     return section(
       classes:
@@ -73,13 +71,10 @@ class HeroSection extends StatelessComponent {
                     [text('Hire Me')],
                   ),
 
-                  // "Download CV" Pill Button with Glowing Border (Opens Interactive Preview & Downloader)
-                  button(
-                    id: 'open-cv-modal-btn',
-                    attributes: {
-                      'type': 'button',
-                      'onclick': 'window.openCvModal && window.openCvModal(event)',
-                    },
+                  // "Download CV" Pill Button with Glowing Border (Opens Google Drive View & Download in New Tab)
+                  a(
+                    href: cvViewUrl.isNotEmpty ? cvViewUrl : '/#projects',
+                    target: cvViewUrl.isNotEmpty ? Target.blank : Target.self,
                     classes:
                         'inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm text-white bg-[#0A0A0E]/80 border-2 border-[#38BDF8]/60 hover:border-[#38BDF8] hover:bg-[#38BDF8]/15 hover:shadow-lg hover:shadow-[#38BDF8]/25 transition-all duration-300 hover:scale-105 cursor-pointer',
                     [

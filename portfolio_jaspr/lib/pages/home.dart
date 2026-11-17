@@ -11,8 +11,6 @@ import '../components/projects_section.dart';
 import '../components/gallery_section.dart';
 import '../components/contact_section.dart';
 import '../components/footer.dart';
-import '../components/cv_modal.dart';
-import '../core/utils/drive_utils.dart';
 
 class Home extends StatefulComponent {
   const Home({super.key});
@@ -66,13 +64,6 @@ class _HomeState extends State<Home> {
           ContactSection(profile: _data.profile),
           const Footer(),
         ]),
-
-        // Interactive CV Preview & Download Modal mounted at root level
-        CvModal(
-          cvDownloadUrl: getDriveDownloadUrl(_data.profile.cvUrl),
-          cvPreviewUrl: getDrivePreviewUrl(_data.profile.cvUrl),
-          cvExternalViewUrl: getDriveExternalViewUrl(_data.profile.cvUrl),
-        ),
       ],
     );
   }
