@@ -9,43 +9,60 @@ class HeroSection extends StatelessComponent {
 
   @override
   Component build(BuildContext context) {
+    // Placeholder image URL if heroPhoto is not yet provided
+    final photoUrl = profile.heroPhoto.isNotEmpty
+        ? profile.heroPhoto
+        : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80';
+
     return section(
       classes:
-          'min-h-[90vh] flex items-center justify-center px-6 pt-28 pb-16 bg-[#0A0A0C]',
+          'relative min-h-[92vh] flex items-center justify-center px-6 pt-28 pb-20 bg-[#0A0A0C] overflow-hidden',
       [
-        div(classes: 'max-w-7xl mx-auto w-full', [
+        // Ambient background glow lights
+        div(
+          classes:
+              'absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[#AB4AFF]/15 via-[#6366F1]/10 to-transparent blur-[140px] pointer-events-none rounded-full',
+          [],
+        ),
+
+        div(classes: 'max-w-7xl mx-auto w-full relative z-10', [
           div(
             classes:
-                'grid grid-cols-1 lg:grid-cols-12 gap-12 items-center',
+                'grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center',
             [
-              // Left Column
+              // Left Column (Text & Bio)
               div(classes: 'lg:col-span-7 space-y-8', [
-                // Badge
+                // Top Status Badge
                 div(
                   classes:
-                      'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1A1A22] border border-[#2A2A36] text-xs font-medium text-[#C4C4CC]',
+                      'inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#121218]/90 border border-[#2A2A38] text-xs font-semibold text-[#C4C4CC] shadow-inner',
                   [
                     span(
-                      classes: 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse',
+                      classes:
+                          'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400',
                       [],
                     ),
-                    text('Available for Full-time & Contract roles'),
+                    text('Available for Senior & Lead Roles • Remote / Hybrid'),
                   ],
                 ),
 
-                // Main Heading
+                // Main Heading with Gradient Accent
                 div(classes: 'space-y-4', [
                   h1(
                     classes:
-                        'text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-tight',
+                        'text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]',
                     [
                       text("Hi, I'm "),
-                      span(classes: 'text-[#AB4AFF]', [text(profile.name)]),
+                      span(
+                        classes:
+                            'bg-gradient-to-r from-[#AB4AFF] via-[#C084FC] to-[#818CF8] bg-clip-text text-transparent',
+                        [text(profile.name)],
+                      ),
                     ],
                   ),
                   p(
                     classes:
-                        'text-xl sm:text-2xl font-semibold text-[#C4C4CC]',
+                        'text-xl sm:text-2xl font-bold text-[#E4E4E7] tracking-tight',
                     [text(profile.tagline)],
                   ),
                   p(
@@ -55,36 +72,44 @@ class HeroSection extends StatelessComponent {
                   ),
                 ]),
 
-                // CTAs
-                div(classes: 'flex flex-wrap gap-4 pt-2', [
+                // Action Buttons
+                div(classes: 'flex flex-wrap items-center gap-4 pt-2', [
                   a(
                     href: '/#projects',
                     classes:
-                        'inline-flex items-center justify-center px-6 py-3.5 rounded-xl font-semibold text-white bg-[#AB4AFF] hover:bg-[#9732f0] transition-all shadow-lg shadow-[#AB4AFF]/25',
-                    [text('Explore Projects →')],
+                        'inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-[#AB4AFF] to-[#8B1FFF] hover:from-[#9732f0] hover:to-[#7812e5] transition-all duration-300 shadow-xl shadow-[#AB4AFF]/25 hover:shadow-2xl hover:shadow-[#AB4AFF]/40 hover:-translate-y-0.5',
+                    [text('Explore My Work ↗')],
                   ),
                   a(
                     href: '/#contact',
                     classes:
-                        'inline-flex items-center justify-center px-6 py-3.5 rounded-xl font-semibold text-[#F4F4F6] bg-[#121216] border border-[#1A1A22] hover:bg-[#1A1A22] transition-colors',
+                        'inline-flex items-center justify-center px-7 py-3.5 rounded-xl font-semibold text-sm text-[#F4F4F6] bg-[#121216] border border-[#2A2A38] hover:bg-[#1A1A24] hover:border-[#AB4AFF]/50 transition-all duration-200',
                     [text('Contact Me')],
                   ),
+                  if (profile.cvUrl.isNotEmpty)
+                    a(
+                      href: profile.cvUrl,
+                      target: Target.blank,
+                      classes:
+                          'inline-flex items-center justify-center px-5 py-3.5 rounded-xl font-medium text-xs text-[#8A8A93] hover:text-white transition-colors',
+                      [text('Download CV ↓')],
+                    ),
                 ]),
 
                 // Stats row
                 div(
                   classes:
-                      'grid grid-cols-3 gap-6 pt-8 border-t border-[#1A1A22] max-w-lg',
+                      'grid grid-cols-3 gap-6 pt-8 border-t border-[#1A1A24] max-w-lg',
                   [
                     for (var stat in profile.stats)
                       div(classes: 'space-y-1', [
                         div(
                           classes:
-                              'text-2xl sm:text-3xl font-bold text-white',
+                              'text-2xl sm:text-3xl font-extrabold text-white tracking-tight',
                           [text(stat.value)],
                         ),
                         div(
-                          classes: 'text-xs sm:text-sm text-[#8A8A93]',
+                          classes: 'text-xs font-medium text-[#8A8A93]',
                           [text(stat.label)],
                         ),
                       ]),
@@ -92,63 +117,107 @@ class HeroSection extends StatelessComponent {
                 ),
               ]),
 
-              // Right Column (Visual Card / Flutter Badge)
+              // Right Column (Prominent Profile Photo & Badge Card)
               div(
                 classes:
-                    'lg:col-span-5 flex justify-center lg:justify-end',
+                    'lg:col-span-5 flex justify-center lg:justify-end relative',
                 [
+                  // Radial Glow Behind Photo Card
                   div(
                     classes:
-                        'relative w-full max-w-md p-8 rounded-3xl bg-gradient-to-br from-[#121216] to-[#1A1A22] border border-[#2A2A36] shadow-2xl space-y-6',
+                        'absolute -inset-4 bg-gradient-to-tr from-[#AB4AFF]/40 via-[#6366F1]/30 to-[#3B82F6]/25 rounded-[40px] blur-3xl opacity-60 -z-10',
+                    [],
+                  ),
+
+                  // Main Card Frame
+                  div(
+                    classes:
+                        'relative w-full max-w-[340px] sm:max-w-[380px] rounded-[32px] p-2.5 bg-gradient-to-b from-[#2E2E3E]/70 via-[#1A1A24]/60 to-[#121218]/80 border border-[#2E2E40] shadow-2xl backdrop-blur-sm group',
                     [
+                      // Inner Photo Container
                       div(
                         classes:
-                            'flex items-center justify-between pb-6 border-b border-[#2A2A36]',
+                            'relative w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-[#121218]',
                         [
-                          div(classes: 'space-y-1', [
-                            span(
-                              classes:
-                                  'text-xs font-semibold text-[#AB4AFF] uppercase tracking-wider',
-                              [text('Core Specialization')],
-                            ),
-                            h3(classes: 'text-xl font-bold text-white', [
-                              text('Flutter & Dart Expert'),
-                            ]),
-                          ]),
+                          // Profile Image
+                          img(
+                            src: photoUrl,
+                            alt: profile.name,
+                            classes:
+                                'w-full h-full object-cover object-top filter contrast-[1.05] brightness-[0.95] group-hover:scale-105 transition-transform duration-700',
+                          ),
+
+                          // Dark Gradient Overlay for contrast with floating badges
                           div(
                             classes:
-                                'w-12 h-12 rounded-2xl bg-[#AB4AFF]/10 flex items-center justify-center text-[#AB4AFF] font-bold text-xl',
-                            [text('⚡')],
+                                'absolute inset-0 bg-gradient-to-t from-[#0A0A0C] via-transparent to-black/30 pointer-events-none',
+                            [],
                           ),
-                        ],
-                      ),
 
-                      p(
-                        classes:
-                            'text-sm text-[#8A8A93] leading-relaxed',
-                        [
-                          text(
-                            'Specializing in clean architectures, Bloc/Riverpod state patterns, offline-first sync, and high-performance cross-platform applications across iOS, Android, and Web.',
-                          ),
-                        ],
-                      ),
-
-                      // Tech pills
-                      div(classes: 'flex flex-wrap gap-2 pt-2', [
-                        for (var tech in [
-                          'Flutter',
-                          'Dart',
-                          'Jaspr',
-                          'Clean Arch',
-                          'Firebase',
-                          'TypeScript',
-                        ])
-                          span(
+                          // Top-Left Floating Badge
+                          div(
                             classes:
-                                'px-3 py-1 rounded-lg text-xs font-medium bg-[#0A0A0C] border border-[#2A2A36] text-[#C4C4CC]',
-                            [text(tech)],
+                                'absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0A0A0C]/80 backdrop-blur-md border border-[#AB4AFF]/40 text-xs font-semibold text-white shadow-lg',
+                            [
+                              span(
+                                classes: 'text-[#AB4AFF]',
+                                [text('⚡')],
+                              ),
+                              text('Flutter & Dart Expert'),
+                            ],
                           ),
-                      ]),
+
+                          // Top-Right Placeholder Indicator (if using placeholder)
+                          if (profile.heroPhoto.isEmpty)
+                            div(
+                              classes:
+                                  'absolute top-4 right-4 px-2.5 py-1 rounded-md bg-black/75 backdrop-blur-md border border-white/10 text-[10px] font-mono text-[#A1A1AA] uppercase tracking-wider',
+                              [text('Placeholder')],
+                            ),
+
+                          // Bottom Card Details Overlay
+                          div(
+                            classes:
+                                'absolute bottom-0 left-0 right-0 p-5 space-y-2',
+                            [
+                              div(classes: 'flex items-center justify-between', [
+                                div(classes: 'space-y-0.5', [
+                                  h3(
+                                    classes:
+                                        'text-lg font-bold text-white tracking-tight',
+                                    [text(profile.name)],
+                                  ),
+                                  p(
+                                    classes:
+                                        'text-xs font-medium text-[#AB4AFF]',
+                                    [text('Senior Mobile Engineer')],
+                                  ),
+                                ]),
+                                span(
+                                  classes:
+                                      'inline-flex items-center px-2 py-1 rounded-full text-[11px] font-medium bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+                                  [text('Verified')],
+                                ),
+                              ]),
+
+                              // Tech pills inside card
+                              div(classes: 'flex flex-wrap gap-1.5 pt-1', [
+                                for (var tech in [
+                                  'Flutter',
+                                  'Dart',
+                                  'Clean Arch',
+                                  'Jaspr',
+                                ])
+                                  span(
+                                    classes:
+                                        'px-2 py-0.5 rounded text-[10px] font-semibold bg-[#1A1A24]/90 text-[#D4D4D8] border border-[#2E2E40]',
+                                    [text(tech)],
+                                  ),
+                              ]),
+                            ],
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ],
