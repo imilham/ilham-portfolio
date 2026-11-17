@@ -125,7 +125,7 @@ class HeroSection extends StatelessComponent {
                   // Radial Glow Behind Photo Card
                   div(
                     classes:
-                        'absolute -inset-6 bg-gradient-to-tr from-[#AB4AFF]/60 via-[#6366F1]/50 to-[#3B82F6]/40 rounded-[44px] blur-2xl opacity-85 -z-10',
+                        'absolute -inset-4 bg-gradient-to-tr from-[#AB4AFF]/40 via-[#6366F1]/30 to-[#3B82F6]/25 rounded-[40px] blur-3xl opacity-45 -z-10',
                     [],
                   ),
 
