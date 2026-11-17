@@ -350,99 +350,124 @@ class _AdminPageState extends State<AdminPage> {
   Component _buildLoginView() {
     return div(
       classes:
-          'min-h-screen bg-[#0A0A0C] flex flex-col items-center justify-center p-6 text-[#F4F4F6] relative selection:bg-[#AB4AFF] selection:text-white',
+          'min-h-screen bg-[#020204] flex items-center justify-center p-4 sm:p-6 text-[#F4F4F6] relative selection:bg-[#AB4AFF] selection:text-white',
+      attributes: {
+        'style':
+            'display: flex; align-items: center; justify-content: center; min-height: 100vh; width: 100%;',
+      },
       [
-        div(classes: 'w-full max-w-md', [
-          // Back to portfolio link
-          Link(
-            to: '/',
-            classes:
-                'inline-flex items-center gap-2 text-[#8A8A93] hover:text-[#AB4AFF] transition-colors mb-8 text-sm font-medium',
-            child: span([text('← Back to Portfolio')]),
-          ),
+        div(
+          classes: 'w-full max-w-md mx-auto',
+          attributes: {
+            'style':
+                'max-width: 440px; width: 100%; margin-left: auto; margin-right: auto;',
+          },
+          [
+            // Back to portfolio link
+            Link(
+              to: '/',
+              classes:
+                  'inline-flex items-center gap-2 text-xs font-semibold text-[#8A8A93] hover:text-[#AB4AFF] transition-colors mb-6',
+              child: span([text('← Back to Portfolio')]),
+            ),
 
-          // Login Box
-          div(
-            classes:
-                'bg-[#121216] border border-[#1A1A22] rounded-2xl p-8 shadow-2xl',
-            [
-              div(classes: 'flex flex-col items-center mb-8 text-center', [
+            // Login Box
+            div(
+              classes:
+                  'bg-[#0D0D14] border border-[#262636] rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden',
+              attributes: {
+                'style':
+                    'box-shadow: 0 0 50px rgba(171, 74, 255, 0.15), 0 20px 40px rgba(0,0,0,0.6);',
+              },
+              [
+                // Top accent gradient bar
                 div(
                   classes:
-                      'w-14 h-14 bg-[#1A1A22] rounded-full flex items-center justify-center mb-4 text-2xl border border-[#2A2A38]',
-                  [text('🔒')],
-                ),
-                h1(
-                  classes: 'text-2xl font-bold tracking-tight text-white',
-                  [text('Admin Access')],
-                ),
-                p(
-                  classes: 'text-xs text-[#8A8A93] mt-2 max-w-xs leading-relaxed',
-                  [
-                    text(
-                        'Sign in with your Firebase Auth credentials to manage your portfolio, CV, projects, and articles.'),
-                  ],
-                ),
-              ]),
-
-              // Error banner
-              if (_authError.isNotEmpty)
-                div(
-                  classes:
-                      'p-3 mb-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-xs text-center font-medium',
-                  [text(_authError)],
+                      'absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#AB4AFF] via-[#38BDF8] to-[#AB4AFF]',
+                  [],
                 ),
 
-              // Form fields
-              div(classes: 'space-y-4', [
-                div([
-                  label(
+                div(classes: 'flex flex-col items-center mb-6 text-center pt-2', [
+                  div(
                     classes:
-                        'block text-xs font-semibold text-[#8A8A93] mb-1.5 uppercase tracking-wider',
-                    [text('Admin Email')],
+                        'w-12 h-12 bg-[#1A1A24] rounded-2xl flex items-center justify-center mb-3 text-xl border border-[#2E2E40]',
+                    attributes: {
+                      'style': 'box-shadow: inset 0 0 12px rgba(171, 74, 255, 0.2);',
+                    },
+                    [text('🔒')],
                   ),
-                  input<String>(
-                    type: InputType.email,
-                    value: _loginEmail,
-                    onInput: (val) => _loginEmail = val,
-                    classes:
-                        'w-full px-4 py-3 bg-[#0A0A0C] border border-[#1A1A22] rounded-xl focus:border-[#AB4AFF] focus:outline-none transition-all text-sm text-[#F4F4F6]',
-                    attributes: {'placeholder': 'admin@example.com'},
+                  h1(
+                    classes: 'text-xl font-bold tracking-tight text-white',
+                    [text('Admin Console')],
                   ),
-                ]),
-                div([
-                  label(
-                    classes:
-                        'block text-xs font-semibold text-[#8A8A93] mb-1.5 uppercase tracking-wider',
-                    [text('Password')],
-                  ),
-                  input<String>(
-                    type: InputType.password,
-                    value: _loginPassword,
-                    onInput: (val) => _loginPassword = val,
-                    classes:
-                        'w-full px-4 py-3 bg-[#0A0A0C] border border-[#1A1A22] rounded-xl focus:border-[#AB4AFF] focus:outline-none transition-all text-sm text-[#F4F4F6]',
-                    attributes: {'placeholder': '••••••••••••'},
+                  p(
+                    classes: 'text-xs text-[#8A8A93] mt-1.5 max-w-xs leading-relaxed',
+                    [
+                      text(
+                          'Sign in to manage your portfolio, CV, projects, and articles.'),
+                    ],
                   ),
                 ]),
 
-                // Sign In Button
-                button(
-                  [
-                    if (_isAuthLoading)
-                      span(classes: 'animate-pulse', [text('Signing in...')])
-                    else
-                      text('Sign In to Dashboard →'),
-                  ],
-                  onClick: _handleLogin,
-                  disabled: _isAuthLoading,
-                  classes:
-                      'w-full mt-2 py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-[#AB4AFF] to-[#8B1FFF] hover:from-[#9732f0] hover:to-[#7812e5] transition-all duration-200 shadow-lg shadow-[#AB4AFF]/20 cursor-pointer disabled:opacity-50',
-                ),
-              ]),
-            ],
-          ),
-        ]),
+                // Error banner
+                if (_authError.isNotEmpty)
+                  div(
+                    classes:
+                        'p-3 mb-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-xs text-center font-medium',
+                    [text(_authError)],
+                  ),
+
+                // Form fields
+                div(classes: 'space-y-4', [
+                  div([
+                    label(
+                      classes:
+                          'block text-[11px] font-bold text-[#A1A1AA] mb-1.5 uppercase tracking-wider',
+                      [text('Admin Email')],
+                    ),
+                    input<String>(
+                      type: InputType.email,
+                      value: _loginEmail,
+                      onInput: (val) => _loginEmail = val,
+                      classes:
+                          'w-full px-4 py-2.5 bg-[#050508] border border-[#262636] rounded-xl focus:border-[#AB4AFF] focus:outline-none transition-all text-xs sm:text-sm text-[#F4F4F6] placeholder-[#52525E]',
+                      attributes: {'placeholder': 'admin@example.com'},
+                    ),
+                  ]),
+                  div([
+                    label(
+                      classes:
+                          'block text-[11px] font-bold text-[#A1A1AA] mb-1.5 uppercase tracking-wider',
+                      [text('Password')],
+                    ),
+                    input<String>(
+                      type: InputType.password,
+                      value: _loginPassword,
+                      onInput: (val) => _loginPassword = val,
+                      classes:
+                          'w-full px-4 py-2.5 bg-[#050508] border border-[#262636] rounded-xl focus:border-[#AB4AFF] focus:outline-none transition-all text-xs sm:text-sm text-[#F4F4F6] placeholder-[#52525E]',
+                      attributes: {'placeholder': '••••••••••••'},
+                    ),
+                  ]),
+
+                  // Sign In Button
+                  button(
+                    [
+                      if (_isAuthLoading)
+                        span(classes: 'animate-pulse', [text('Authenticating...')])
+                      else
+                        text('Sign In to Dashboard →'),
+                    ],
+                    onClick: _handleLogin,
+                    disabled: _isAuthLoading,
+                    classes:
+                        'w-full mt-3 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-[#AB4AFF] to-[#8B1FFF] hover:from-[#9732f0] hover:to-[#7812e5] shadow-lg shadow-[#AB4AFF]/25 transition-all duration-200 cursor-pointer disabled:opacity-50',
+                  ),
+                ]),
+              ],
+            ),
+          ],
+        ),
       ],
     );
   }

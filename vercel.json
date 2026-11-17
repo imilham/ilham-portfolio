@@ -23,7 +23,16 @@
       ]
     },
     {
-      "source": "/(.*)\\.(js|css|png|jpg|jpeg|webp|svg|woff|woff2)",
+      "source": "/(styles\\.css|main\\.client\\.dart\\.js)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(png|jpg|jpeg|webp|svg|woff|woff2|ico)",
       "headers": [
         {
           "key": "Cache-Control",
