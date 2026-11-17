@@ -1,6 +1,7 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import '../models/profile.dart';
+import '../core/utils/drive_utils.dart';
 
 class HeroSection extends StatelessComponent {
   final Profile profile;
@@ -9,10 +10,13 @@ class HeroSection extends StatelessComponent {
 
   @override
   Component build(BuildContext context) {
-    // If heroPhoto is provided, use it; otherwise use the high-res developer portrait placeholder
-    final photoUrl = profile.heroPhoto.isNotEmpty
-        ? profile.heroPhoto
+    // Resolve Firebase / Google Drive profile image using drive_utils
+    final resolvedPhoto = getDriveViewUrl(profile.heroPhoto);
+    final photoUrl = resolvedPhoto.isNotEmpty
+        ? resolvedPhoto
         : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&auto=format&fit=crop&q=80';
+
+    final cvDownloadUrl = getDriveDownloadUrl(profile.cvUrl);
 
     return section(
       classes:
@@ -69,14 +73,12 @@ class HeroSection extends StatelessComponent {
 
                   // "Download CV" / "Explore Work" Pill Button with Glowing Border
                   a(
-                    href: profile.cvUrl.isNotEmpty ? profile.cvUrl : '/#projects',
-                    target: profile.cvUrl.isNotEmpty ? Target.blank : Target.self,
+                    href: cvDownloadUrl.isNotEmpty ? cvDownloadUrl : '/#projects',
+                    target: cvDownloadUrl.isNotEmpty ? Target.blank : Target.self,
                     classes:
                         'inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm text-white bg-[#0A0A0E]/80 border-2 border-[#38BDF8]/60 hover:border-[#38BDF8] hover:bg-[#38BDF8]/15 hover:shadow-lg hover:shadow-[#38BDF8]/25 transition-all duration-300 hover:scale-105',
                     [
-                      text(profile.cvUrl.isNotEmpty
-                          ? 'Download CV'
-                          : 'Download CV'),
+                      text('Download CV'),
                     ],
                   ),
                 ]),
@@ -129,15 +131,11 @@ class HeroSection extends StatelessComponent {
                             alt: profile.name,
                             classes:
                                 'w-full h-full object-cover object-top filter brightness-[0.98] contrast-[1.05] group-hover:scale-105 transition-transform duration-700',
+                            attributes: {
+                              'loading': 'eager',
+                              'referrerpolicy': 'no-referrer',
+                            },
                           ),
-
-                          // Subtle placeholder tag if photo not yet uploaded
-                          if (profile.heroPhoto.isEmpty)
-                            div(
-                              classes:
-                                  'absolute bottom-6 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/15 text-[11px] font-medium text-white/90 shadow-lg whitespace-nowrap',
-                              [text('📷 Placeholder Photo')],
-                            ),
                         ],
                       ),
                     ],

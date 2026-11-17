@@ -1,6 +1,7 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import '../models/portfolio_items.dart';
+import '../core/utils/drive_utils.dart';
 
 class ProjectsSection extends StatelessComponent {
   final List<Project> projects;
@@ -60,10 +61,14 @@ class ProjectsSection extends StatelessComponent {
         // Image
         div(classes: 'relative h-48 w-full overflow-hidden bg-[#1A1A22]', [
           img(
-            src: project.image,
+            src: getDriveViewUrl(project.image),
             alt: project.title,
             classes:
                 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500',
+            attributes: {
+              'loading': 'lazy',
+              'referrerpolicy': 'no-referrer',
+            },
           ),
           if (project.featured)
             div(
