@@ -49,6 +49,16 @@ class AmbientBackground extends StatelessComponent {
       (top: 72, left: 82, size: 1.6, type: 'star-fast', color: 'bg-white'),
     ];
 
+    // Floating cosmic stardust motes (ambient rising particles)
+    const dustMotes = [
+      (bottom: 12, left: 18, size: 2.2, type: 'dust-mote-1', color: 'bg-white/60'),
+      (bottom: 25, left: 42, size: 1.8, type: 'dust-mote-2', color: 'bg-[#C084FC]/70'),
+      (bottom: 8, left: 65, size: 2.0, type: 'dust-mote-3', color: 'bg-[#38BDF8]/60'),
+      (bottom: 30, left: 82, size: 1.6, type: 'dust-mote-1', color: 'bg-white/70'),
+      (bottom: 18, left: 88, size: 2.4, type: 'dust-mote-2', color: 'bg-[#E9D5FF]/65'),
+      (bottom: 5, left: 32, size: 1.5, type: 'dust-mote-3', color: 'bg-white/50'),
+    ];
+
     return div(
       classes:
           'fixed inset-0 pointer-events-none overflow-hidden z-0 select-none bg-deep-space',
@@ -56,28 +66,45 @@ class AmbientBackground extends StatelessComponent {
         // Cosmic Violet Nebula Cloud (Soft glowing space dust on the right side)
         div(
           classes:
-              'absolute top-10 -right-20 w-[750px] h-[750px] rounded-full bg-gradient-to-bl from-[#AB4AFF]/20 via-[#7C3AED]/12 to-transparent blur-[120px] animate-nebula',
+              'absolute top-10 -right-20 w-[780px] h-[780px] rounded-full bg-gradient-to-bl from-[#AB4AFF]/22 via-[#7C3AED]/14 to-transparent blur-[120px] animate-nebula',
           [],
         ),
 
         // Distant Indigo Nebula (Left side)
         div(
           classes:
-              'absolute top-1/2 -left-32 w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-[#6366F1]/16 via-[#4F46E5]/10 to-transparent blur-[130px] animate-nebula',
+              'absolute top-1/2 -left-32 w-[680px] h-[680px] rounded-full bg-gradient-to-tr from-[#6366F1]/18 via-[#4F46E5]/12 to-transparent blur-[130px] animate-nebula-alt',
           [],
         ),
 
         // Shooting Stars (Meteors flying across the space background)
         div(
           classes:
-              'absolute top-[18%] right-[10%] w-[180px] h-[1.5px] rounded-full shooting-star-1 opacity-0 pointer-events-none',
+              'absolute top-[14%] right-[8%] w-[220px] h-[2px] rounded-full shooting-star-1 opacity-0 pointer-events-none',
           [],
         ),
         div(
           classes:
-              'absolute top-[45%] right-[25%] w-[160px] h-[1.5px] rounded-full shooting-star-2 opacity-0 pointer-events-none',
+              'absolute top-[38%] right-[28%] w-[240px] h-[2px] rounded-full shooting-star-2 opacity-0 pointer-events-none',
           [],
         ),
+        div(
+          classes:
+              'absolute top-[62%] right-[14%] w-[200px] h-[1.8px] rounded-full shooting-star-3 opacity-0 pointer-events-none',
+          [],
+        ),
+
+        // Floating Stardust Motes
+        for (var mote in dustMotes)
+          div(
+            classes:
+                'absolute rounded-full blur-[0.5px] ${mote.color} ${mote.type}',
+            attributes: {
+              'style':
+                  'bottom: ${mote.bottom}%; left: ${mote.left}%; width: ${mote.size}px; height: ${mote.size}px;',
+            },
+            [],
+          ),
 
         // Starfield elements
         for (var star in stars)
