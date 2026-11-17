@@ -35,8 +35,7 @@ class CvModal extends StatelessComponent {
           [
             // Header Bar
             div(
-              classes:
-                  'flex items-center justify-between px-5 py-4 bg-[#101016] border-b border-[#222230]',
+              classes: 'flex items-center justify-between px-5 py-4 bg-[#101016] border-b border-[#222230]',
               [
                 // Title & Subtitle
                 div(classes: 'flex items-center gap-3', [
@@ -94,7 +93,6 @@ class CvModal extends StatelessComponent {
               classes: 'relative w-full flex-1 bg-[#0A0A0F] overflow-hidden',
               [
                 iframe(
-                  [],
                   id: 'cv-pdf-iframe',
                   src: '',
                   classes: 'w-full h-full border-0 bg-[#0A0A0F]',
@@ -102,6 +100,7 @@ class CvModal extends StatelessComponent {
                   attributes: {
                     'data-preview-url': cvPreviewUrl,
                   },
+                  [],
                 ),
               ],
             ),
