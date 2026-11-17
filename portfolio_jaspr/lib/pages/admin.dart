@@ -1,6 +1,7 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
+import 'package:universal_web/web.dart' as web;
 
 import '../core/services/firebase_service.dart';
 import '../data/portfolio_data.dart';
@@ -46,6 +47,11 @@ class _AdminPageState extends State<AdminPage> {
   void initState() {
     super.initState();
     if (kIsWeb) {
+      final savedToken = web.window.localStorage.getItem('admin_id_token');
+      if (savedToken != null && savedToken.isNotEmpty) {
+        _idToken = savedToken;
+        _isAuthenticated = true;
+      }
       _fetchLiveFirestoreData();
     }
   }
@@ -82,6 +88,9 @@ class _AdminPageState extends State<AdminPage> {
         _loginEmail.trim(),
         _loginPassword,
       );
+      if (kIsWeb) {
+        web.window.localStorage.setItem('admin_id_token', token);
+      }
       if (mounted) {
         setState(() {
           _idToken = token;
@@ -92,8 +101,21 @@ class _AdminPageState extends State<AdminPage> {
       }
     } catch (e) {
       if (mounted) {
+        final rawMsg = e.toString().replaceAll('Exception:', '').trim();
+        String friendlyMsg;
+        if (rawMsg.contains('INVALID_LOGIN_CREDENTIALS') || rawMsg.contains('INVALID_PASSWORD')) {
+          friendlyMsg = 'Incorrect email or password. Please verify your credentials.';
+        } else if (rawMsg.contains('EMAIL_NOT_FOUND')) {
+          friendlyMsg = 'No Firebase Auth account found with this email.';
+        } else if (rawMsg.contains('TOO_MANY_ATTEMPTS')) {
+          friendlyMsg = 'Too many failed attempts. Please wait a moment and try again.';
+        } else if (rawMsg.contains('USER_DISABLED')) {
+          friendlyMsg = 'This admin account has been disabled in Firebase.';
+        } else {
+          friendlyMsg = rawMsg;
+        }
         setState(() {
-          _authError = e.toString().replaceAll('Exception:', '').trim();
+          _authError = friendlyMsg;
           _isAuthLoading = false;
         });
       }
@@ -101,6 +123,9 @@ class _AdminPageState extends State<AdminPage> {
   }
 
   void _handleLogout() {
+    if (kIsWeb) {
+      web.window.localStorage.removeItem('admin_id_token');
+    }
     setState(() {
       _isAuthenticated = false;
       _idToken = '';
@@ -417,53 +442,71 @@ class _AdminPageState extends State<AdminPage> {
                     [Component.text(_authError)],
                   ),
 
-                // Form fields
-                div(classes: 'space-y-4', [
-                  div([
-                    label(
-                      classes:
-                          'block text-[11px] font-bold text-[#A1A1AA] mb-1.5 uppercase tracking-wider',
-                      [Component.text('Admin Email')],
-                    ),
-                    input<String>(
-                      type: InputType.email,
-                      value: _loginEmail,
-                      onInput: (val) => _loginEmail = val,
-                      classes:
-                          'w-full px-4 py-2.5 bg-[#050508] border border-[#262636] rounded-xl focus:border-[#AB4AFF] focus:outline-none transition-all text-xs sm:text-sm text-[#F4F4F6] placeholder-[#52525E]',
-                      attributes: {'placeholder': 'admin@example.com'},
-                    ),
-                  ]),
-                  div([
-                    label(
-                      classes:
-                          'block text-[11px] font-bold text-[#A1A1AA] mb-1.5 uppercase tracking-wider',
-                      [Component.text('Password')],
-                    ),
-                    input<String>(
-                      type: InputType.password,
-                      value: _loginPassword,
-                      onInput: (val) => _loginPassword = val,
-                      classes:
-                          'w-full px-4 py-2.5 bg-[#050508] border border-[#262636] rounded-xl focus:border-[#AB4AFF] focus:outline-none transition-all text-xs sm:text-sm text-[#F4F4F6] placeholder-[#52525E]',
-                      attributes: {'placeholder': '••••••••••••'},
-                    ),
-                  ]),
+                // Form fields wrapped in <form> to handle Enter key & autofill
+                form(
+                  events: {
+                    'submit': (event) {
+                      event.preventDefault();
+                      _handleLogin();
+                    },
+                  },
+                  classes: 'space-y-4',
+                  [
+                    div([
+                      label(
+                        classes:
+                            'block text-[11px] font-bold text-[#A1A1AA] mb-1.5 uppercase tracking-wider',
+                        [Component.text('Admin Email')],
+                      ),
+                      input<String>(
+                        type: InputType.email,
+                        value: _loginEmail,
+                        onInput: (val) => _loginEmail = val,
+                        onChange: (val) => _loginEmail = val,
+                        classes:
+                            'w-full px-4 py-2.5 bg-[#050508] border border-[#262636] rounded-xl focus:border-[#AB4AFF] focus:outline-none transition-all text-xs sm:text-sm text-[#F4F4F6] placeholder-[#52525E]',
+                        attributes: {
+                          'placeholder': 'admin@example.com',
+                          'autocomplete': 'email',
+                        },
+                      ),
+                    ]),
+                    div([
+                      label(
+                        classes:
+                            'block text-[11px] font-bold text-[#A1A1AA] mb-1.5 uppercase tracking-wider',
+                        [Component.text('Password')],
+                      ),
+                      input<String>(
+                        type: InputType.password,
+                        value: _loginPassword,
+                        onInput: (val) => _loginPassword = val,
+                        onChange: (val) => _loginPassword = val,
+                        classes:
+                            'w-full px-4 py-2.5 bg-[#050508] border border-[#262636] rounded-xl focus:border-[#AB4AFF] focus:outline-none transition-all text-xs sm:text-sm text-[#F4F4F6] placeholder-[#52525E]',
+                        attributes: {
+                          'placeholder': '••••••••••••',
+                          'autocomplete': 'current-password',
+                        },
+                      ),
+                    ]),
 
-                  // Sign In Button
-                  button(
-                    [
-                      if (_isAuthLoading)
-                        span(classes: 'animate-pulse', [Component.text('Authenticating...')])
-                      else
-                        Component.text('Sign In to Dashboard →'),
-                    ],
-                    onClick: _handleLogin,
-                    disabled: _isAuthLoading,
-                    classes:
-                        'w-full mt-3 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-[#AB4AFF] to-[#8B1FFF] hover:from-[#9732f0] hover:to-[#7812e5] shadow-lg shadow-[#AB4AFF]/25 transition-all duration-200 cursor-pointer disabled:opacity-50',
-                  ),
-                ]),
+                    // Sign In Button
+                    button(
+                      type: ButtonType.submit,
+                      onClick: _handleLogin,
+                      disabled: _isAuthLoading,
+                      classes:
+                          'w-full mt-3 py-3 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-[#AB4AFF] to-[#8B1FFF] hover:from-[#9732f0] hover:to-[#7812e5] shadow-lg shadow-[#AB4AFF]/25 transition-all duration-200 cursor-pointer disabled:opacity-50',
+                      [
+                        if (_isAuthLoading)
+                          span(classes: 'animate-pulse', [Component.text('Authenticating...')])
+                        else
+                          Component.text('Sign In to Dashboard →'),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             ),
           ],

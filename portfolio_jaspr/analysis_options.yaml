@@ -25,7 +25,7 @@ plugins:
     version: ^0.7.2
     diagnostics:
       prefer_html_components: true
-      sort_children_last: true
+      sort_children_last: false
       styles_ordering: true
 
 # Uncomment the following section to enable or disable additional rules.
