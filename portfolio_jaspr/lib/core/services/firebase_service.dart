@@ -206,44 +206,34 @@ class FirebaseService {
       carouselTexts: carouselTexts.isNotEmpty
           ? carouselTexts
           : defaultSiteData.profile.carouselTexts,
-      skills: skills.isNotEmpty ? skills : defaultSiteData.profile.skills,
-      certifications: certifications.isNotEmpty
-          ? certifications
-          : defaultSiteData.profile.certifications,
+      skills: skills,
+      certifications: certifications,
       stats: statsList.isNotEmpty ? statsList : defaultSiteData.profile.stats,
     );
 
-    // 2. Education
+    // 2. Education - loaded directly from Firebase
     final rawEducation = _extractValue(fields['education']) as List<dynamic>? ?? [];
-    final education = rawEducation.isNotEmpty
-        ? rawEducation
-            .map((e) => Education.fromJson(Map<String, dynamic>.from(e as Map)))
-            .toList()
-        : defaultSiteData.education;
+    final education = rawEducation
+        .map((e) => Education.fromJson(Map<String, dynamic>.from(e as Map)))
+        .toList();
 
-    // 3. Experience
+    // 3. Experience - loaded directly from Firebase
     final rawExperience = _extractValue(fields['experience']) as List<dynamic>? ?? [];
-    final experience = rawExperience.isNotEmpty
-        ? rawExperience
-            .map((e) => Experience.fromJson(Map<String, dynamic>.from(e as Map)))
-            .toList()
-        : defaultSiteData.experience;
+    final experience = rawExperience
+        .map((e) => Experience.fromJson(Map<String, dynamic>.from(e as Map)))
+        .toList();
 
-    // 4. Projects
+    // 4. Projects - loaded directly from Firebase
     final rawProjects = _extractValue(fields['projects']) as List<dynamic>? ?? [];
-    final projects = rawProjects.isNotEmpty
-        ? rawProjects
-            .map((p) => Project.fromJson(Map<String, dynamic>.from(p as Map)))
-            .toList()
-        : defaultSiteData.projects;
+    final projects = rawProjects
+        .map((p) => Project.fromJson(Map<String, dynamic>.from(p as Map)))
+        .toList();
 
-    // 5. Gallery
+    // 5. Gallery - loaded directly from Firebase with zero dummy fallback
     final rawGallery = _extractValue(fields['gallery']) as List<dynamic>? ?? [];
-    final gallery = rawGallery.isNotEmpty
-        ? rawGallery
-            .map((g) => GalleryPhoto.fromJson(Map<String, dynamic>.from(g as Map)))
-            .toList()
-        : defaultSiteData.gallery;
+    final gallery = rawGallery
+        .map((g) => GalleryPhoto.fromJson(Map<String, dynamic>.from(g as Map)))
+        .toList();
 
     // 6. Blog
     final rawBlog = _extractValue(fields['blog']) as List<dynamic>? ?? [];

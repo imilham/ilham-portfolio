@@ -41,15 +41,15 @@ const defaultSiteData = SiteData(
       'Google Cloud Professional Developer',
     ],
     stats: [
-      StatItem(label: 'Projects', value: '15+'),
+      StatItem(label: 'Projects', value: '12+'),
       StatItem(label: 'Years Exp.', value: '3+'),
-      StatItem(label: 'Happy Clients', value: '15+'),
+      StatItem(label: 'Happy Clients', value: '10+'),
     ],
   ),
   education: [
     Education(
       id: '1',
-      degree: 'BSc Computing - Reading',
+      degree: 'BSc Computing',
       school: 'Wrexham Glyndwr University – UK',
       year: 'Present',
       description: 'Specialized in Software Engineering and Artificial Intelligence.',
@@ -97,20 +97,7 @@ const defaultSiteData = SiteData(
       image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80',
     ),
   ],
-  gallery: [
-    GalleryPhoto(
-      id: '1',
-      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-      caption: 'Mountain sunrise',
-      category: 'Travel',
-    ),
-    GalleryPhoto(
-      id: '2',
-      url: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&q=80',
-      caption: 'City lights',
-      category: 'Urban',
-    ),
-  ],
+  gallery: [],
   blog: [
     BlogPost(
       id: '23whug2d715',
