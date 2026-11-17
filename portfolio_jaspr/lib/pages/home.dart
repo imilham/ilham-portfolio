@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
+import 'package:universal_web/web.dart' as web;
 import '../data/portfolio_data.dart';
 import '../models/site_data.dart';
 import '../core/services/firebase_service.dart';
@@ -25,6 +27,18 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    if (kIsWeb) {
+      try {
+        final cached = web.window.localStorage.getItem('cached_site_data');
+        if (cached != null && cached.isNotEmpty) {
+          final decoded = jsonDecode(cached) as Map<String, dynamic>;
+          final parsed = SiteData.fromJson(decoded);
+          if (parsed.profile.heroPhoto.isNotEmpty) {
+            _data = parsed;
+          }
+        }
+      } catch (_) {}
+    }
     _loadFirebaseData();
   }
 
@@ -35,9 +49,17 @@ class _HomeState extends State<Home> {
         setState(() {
           _data = liveData;
         });
+        if (kIsWeb) {
+          try {
+            web.window.localStorage.setItem(
+              'cached_site_data',
+              jsonEncode(liveData.toJson()),
+            );
+          } catch (_) {}
+        }
       }
     } catch (_) {
-      // Retain defaultSiteData seamlessly if offline
+      // Retain defaultSiteData or cached data seamlessly if offline
     }
   }
 

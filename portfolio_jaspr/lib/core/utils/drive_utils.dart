@@ -6,15 +6,16 @@ String getDriveViewUrl(String? url, {int width = 800}) {
   if (url == null || url.trim().isEmpty) return '';
   final trimmed = url.trim();
 
-  // Match /file/d/{id} or ?id={id} or &id={id}
+  // Match /file/d/{id} or ?id={id} or &id={id} or /d/{id}
   final regExp1 = RegExp(r'/file/d/([a-zA-Z0-9_-]+)');
   final regExp2 = RegExp(r'[?&]id=([a-zA-Z0-9_-]+)');
-  final match = regExp1.firstMatch(trimmed) ?? regExp2.firstMatch(trimmed);
+  final regExp3 = RegExp(r'/d/([a-zA-Z0-9_-]+)');
+  final match = regExp1.firstMatch(trimmed) ?? regExp2.firstMatch(trimmed) ?? regExp3.firstMatch(trimmed);
 
   if (match != null && match.group(1) != null) {
     final id = match.group(1)!;
-    // Direct Google UserContent CDN link with optimized resolution
-    return 'https://lh3.googleusercontent.com/d/$id=w$width';
+    // Direct Google UserContent CDN link with optimized resolution and native WebP edge compression
+    return 'https://lh3.googleusercontent.com/d/$id=w$width-rw';
   }
   return trimmed;
 }
@@ -25,7 +26,8 @@ String getDriveDownloadUrl(String? url) {
 
   final regExp1 = RegExp(r'/file/d/([a-zA-Z0-9_-]+)');
   final regExp2 = RegExp(r'[?&]id=([a-zA-Z0-9_-]+)');
-  final match = regExp1.firstMatch(trimmed) ?? regExp2.firstMatch(trimmed);
+  final regExp3 = RegExp(r'/d/([a-zA-Z0-9_-]+)');
+  final match = regExp1.firstMatch(trimmed) ?? regExp2.firstMatch(trimmed) ?? regExp3.firstMatch(trimmed);
 
   if (match != null && match.group(1) != null) {
     final id = match.group(1)!;
@@ -41,7 +43,8 @@ String getDrivePreviewUrl(String? url) {
 
   final regExp1 = RegExp(r'/file/d/([a-zA-Z0-9_-]+)');
   final regExp2 = RegExp(r'[?&]id=([a-zA-Z0-9_-]+)');
-  final match = regExp1.firstMatch(trimmed) ?? regExp2.firstMatch(trimmed);
+  final regExp3 = RegExp(r'/d/([a-zA-Z0-9_-]+)');
+  final match = regExp1.firstMatch(trimmed) ?? regExp2.firstMatch(trimmed) ?? regExp3.firstMatch(trimmed);
 
   if (match != null && match.group(1) != null) {
     final id = match.group(1)!;
@@ -57,7 +60,8 @@ String getDriveExternalViewUrl(String? url) {
 
   final regExp1 = RegExp(r'/file/d/([a-zA-Z0-9_-]+)');
   final regExp2 = RegExp(r'[?&]id=([a-zA-Z0-9_-]+)');
-  final match = regExp1.firstMatch(trimmed) ?? regExp2.firstMatch(trimmed);
+  final regExp3 = RegExp(r'/d/([a-zA-Z0-9_-]+)');
+  final match = regExp1.firstMatch(trimmed) ?? regExp2.firstMatch(trimmed) ?? regExp3.firstMatch(trimmed);
 
   if (match != null && match.group(1) != null) {
     final id = match.group(1)!;

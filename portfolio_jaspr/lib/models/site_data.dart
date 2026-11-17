@@ -21,25 +21,29 @@ class SiteData {
 
   factory SiteData.fromJson(Map<String, dynamic> json) {
     return SiteData(
-      profile: Profile.fromJson(json['profile'] as Map<String, dynamic>? ?? {}),
+      profile: Profile.fromJson(
+        json['profile'] != null
+            ? Map<String, dynamic>.from(json['profile'] as Map)
+            : {},
+      ),
       education: (json['education'] as List<dynamic>?)
-              ?.map((e) => Education.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => Education.fromJson(Map<String, dynamic>.from(e as Map)))
               .toList() ??
           [],
       experience: (json['experience'] as List<dynamic>?)
-              ?.map((e) => Experience.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => Experience.fromJson(Map<String, dynamic>.from(e as Map)))
               .toList() ??
           [],
       projects: (json['projects'] as List<dynamic>?)
-              ?.map((e) => Project.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => Project.fromJson(Map<String, dynamic>.from(e as Map)))
               .toList() ??
           [],
       gallery: (json['gallery'] as List<dynamic>?)
-              ?.map((e) => GalleryPhoto.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => GalleryPhoto.fromJson(Map<String, dynamic>.from(e as Map)))
               .toList() ??
           [],
       blog: (json['blog'] as List<dynamic>?)
-              ?.map((e) => BlogPost.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => BlogPost.fromJson(Map<String, dynamic>.from(e as Map)))
               .toList() ??
           [],
     );

@@ -53,7 +53,7 @@ class Profile {
       skills: (json['skills'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
       certifications: (json['certifications'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
       stats: (json['stats'] as List<dynamic>?)
-              ?.map((e) => StatItem.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => StatItem.fromJson(Map<String, dynamic>.from(e as Map)))
               .toList() ??
           [],
     );

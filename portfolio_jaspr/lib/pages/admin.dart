@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
@@ -143,6 +144,14 @@ class _AdminPageState extends State<AdminPage> {
       if (mounted) {
         setState(() => _isSaving = false);
         if (success) {
+          if (kIsWeb) {
+            try {
+              web.window.localStorage.setItem(
+                'cached_site_data',
+                jsonEncode(_data.toJson()),
+              );
+            } catch (_) {}
+          }
           _showToast('All changes saved to Firestore!');
         } else {
           _showToast('Failed to save to Firestore.');
