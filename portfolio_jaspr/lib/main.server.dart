@@ -15,6 +15,9 @@ void main() {
   runApp(Document(
     title: 'Mohamed Ilham | Senior Mobile Engineer & Flutter Specialist',
     head: [
+      link(rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg'),
+      link(rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'),
+      link(rel: 'apple-touch-icon', href: '/apple-touch-icon.png'),
       link(href: '/styles.css', rel: 'stylesheet'),
       meta(name: 'viewport', content: 'width=device-width, initial-scale=1.0'),
       meta(

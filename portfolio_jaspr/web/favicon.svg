@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="ambientGlow" cx="75%" cy="25%" r="60%">
+      <stop offset="0%" stop-color="#AB4AFF" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#AB4AFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="purpleGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background squircle -->
+  <rect width="64" height="64" rx="16" fill="#07070B"/>
+  
+  <!-- Subtle ambient purple top-right glow -->
+  <rect width="64" height="64" rx="16" fill="url(#ambientGlow)"/>
+
+  <!-- Border ring -->
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="#AB4AFF" stroke-width="2" stroke-opacity="0.8"/>
+
+  <!-- "i" dot -->
+  <circle cx="23" cy="19" r="4.2" fill="#FFFFFF"/>
+
+  <!-- "i" stem -->
+  <rect x="19" y="27" width="8" height="21" rx="2.5" fill="#FFFFFF"/>
+
+  <!-- Signature purple accent dot "." -->
+  <circle cx="41" cy="43.5" r="4.6" fill="#AB4AFF" filter="url(#purpleGlow)"/>
+</svg>
