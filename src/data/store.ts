@@ -200,6 +200,9 @@ const DOC_ID = 'main';
 const COLLECTION = 'portfolio';
 
 export async function loadData(): Promise<SiteData> {
+  if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
+    return defaultData;
+  }
   try {
     const docRef = doc(db, COLLECTION, DOC_ID);
     const docSnap = await getDoc(docRef);
