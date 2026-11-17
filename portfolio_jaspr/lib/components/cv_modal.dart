@@ -18,7 +18,11 @@ class CvModal extends StatelessComponent {
     return div(
       id: 'cv-modal-overlay',
       classes:
-          'fixed inset-0 z-[100] hidden items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md transition-opacity duration-300 opacity-0',
+          'fixed inset-0 z-[9999] items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md transition-opacity duration-200 opacity-0',
+      attributes: {
+        'style': 'display: none;',
+        'onclick': 'if(event.target.id === "cv-modal-overlay") { window.closeCvModal && window.closeCvModal(event); }',
+      },
       [
         // Modal Card Container
         div(
@@ -26,7 +30,7 @@ class CvModal extends StatelessComponent {
           classes:
               'relative w-full max-w-5xl h-[88vh] bg-[#0A0A0F] border border-[#2A2A38] rounded-2xl shadow-2xl flex flex-col overflow-hidden',
           attributes: {
-            'style': 'box-shadow: 0 0 50px rgba(171, 74, 255, 0.2);',
+            'style': 'box-shadow: 0 0 50px rgba(171, 74, 255, 0.25);',
           },
           [
             // Header Bar
@@ -34,7 +38,7 @@ class CvModal extends StatelessComponent {
               classes:
                   'flex items-center justify-between px-5 py-4 bg-[#101016] border-b border-[#222230]',
               [
-                // Title & Badge
+                // Title & Subtitle
                 div(classes: 'flex items-center gap-3', [
                   span(classes: 'text-xl', [text('📄')]),
                   div([
@@ -44,7 +48,7 @@ class CvModal extends StatelessComponent {
                     ),
                     p(
                       classes: 'text-xs text-[#8A8A93]',
-                      [text('PDF Document • Interactive Preview')],
+                      [text('PDF Document • Live Preview & Download')],
                     ),
                   ]),
                 ]),
@@ -72,9 +76,13 @@ class CvModal extends StatelessComponent {
                     ),
                   button(
                     id: 'close-cv-modal-btn',
+                    attributes: {
+                      'aria-label': 'Close modal',
+                      'type': 'button',
+                      'onclick': 'window.closeCvModal && window.closeCvModal(event)',
+                    },
                     classes:
                         'p-2 text-[#A1A1AA] hover:text-white hover:bg-[#20202C] rounded-lg transition-colors cursor-pointer text-lg leading-none flex items-center justify-center w-9 h-9',
-                    attributes: {'aria-label': 'Close modal'},
                     [text('✕')],
                   ),
                 ]),
@@ -100,73 +108,64 @@ class CvModal extends StatelessComponent {
           ],
         ),
 
-        // Vanilla JavaScript Controller to open/close with zero framework overhead
+        // Global JavaScript Controller (Guaranteed to work regardless of hydration timing)
         script(
           content: '''
-(function() {
-  function initCvModal() {
-    var overlay = document.getElementById('cv-modal-overlay');
-    var iframe = document.getElementById('cv-pdf-iframe');
-    var closeBtn = document.getElementById('close-cv-modal-btn');
-    var openBtn = document.getElementById('open-cv-modal-btn');
+window.openCvModal = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  var overlay = document.getElementById('cv-modal-overlay');
+  var iframe = document.getElementById('cv-pdf-iframe');
+  if (!overlay) return;
 
-    if (!overlay || !iframe) return;
-
+  if (iframe) {
     var previewUrl = iframe.getAttribute('data-preview-url') || '';
-
-    function openModal(e) {
-      if (e) e.preventDefault();
-      if (!iframe.src && previewUrl) {
-        iframe.src = previewUrl;
-      }
-      overlay.classList.remove('hidden');
-      overlay.classList.add('flex');
-      setTimeout(function() {
-        overlay.classList.remove('opacity-0');
-        overlay.classList.add('opacity-100');
-      }, 10);
-      document.body.style.overflow = 'hidden';
+    if (previewUrl && !iframe.src) {
+      iframe.src = previewUrl;
     }
-
-    function closeModal() {
-      overlay.classList.remove('opacity-100');
-      overlay.classList.add('opacity-0');
-      setTimeout(function() {
-        overlay.classList.remove('flex');
-        overlay.classList.add('hidden');
-        document.body.style.overflow = '';
-      }, 300);
-    }
-
-    if (openBtn) {
-      openBtn.addEventListener('click', openModal);
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeModal);
-    }
-
-    // Close when clicking outside the card
-    overlay.addEventListener('click', function(e) {
-      if (e.target === overlay) {
-        closeModal();
-      }
-    });
-
-    // Close on Escape key
-    window.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
-        closeModal();
-      }
-    });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCvModal);
-  } else {
-    initCvModal();
+  overlay.style.display = 'flex';
+  setTimeout(function() {
+    overlay.classList.remove('opacity-0');
+    overlay.classList.add('opacity-100');
+  }, 10);
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeCvModal = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  var overlay = document.getElementById('cv-modal-overlay');
+  if (!overlay) return;
+
+  overlay.classList.remove('opacity-100');
+  overlay.classList.add('opacity-0');
+  setTimeout(function() {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }, 200);
+};
+
+// Global Event Delegation (catches clicks even after DOM hydration)
+document.addEventListener('click', function(e) {
+  var target = e.target;
+  if (!target) return;
+  var btn = target.closest ? target.closest('#open-cv-modal-btn') : null;
+  if (btn || target.id === 'open-cv-modal-btn') {
+    e.preventDefault();
+    e.stopPropagation();
+    window.openCvModal(e);
   }
-})();
+});
+
+// Close on Escape key
+window.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var overlay = document.getElementById('cv-modal-overlay');
+    if (overlay && overlay.style.display !== 'none') {
+      window.closeCvModal(e);
+    }
+  }
+});
 ''',
         ),
       ],

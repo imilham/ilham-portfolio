@@ -2,7 +2,6 @@ import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import '../models/profile.dart';
 import '../core/utils/drive_utils.dart';
-import 'cv_modal.dart';
 
 class HeroSection extends StatelessComponent {
   final Profile profile;
@@ -74,14 +73,17 @@ class HeroSection extends StatelessComponent {
                     [text('Hire Me')],
                   ),
 
-                  // "View CV" Pill Button with Glowing Border (Opens Interactive Modal)
+                  // "Download CV" Pill Button with Glowing Border (Opens Interactive Preview & Downloader)
                   button(
                     id: 'open-cv-modal-btn',
+                    attributes: {
+                      'type': 'button',
+                      'onclick': 'window.openCvModal && window.openCvModal(event)',
+                    },
                     classes:
-                        'inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-[#0A0A0E]/80 border-2 border-[#38BDF8]/60 hover:border-[#38BDF8] hover:bg-[#38BDF8]/15 hover:shadow-lg hover:shadow-[#38BDF8]/25 transition-all duration-300 hover:scale-105 cursor-pointer',
+                        'inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm text-white bg-[#0A0A0E]/80 border-2 border-[#38BDF8]/60 hover:border-[#38BDF8] hover:bg-[#38BDF8]/15 hover:shadow-lg hover:shadow-[#38BDF8]/25 transition-all duration-300 hover:scale-105 cursor-pointer',
                     [
-                      span(classes: 'text-base', [text('📄')]),
-                      text('View CV'),
+                      text('Download CV'),
                     ],
                   ),
                 ]),
@@ -149,13 +151,6 @@ class HeroSection extends StatelessComponent {
             ],
           ),
         ]),
-
-        // Interactive CV Preview Modal (In-Page PDF Viewer & Direct Download)
-        CvModal(
-          cvDownloadUrl: cvDownloadUrl,
-          cvPreviewUrl: cvPreviewUrl,
-          cvExternalViewUrl: cvExternalViewUrl,
-        ),
       ],
     );
   }
