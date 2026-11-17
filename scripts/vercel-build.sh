@@ -26,6 +26,6 @@ npm install
 npm run build:css
 
 echo "🚀 [4/4] Building Jaspr Static Site Generation (SSG)..."
-jaspr build --sitemap-domain=https://imilham.com
+jaspr build -p 9020 --sitemap-domain=https://imilham.com
 
 echo "✅ Build completed successfully! Static output ready in portfolio_jaspr/build/jaspr"
