@@ -15,35 +15,15 @@ class Footer extends StatelessComponent {
           classes:
               'max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-xs',
           [
-            // Left: Code Branding { M/I } MOHAMED ILHAM
+            // Left: Brand logo
             div(classes: 'flex items-center gap-3', [
               Link(
                 to: '/',
                 classes:
-                    'group flex items-center gap-2.5 text-white/90 hover:text-white transition-colors',
+                    'text-base font-bold tracking-tight text-white hover:text-[#AB4AFF] transition-colors flex items-center',
                 child: span([
-                  // Stylized Monogram Brackets
-                  span(
-                    classes:
-                        'font-serif text-lg text-[#AB4AFF] font-light tracking-wider',
-                    [text('{ ')],
-                  ),
-                  span(
-                    classes:
-                        'text-xs font-mono font-bold tracking-widest text-white group-hover:text-[#AB4AFF] transition-colors',
-                    [text('M / I')],
-                  ),
-                  span(
-                    classes:
-                        'font-serif text-lg text-[#AB4AFF] font-light tracking-wider',
-                    [text(' }')],
-                  ),
-                  // Name with wide uppercase tracking matching reference
-                  span(
-                    classes:
-                        'ml-2 text-xs font-semibold tracking-[0.22em] text-[#E4E4E7] uppercase',
-                    [text('Mohamed Ilham')],
-                  ),
+                  text('imilham'),
+                  span(classes: 'text-[#AB4AFF]', [text('.')]),
                 ]),
               ),
             ]),
