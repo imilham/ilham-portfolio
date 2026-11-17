@@ -6,6 +6,8 @@ import 'data/portfolio_data.dart';
 import 'pages/home.dart';
 import 'pages/blog.dart';
 import 'pages/blog_post.dart';
+import 'pages/privacy.dart';
+import 'pages/terms.dart';
 
 class App extends StatelessComponent {
   const App({super.key});
@@ -27,6 +29,16 @@ class App extends StatelessComponent {
             path: '/blog',
             title: 'Blog | Mohamed Ilham',
             builder: (context, state) => const Blog(),
+          ),
+          Route(
+            path: '/privacy',
+            title: 'Privacy Policy | Mohamed Ilham',
+            builder: (context, state) => const PrivacyPage(),
+          ),
+          Route(
+            path: '/terms',
+            title: 'Terms and Conditions | Mohamed Ilham',
+            builder: (context, state) => const TermsPage(),
           ),
           // Statically pre-rendered routes for each blog post in SSG mode
           for (var post in defaultSiteData.blog)

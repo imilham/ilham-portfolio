@@ -1,5 +1,6 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
+import 'package:jaspr_router/jaspr_router.dart';
 
 class Footer extends StatelessComponent {
   const Footer({super.key});
@@ -7,37 +8,103 @@ class Footer extends StatelessComponent {
   @override
   Component build(BuildContext context) {
     return footer(
-      classes: 'py-10 px-6 bg-[#070709] border-t border-[#1A1A22]',
+      classes:
+          'relative z-20 py-10 px-6 sm:px-10 bg-[#040407]/80 backdrop-blur-md border-t border-[#1C1C28]',
       [
         div(
           classes:
-              'max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8A8A93]',
+              'max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-xs',
           [
-            div([
-              text('© ${DateTime.now().year} Mohamed Ilham. All rights reserved.'),
+            // Left: Code Branding { M/I } MOHAMED ILHAM
+            div(classes: 'flex items-center gap-3', [
+              Link(
+                to: '/',
+                classes:
+                    'group flex items-center gap-2.5 text-white/90 hover:text-white transition-colors',
+                child: span([
+                  // Stylized Monogram Brackets
+                  span(
+                    classes:
+                        'font-serif text-lg text-[#AB4AFF] font-light tracking-wider',
+                    [text('{ ')],
+                  ),
+                  span(
+                    classes:
+                        'text-xs font-mono font-bold tracking-widest text-white group-hover:text-[#AB4AFF] transition-colors',
+                    [text('M / I')],
+                  ),
+                  span(
+                    classes:
+                        'font-serif text-lg text-[#AB4AFF] font-light tracking-wider',
+                    [text(' }')],
+                  ),
+                  // Name with wide uppercase tracking matching reference
+                  span(
+                    classes:
+                        'ml-2 text-xs font-semibold tracking-[0.22em] text-[#E4E4E7] uppercase',
+                    [text('Mohamed Ilham')],
+                  ),
+                ]),
+              ),
             ]),
-            div(classes: 'flex items-center gap-6', [
-              a(
-                href: '/#about',
-                classes: 'hover:text-white transition-colors',
-                [text('About')],
-              ),
-              a(
-                href: '/#projects',
-                classes: 'hover:text-white transition-colors',
-                [text('Projects')],
-              ),
-              a(
-                href: '/blog',
-                classes: 'hover:text-white transition-colors',
-                [text('Blog')],
-              ),
-              a(
-                href: '/#contact',
-                classes: 'hover:text-white transition-colors',
-                [text('Contact')],
-              ),
-            ]),
+
+            // Center: Copyright Statement
+            div(
+              classes:
+                  'text-[#8E8EA0] text-center tracking-wide font-normal order-last md:order-none',
+              [
+                text('All rights reserved © 2024 - 2026'),
+              ],
+            ),
+
+            // Right: Status indicator, Privacy Policy & Terms Links
+            div(
+              classes:
+                  'flex flex-col items-center md:items-end gap-2 text-xs text-[#8E8EA0]',
+              [
+                // Status with animated live green dot
+                a(
+                  href: '/#contact',
+                  classes:
+                      'group inline-flex items-center gap-2 text-[#8E8EA0] hover:text-white transition-colors cursor-pointer',
+                  [
+                    span(classes: 'relative flex h-2 w-2', [
+                      span(
+                        classes:
+                            'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75',
+                        [],
+                      ),
+                      span(
+                        classes:
+                            'relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]',
+                        [],
+                      ),
+                    ]),
+                    span(
+                      classes:
+                          'text-xs font-medium text-[#D4D4D8] group-hover:text-white transition-colors',
+                      [text('Status')],
+                    ),
+                  ],
+                ),
+
+                // Privacy Policy Link
+                Link(
+                  to: '/privacy',
+                  classes:
+                      'text-xs text-[#8E8EA0] hover:text-[#AB4AFF] transition-colors font-normal',
+                  child: span([text('Privacy Policy')]),
+                ),
+
+                // Terms and Conditions Link
+                Link(
+                  to: '/terms',
+                  classes:
+                      'text-xs text-[#8E8EA0] hover:text-[#AB4AFF] transition-colors font-normal',
+                  child: span([text('Terms and Conditions')]),
+                ),
+              ],
+            ),
           ],
         ),
       ],
