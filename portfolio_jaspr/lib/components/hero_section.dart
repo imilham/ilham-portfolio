@@ -2,6 +2,7 @@ import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import '../models/profile.dart';
 import '../core/utils/drive_utils.dart';
+import 'cv_modal.dart';
 
 class HeroSection extends StatelessComponent {
   final Profile profile;
@@ -17,6 +18,8 @@ class HeroSection extends StatelessComponent {
         : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&auto=format&fit=crop&q=80';
 
     final cvDownloadUrl = getDriveDownloadUrl(profile.cvUrl);
+    final cvPreviewUrl = getDrivePreviewUrl(profile.cvUrl);
+    final cvExternalViewUrl = getDriveExternalViewUrl(profile.cvUrl);
 
     return section(
       classes:
@@ -71,14 +74,14 @@ class HeroSection extends StatelessComponent {
                     [text('Hire Me')],
                   ),
 
-                  // "Download CV" / "Explore Work" Pill Button with Glowing Border
-                  a(
-                    href: cvDownloadUrl.isNotEmpty ? cvDownloadUrl : '/#projects',
-                    target: cvDownloadUrl.isNotEmpty ? Target.blank : Target.self,
+                  // "View CV" Pill Button with Glowing Border (Opens Interactive Modal)
+                  button(
+                    id: 'open-cv-modal-btn',
                     classes:
-                        'inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm text-white bg-[#0A0A0E]/80 border-2 border-[#38BDF8]/60 hover:border-[#38BDF8] hover:bg-[#38BDF8]/15 hover:shadow-lg hover:shadow-[#38BDF8]/25 transition-all duration-300 hover:scale-105',
+                        'inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm text-white bg-[#0A0A0E]/80 border-2 border-[#38BDF8]/60 hover:border-[#38BDF8] hover:bg-[#38BDF8]/15 hover:shadow-lg hover:shadow-[#38BDF8]/25 transition-all duration-300 hover:scale-105 cursor-pointer',
                     [
-                      text('Download CV'),
+                      span(classes: 'text-base', [text('📄')]),
+                      text('View CV'),
                     ],
                   ),
                 ]),
@@ -146,6 +149,13 @@ class HeroSection extends StatelessComponent {
             ],
           ),
         ]),
+
+        // Interactive CV Preview Modal (In-Page PDF Viewer & Direct Download)
+        CvModal(
+          cvDownloadUrl: cvDownloadUrl,
+          cvPreviewUrl: cvPreviewUrl,
+          cvExternalViewUrl: cvExternalViewUrl,
+        ),
       ],
     );
   }

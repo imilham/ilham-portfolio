@@ -33,3 +33,35 @@ String getDriveDownloadUrl(String? url) {
   }
   return trimmed;
 }
+
+/// Google Drive embedded preview URL for iframes
+String getDrivePreviewUrl(String? url) {
+  if (url == null || url.trim().isEmpty) return '';
+  final trimmed = url.trim();
+
+  final regExp1 = RegExp(r'/file/d/([a-zA-Z0-9_-]+)');
+  final regExp2 = RegExp(r'[?&]id=([a-zA-Z0-9_-]+)');
+  final match = regExp1.firstMatch(trimmed) ?? regExp2.firstMatch(trimmed);
+
+  if (match != null && match.group(1) != null) {
+    final id = match.group(1)!;
+    return 'https://drive.google.com/file/d/$id/preview';
+  }
+  return trimmed;
+}
+
+/// Google Drive full external preview URL for opening in a new tab
+String getDriveExternalViewUrl(String? url) {
+  if (url == null || url.trim().isEmpty) return '';
+  final trimmed = url.trim();
+
+  final regExp1 = RegExp(r'/file/d/([a-zA-Z0-9_-]+)');
+  final regExp2 = RegExp(r'[?&]id=([a-zA-Z0-9_-]+)');
+  final match = regExp1.firstMatch(trimmed) ?? regExp2.firstMatch(trimmed);
+
+  if (match != null && match.group(1) != null) {
+    final id = match.group(1)!;
+    return 'https://drive.google.com/file/d/$id/view?usp=sharing';
+  }
+  return trimmed;
+}
