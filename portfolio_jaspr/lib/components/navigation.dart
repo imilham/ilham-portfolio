@@ -7,16 +7,13 @@ class Navigation extends StatelessComponent {
 
   @override
   Component build(BuildContext context) {
-    const avatarPlaceholder =
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80';
-
     return nav(
       classes:
           'fixed top-0 left-0 right-0 z-50 bg-[#0A0A0C]/85 backdrop-blur-md border-b border-[#1A1A22] transition-all',
       [
         div(
           classes:
-              'max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between',
+              'max-w-7xl mx-auto px-6 py-4 flex items-center justify-between',
           [
             // Logo
             Link(
@@ -30,7 +27,7 @@ class Navigation extends StatelessComponent {
             ),
 
             // Desktop Navigation Links
-            div(classes: 'hidden md:flex items-center gap-7', [
+            div(classes: 'hidden md:flex items-center gap-8', [
               a(
                 href: '/#about',
                 classes:
@@ -58,30 +55,12 @@ class Navigation extends StatelessComponent {
               a(
                 href: '/#contact',
                 classes:
-                    'px-4 py-2 rounded-lg text-sm font-semibold text-white bg-[#AB4AFF] hover:bg-[#9732f0] transition-colors shadow-lg shadow-[#AB4AFF]/20',
+                    'px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#AB4AFF] hover:bg-[#9732f0] transition-all shadow-lg shadow-[#AB4AFF]/20 hover:shadow-xl hover:shadow-[#AB4AFF]/30',
                 [text('Get in Touch')],
-              ),
-              // Top-right Profile Avatar Chip
-              a(
-                href: '/#about',
-                classes:
-                    'relative w-9 h-9 rounded-full ring-2 ring-[#AB4AFF]/50 overflow-hidden bg-[#1A1A24] flex items-center justify-center hover:ring-[#AB4AFF] hover:scale-105 transition-all shadow-md group',
-                [
-                  img(
-                    src: avatarPlaceholder,
-                    alt: 'Mohamed Ilham Profile',
-                    classes: 'w-full h-full object-cover',
-                  ),
-                  span(
-                    classes:
-                        'absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-[#0A0A0C]',
-                    [],
-                  ),
-                ],
               ),
             ]),
 
-            // Mobile menu indicator with mini avatar
+            // Mobile menu buttons
             div(classes: 'md:hidden flex items-center gap-3', [
               Link(
                 to: '/blog',
@@ -91,20 +70,8 @@ class Navigation extends StatelessComponent {
               a(
                 href: '/#contact',
                 classes:
-                    'px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#AB4AFF]',
+                    'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#AB4AFF]',
                 [text('Contact')],
-              ),
-              a(
-                href: '/#about',
-                classes:
-                    'relative w-8 h-8 rounded-full ring-2 ring-[#AB4AFF]/60 overflow-hidden bg-[#1A1A24]',
-                [
-                  img(
-                    src: avatarPlaceholder,
-                    alt: 'Profile',
-                    classes: 'w-full h-full object-cover',
-                  ),
-                ],
               ),
             ]),
           ],
