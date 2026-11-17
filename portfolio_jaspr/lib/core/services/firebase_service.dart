@@ -169,9 +169,18 @@ class FirebaseService {
             ))
         .toList();
 
-    final carouselTexts = (profileMap['carouselTexts'] as List<dynamic>? ?? [])
+    final rawCarousel = (profileMap['carouselTexts'] as List<dynamic>? ?? [])
         .map((t) => t.toString())
         .toList();
+    final carouselTexts = (rawCarousel.isNotEmpty &&
+            !rawCarousel.contains('a Mobile Engineer'))
+        ? rawCarousel
+        : defaultSiteData.profile.carouselTexts;
+
+    final rawName = profileMap['name']?.toString() ?? '';
+    final resolvedName = (rawName.isEmpty || rawName == 'Ilham')
+        ? defaultSiteData.profile.name
+        : rawName;
 
     final skills = (profileMap['skills'] as List<dynamic>? ?? [])
         .map((s) => s.toString())
@@ -182,7 +191,7 @@ class FirebaseService {
         .toList();
 
     final profile = Profile(
-      name: profileMap['name']?.toString() ?? defaultSiteData.profile.name,
+      name: resolvedName,
       tagline: profileMap['tagline']?.toString() ?? defaultSiteData.profile.tagline,
       bio: profileMap['bio']?.toString() ?? defaultSiteData.profile.bio,
       location: profileMap['location']?.toString() ?? defaultSiteData.profile.location,

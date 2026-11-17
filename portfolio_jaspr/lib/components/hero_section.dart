@@ -2,6 +2,7 @@ import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import '../models/profile.dart';
 import '../core/utils/drive_utils.dart';
+import 'animated_rotating_title.dart';
 
 class HeroSection extends StatelessComponent {
   final Profile profile;
@@ -42,11 +43,10 @@ class HeroSection extends StatelessComponent {
                         'text-5xl sm:text-7xl font-extrabold text-white tracking-tight leading-none',
                     [Component.text(profile.name)],
                   ),
-                  // Subtitle / Specialization
-                  h3(
-                    classes:
-                        'text-xl sm:text-2xl font-bold text-white pt-1 tracking-tight',
-                    [Component.text(profile.tagline)],
+                  // Subtitle / Specialization with Animated Letter Carousel
+                  AnimatedRotatingTitle(
+                    titles: profile.carouselTexts,
+                    fallbackTagline: profile.tagline,
                   ),
                 ]),
 

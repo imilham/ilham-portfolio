@@ -804,7 +804,15 @@ class _AdminPageState extends State<AdminPage> {
 
       // Name Carousel Texts
       _buildCard([
-        _buildSubTitle('Hero Rotating Text Carousel'),
+        _buildSubTitle('Hero Animated Role Titles (Rotating Subtitle)'),
+        p(
+          classes: 'text-xs text-[#8A8A93] mb-3 leading-relaxed',
+          [
+            Component.text(
+              'These titles rotate with animated sliding letters below your name on the hero section (e.g. Senior Mobile Engineer, Flutter Specialist, Entrepreneur).',
+            ),
+          ],
+        ),
         div(classes: 'flex flex-wrap gap-2 my-3', [
           for (var t in profile.carouselTexts)
             span(
@@ -825,7 +833,7 @@ class _AdminPageState extends State<AdminPage> {
             value: _newCarouselInput,
             onInput: (v) => _newCarouselInput = v,
             classes: _inputClass,
-            attributes: {'placeholder': 'Add role (e.g. Mobile Architect)'},
+            attributes: {'placeholder': 'Add role title (e.g. Entrepreneur)'},
           ),
           button(
             [Component.text('+ Add')],

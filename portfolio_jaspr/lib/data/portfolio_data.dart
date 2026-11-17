@@ -5,7 +5,7 @@ import '../models/site_data.dart';
 
 const defaultSiteData = SiteData(
   profile: Profile(
-    name: 'Ilham',
+    name: 'Mohamed Ilham',
     tagline: 'Senior Mobile Engineer & Flutter Specialist',
     bio:
         'Results-driven Flutter Engineer with 2+ years of experience delivering high-performance, cross-platform mobile applications. Specialized in clean architecture, modular code separation, and pixel-perfect UI implementation. Proven track record in optimizing app performance, secure API integration, and setting up automated CI/CD pipelines. A proactive technical leader committed to engineering excellence, actively mentoring junior developers and driving team-wide adoption of best practices and development standards.',
@@ -14,16 +14,14 @@ const defaultSiteData = SiteData(
     github: 'https://github.com',
     linkedin: 'https://linkedin.com',
     twitter: 'https://twitter.com',
-    heroPhoto:
-        'https://drive.google.com/file/d/1Rb0fKjZ3p8nXGwdW85jBJbNVWEDPCK_V/view?usp=sharing',
+    heroPhoto: 'https://drive.google.com/file/d/1Rb0fKjZ3p8nXGwdW85jBJbNVWEDPCK_V/view?usp=sharing',
     siteTitle: 'Mohamed Ilham — Software Engineer',
-    cvUrl:
-        'https://drive.google.com/file/d/1ABa6q4_hV8nqEusknLIdpXfdLTomS9KQ/view?usp=sharing',
+    cvUrl: 'https://drive.google.com/file/d/1ABa6q4_hV8nqEusknLIdpXfdLTomS9KQ/view?usp=sharing',
     enableCarousel: true,
     carouselTexts: [
-      'a Mobile Engineer',
-      'an Entrepreneur',
+      'Senior Mobile Engineer',
       'Flutter Specialist',
+      'Entrepreneur',
     ],
     skills: [
       'Flutter',
@@ -54,16 +52,14 @@ const defaultSiteData = SiteData(
       degree: 'BSc Computing - Reading',
       school: 'Wrexham Glyndwr University – UK',
       year: 'Present',
-      description:
-          'Specialized in Software Engineering and Artificial Intelligence.',
+      description: 'Specialized in Software Engineering and Artificial Intelligence.',
     ),
     Education(
       id: 'yzh610q6a8c',
       degree: 'Higher National Diploma In Software Engineering',
       school: 'National Institute Of Business Management',
       year: '2023 – 2024',
-      description:
-          'Comprehensive training in software systems, algorithms, and cross-platform architecture.',
+      description: 'Comprehensive training in software systems, algorithms, and cross-platform architecture.',
     ),
   ],
   experience: [
@@ -87,8 +83,7 @@ const defaultSiteData = SiteData(
       liveUrl: 'https://wathiq.lk',
       githubUrl: '#',
       featured: true,
-      image:
-          'https://drive.google.com/file/d/1dkPYQXbiMb88Bz7fLJsUvgyCUvOKoXtu/view?usp=sharing',
+      image: 'https://drive.google.com/file/d/1dkPYQXbiMb88Bz7fLJsUvgyCUvOKoXtu/view?usp=sharing',
     ),
     Project(
       id: 'phypbkl8ok',
@@ -99,22 +94,19 @@ const defaultSiteData = SiteData(
       liveUrl: 'https://wathiq.cyberpilum.com',
       githubUrl: '#',
       featured: true,
-      image:
-          'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80',
     ),
   ],
   gallery: [
     GalleryPhoto(
       id: '1',
-      url:
-          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
+      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
       caption: 'Mountain sunrise',
       category: 'Travel',
     ),
     GalleryPhoto(
       id: '2',
-      url:
-          'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&q=80',
+      url: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&q=80',
       caption: 'City lights',
       category: 'Urban',
     ),
@@ -166,13 +158,7 @@ Flutter is designed to avoid breaking existing apps. If a plugin does not suppor
 - Verify any custom iOS build scripts
 - Test your CI/CD pipeline after migration
 ''',
-      tags: [
-        'Flutter',
-        'iOSDevelopment',
-        'SwiftPM',
-        'SwiftPackageManager',
-        'MobileDevelopment'
-      ],
+      tags: ['Flutter', 'iOSDevelopment', 'SwiftPM', 'SwiftPackageManager', 'MobileDevelopment'],
       coverImage:
           'https://media.licdn.com/dms/image/v2/D4D22AQGRmGRkI_jnsA/feedshare-shrink_1280/B4DZ66mLGjJAAM-/0/1781247030146?e=1782950400&v=beta&t=NsTFwA2T9dt4bMd7j_RrvPlibW908A2hw-QKIA-NYXQ',
       publishedAt: '2026-06-13',
@@ -197,8 +183,7 @@ Enter **Jaspr**—the open-source Dart web framework powering `flutter.dev`.
 3. **Static Site Generation (SSG)**: Fast loading and top SEO rankings.
 ''',
       tags: ['Dart', 'Jaspr', 'Flutter', 'Web'],
-      coverImage:
-          'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=800&q=80',
+      coverImage: 'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=800&q=80',
       publishedAt: '2026-11-17',
       published: true,
     ),

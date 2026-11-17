@@ -244,3 +244,65 @@
   animation: circularHaloPulse 4s ease-in-out infinite;
   will-change: box-shadow, border-color;
 }
+
+/* --- Hero Rotating Role Letter Animations --- */
+@keyframes letterSlideInLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-14px, 0, 0);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+@keyframes letterSlideOutRight {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(14px, 0, 0);
+    filter: blur(3px);
+  }
+}
+
+.anim-letter-in {
+  display: inline-block;
+  opacity: 0;
+  animation: letterSlideInLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.anim-letter-out {
+  display: inline-block;
+  opacity: 1;
+  animation: letterSlideOutRight 0.3s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  will-change: transform, opacity;
+}
+
+.anim-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.15em;
+  margin-left: 0.35rem;
+  vertical-align: middle;
+  background: linear-gradient(to bottom, #AB4AFF, #38BDF8);
+  border-radius: 9999px;
+  box-shadow: 0 0 10px rgba(171, 74, 255, 0.6);
+  animation: cursorBlink 0.9s infinite ease-in-out;
+}
+
+@keyframes cursorBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

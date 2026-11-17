@@ -5,8 +5,11 @@
 // Generated with jaspr_builder
 
 import 'package:jaspr/server.dart';
+import 'package:portfolio_jaspr/components/animated_rotating_title.dart'
+    as _animated_rotating_title;
 import 'package:portfolio_jaspr/constants/theme.dart' as _theme;
 import 'package:portfolio_jaspr/pages/admin.dart' as _admin;
+import 'package:portfolio_jaspr/pages/home.dart' as _home;
 import 'package:portfolio_jaspr/app.dart' as _app;
 
 /// Default [ServerOptions] for use with your Jaspr project.
@@ -27,6 +30,18 @@ import 'package:portfolio_jaspr/app.dart' as _app;
 /// ```
 ServerOptions get defaultServerOptions => ServerOptions(
   clientId: 'main.client.dart.js',
-  clients: {_admin.AdminPage: ClientTarget<_admin.AdminPage>('admin')},
+  clients: {
+    _animated_rotating_title.AnimatedRotatingTitle:
+        ClientTarget<_animated_rotating_title.AnimatedRotatingTitle>(
+          'animated_rotating_title',
+          params: __animated_rotating_titleAnimatedRotatingTitle,
+        ),
+    _admin.AdminPage: ClientTarget<_admin.AdminPage>('admin'),
+    _home.Home: ClientTarget<_home.Home>('home'),
+  },
   styles: () => [..._theme.styles, ..._app.App.styles],
 );
+
+Map<String, Object?> __animated_rotating_titleAnimatedRotatingTitle(
+  _animated_rotating_title.AnimatedRotatingTitle c,
+) => {'titles': c.titles, 'fallbackTagline': c.fallbackTagline};

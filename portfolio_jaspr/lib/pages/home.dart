@@ -14,6 +14,7 @@ import '../components/gallery_section.dart';
 import '../components/contact_section.dart';
 import '../components/footer.dart';
 
+@client
 class Home extends StatefulComponent {
   const Home({super.key});
 
