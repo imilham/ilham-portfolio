@@ -1,0 +1,41 @@
+name: Verify Jaspr Build
+
+on:
+  push:
+    branches: [ feature/jaspor-migrate, main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build & Verify
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build Tailwind CSS
+        run: |
+          cd portfolio_jaspr
+          npm ci || npm install
+          npm run build:css
+
+      - name: Activate Jaspr CLI
+        run: dart pub global activate jaspr_cli
+
+      - name: Build Jaspr Static Site (SSG)
+        run: |
+          cd portfolio_jaspr
+          export PATH="$HOME/.pub-cache/bin:$PATH"
+          jaspr build --sitemap-domain=https://imilham.com
