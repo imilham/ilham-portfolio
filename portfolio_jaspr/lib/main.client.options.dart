@@ -6,8 +6,6 @@
 
 import 'package:jaspr/client.dart';
 
-import 'package:portfolio_jaspr/components/animated_rotating_title.dart'
-    deferred as _animated_rotating_title;
 import 'package:portfolio_jaspr/pages/admin.dart' deferred as _admin;
 import 'package:portfolio_jaspr/pages/home.dart' deferred as _home;
 
@@ -29,13 +27,6 @@ import 'package:portfolio_jaspr/pages/home.dart' deferred as _home;
 /// ```
 ClientOptions get defaultClientOptions => ClientOptions(
   clients: {
-    'animated_rotating_title': ClientLoader(
-      (p) => _animated_rotating_title.AnimatedRotatingTitle(
-        titles: (p['titles'] as List<Object?>).cast<String>(),
-        fallbackTagline: p['fallbackTagline'] as String,
-      ),
-      loader: _animated_rotating_title.loadLibrary,
-    ),
     'admin': ClientLoader(
       (p) => _admin.AdminPage(),
       loader: _admin.loadLibrary,

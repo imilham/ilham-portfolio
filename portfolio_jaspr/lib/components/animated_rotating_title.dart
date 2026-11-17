@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 
-@client
 class AnimatedRotatingTitle extends StatefulComponent {
   final List<String> titles;
   final String fallbackTagline;
