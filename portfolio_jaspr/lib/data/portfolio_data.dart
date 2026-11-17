@@ -1,5 +1,4 @@
 import '../models/profile.dart';
-import '../models/education_experience.dart';
 import '../models/portfolio_items.dart';
 import '../models/site_data.dart';
 
@@ -23,80 +22,17 @@ const defaultSiteData = SiteData(
       'Flutter Specialist',
       'Entrepreneur',
     ],
-    skills: [
-      'Flutter',
-      'Dart',
-      'Firebase',
-      'iOS',
-      'Android',
-      'Clean Architecture',
-      'CI/CD',
-      'Tailwind CSS',
-      'REST APIs',
-      'MySQL',
-    ],
-    certifications: [
-      'Flutter Development Expert',
-      'AWS Certified Solutions Architect',
-      'Google Cloud Professional Developer',
-    ],
+    skills: [],
+    certifications: [],
     stats: [
       StatItem(label: 'Projects', value: '12+'),
       StatItem(label: 'Years Exp.', value: '3+'),
       StatItem(label: 'Happy Clients', value: '10+'),
     ],
   ),
-  education: [
-    Education(
-      id: '1',
-      degree: 'BSc Computing',
-      school: 'Wrexham Glyndwr University – UK',
-      year: 'Present',
-      description: 'Specialized in Software Engineering and Artificial Intelligence.',
-    ),
-    Education(
-      id: 'yzh610q6a8c',
-      degree: 'Higher National Diploma In Software Engineering',
-      school: 'National Institute Of Business Management',
-      year: '2023 – 2024',
-      description: 'Comprehensive training in software systems, algorithms, and cross-platform architecture.',
-    ),
-  ],
-  experience: [
-    Experience(
-      id: '1',
-      role: 'Senior Mobile / Flutter Developer',
-      company: 'Tech Solutions',
-      period: 'Jan 2024 – Present',
-      description:
-          'Architecting and scaling cross-platform mobile applications with Clean Architecture and state management.',
-      technologies: ['Flutter', 'Dart', 'Bloc', 'Firebase', 'REST APIs'],
-    ),
-  ],
-  projects: [
-    Project(
-      id: '1',
-      title: 'Wathiq',
-      description:
-          'A cross-platform ecosystem built to connect Sri Lankan Muslims globally. The platform features a highly modular architecture supporting real-time peer-to-peer networking, inter-community service directories, and complex financial logic for automated Zakat calculation and distribution.',
-      tags: ['Flutter', 'Dart', 'MySQL', '.NET', 'Cloudflare', 'GitHub'],
-      liveUrl: 'https://wathiq.lk',
-      githubUrl: '#',
-      featured: true,
-      image: 'https://drive.google.com/file/d/1dkPYQXbiMb88Bz7fLJsUvgyCUvOKoXtu/view?usp=sharing',
-    ),
-    Project(
-      id: 'phypbkl8ok',
-      title: 'Manamali',
-      description:
-          'A high-security matrimonial super-app engineered with a modular, hub-and-spoke architecture. Features a multi-step user onboarding pipeline, AI-driven identity verification with liveness checks, and a cross-platform codebase supporting secure matchmaking.',
-      tags: ['Flutter', 'Dart', 'Laravel', 'PHP'],
-      liveUrl: 'https://wathiq.cyberpilum.com',
-      githubUrl: '#',
-      featured: true,
-      image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80',
-    ),
-  ],
+  education: [],
+  experience: [],
+  projects: [],
   gallery: [],
   blog: [
     BlogPost(

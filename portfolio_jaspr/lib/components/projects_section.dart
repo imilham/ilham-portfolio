@@ -14,6 +14,10 @@ class ProjectsSection extends StatelessComponent {
         ? projects.where((proj) => proj.featured).toList()
         : projects;
 
+    if (displayProjects.isEmpty) {
+      return div([]);
+    }
+
     return section(
       id: 'projects',
       classes: 'py-24 px-6 bg-transparent border-t border-[#1A1A22]/60',

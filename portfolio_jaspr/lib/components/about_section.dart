@@ -69,107 +69,113 @@ class AboutSection extends StatelessComponent {
             ]),
 
             // Right Column: Skills & Certifications
-            div(classes: 'lg:col-span-6 space-y-8', [
-              // Skills
-              div(
-                classes:
-                    'p-6 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-4',
-                [
-                  h3(classes: 'text-lg font-bold text-white', [
-                    Component.text('Technical Skills'),
-                  ]),
-                  div(classes: 'flex flex-wrap gap-2', [
-                    for (var skill in profile.skills)
-                      span(
-                        classes:
-                            'px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#1A1A22] text-[#F4F4F6] border border-[#2A2A36]',
-                        [Component.text(skill)],
-                      ),
-                  ]),
-                ],
-              ),
-
-              // Certifications
-              div(
-                classes:
-                    'p-6 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-4',
-                [
-                  h3(classes: 'text-lg font-bold text-white', [
-                    Component.text('Certifications & Accreditations'),
-                  ]),
-                  div(classes: 'space-y-3', [
-                    for (var cert in profile.certifications)
-                      div(classes: 'flex items-center gap-3', [
-                        span(
-                          classes:
-                              'w-6 h-6 rounded-full bg-[#AB4AFF]/10 text-[#AB4AFF] flex items-center justify-center text-xs font-bold shrink-0',
-                          [Component.text('✓')],
-                        ),
-                        span(
-                          classes: 'text-sm font-medium text-[#C4C4CC]',
-                          [Component.text(cert)],
-                        ),
+            if (profile.skills.isNotEmpty || profile.certifications.isNotEmpty)
+              div(classes: 'lg:col-span-6 space-y-8', [
+                // Skills
+                if (profile.skills.isNotEmpty)
+                  div(
+                    classes:
+                        'p-6 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-4',
+                    [
+                      h3(classes: 'text-lg font-bold text-white', [
+                        Component.text('Technical Skills'),
                       ]),
-                  ]),
-                ],
-              ),
-            ]),
+                      div(classes: 'flex flex-wrap gap-2', [
+                        for (var skill in profile.skills)
+                          span(
+                            classes:
+                                'px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#1A1A22] text-[#F4F4F6] border border-[#2A2A36]',
+                            [Component.text(skill)],
+                          ),
+                      ]),
+                    ],
+                  ),
+
+                // Certifications
+                if (profile.certifications.isNotEmpty)
+                  div(
+                    classes:
+                        'p-6 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-4',
+                    [
+                      h3(classes: 'text-lg font-bold text-white', [
+                        Component.text('Certifications & Accreditations'),
+                      ]),
+                      div(classes: 'space-y-3', [
+                        for (var cert in profile.certifications)
+                          div(classes: 'flex items-center gap-3', [
+                            span(
+                              classes:
+                                  'w-6 h-6 rounded-full bg-[#AB4AFF]/10 text-[#AB4AFF] flex items-center justify-center text-xs font-bold shrink-0',
+                              [Component.text('✓')],
+                            ),
+                            span(
+                              classes: 'text-sm font-medium text-[#C4C4CC]',
+                              [Component.text(cert)],
+                            ),
+                          ]),
+                      ]),
+                    ],
+                  ),
+              ]),
           ]),
 
           // Experience & Education Cards
-          div(classes: 'grid grid-cols-1 md:grid-cols-2 gap-8 pt-6', [
-            // Experience
-            div(
-              classes:
-                  'p-6 sm:p-8 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-6',
-              [
-                h3(classes: 'text-xl font-bold text-white flex items-center gap-2', [
-                  Component.text('💼 Experience'),
-                ]),
-                for (var exp in experience)
-                  div(classes: 'space-y-2 border-l-2 border-[#AB4AFF] pl-4', [
-                    div(classes: 'flex justify-between items-baseline', [
-                      h4(classes: 'text-base font-semibold text-white', [
-                        Component.text(exp.role),
+          if (experience.isNotEmpty || education.isNotEmpty)
+            div(classes: 'grid grid-cols-1 md:grid-cols-2 gap-8 pt-6', [
+              // Experience
+              if (experience.isNotEmpty)
+                div(
+                  classes:
+                      'p-6 sm:p-8 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-6',
+                  [
+                    h3(classes: 'text-xl font-bold text-white flex items-center gap-2', [
+                      Component.text('💼 Experience'),
+                    ]),
+                    for (var exp in experience)
+                      div(classes: 'space-y-2 border-l-2 border-[#AB4AFF] pl-4', [
+                        div(classes: 'flex justify-between items-baseline', [
+                          h4(classes: 'text-base font-semibold text-white', [
+                            Component.text(exp.role),
+                          ]),
+                          span(classes: 'text-xs text-[#8A8A93]', [Component.text(exp.period)]),
+                        ]),
+                        div(classes: 'text-sm font-medium text-[#AB4AFF]', [
+                          Component.text(exp.company),
+                        ]),
+                        p(classes: 'text-xs text-[#8A8A93] leading-relaxed', [
+                          Component.text(exp.description),
+                        ]),
                       ]),
-                      span(classes: 'text-xs text-[#8A8A93]', [Component.text(exp.period)]),
-                    ]),
-                    div(classes: 'text-sm font-medium text-[#AB4AFF]', [
-                      Component.text(exp.company),
-                    ]),
-                    p(classes: 'text-xs text-[#8A8A93] leading-relaxed', [
-                      Component.text(exp.description),
-                    ]),
-                  ]),
-              ],
-            ),
+                  ],
+                ),
 
-            // Education
-            div(
-              classes:
-                  'p-6 sm:p-8 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-6',
-              [
-                h3(classes: 'text-xl font-bold text-white flex items-center gap-2', [
-                  Component.text('🎓 Education'),
-                ]),
-                for (var edu in education)
-                  div(classes: 'space-y-2 border-l-2 border-[#AB4AFF] pl-4', [
-                    div(classes: 'flex justify-between items-baseline', [
-                      h4(classes: 'text-base font-semibold text-white', [
-                        Component.text(edu.degree),
+              // Education
+              if (education.isNotEmpty)
+                div(
+                  classes:
+                      'p-6 sm:p-8 rounded-2xl bg-[#121216] border border-[#1A1A22] space-y-6',
+                  [
+                    h3(classes: 'text-xl font-bold text-white flex items-center gap-2', [
+                      Component.text('🎓 Education'),
+                    ]),
+                    for (var edu in education)
+                      div(classes: 'space-y-2 border-l-2 border-[#AB4AFF] pl-4', [
+                        div(classes: 'flex justify-between items-baseline', [
+                          h4(classes: 'text-base font-semibold text-white', [
+                            Component.text(edu.degree),
+                          ]),
+                          span(classes: 'text-xs text-[#8A8A93]', [Component.text(edu.year)]),
+                        ]),
+                        div(classes: 'text-sm font-medium text-[#AB4AFF]', [
+                          Component.text(edu.school),
+                        ]),
+                        p(classes: 'text-xs text-[#8A8A93] leading-relaxed', [
+                          Component.text(edu.description),
+                        ]),
                       ]),
-                      span(classes: 'text-xs text-[#8A8A93]', [Component.text(edu.year)]),
-                    ]),
-                    div(classes: 'text-sm font-medium text-[#AB4AFF]', [
-                      Component.text(edu.school),
-                    ]),
-                    p(classes: 'text-xs text-[#8A8A93] leading-relaxed', [
-                      Component.text(edu.description),
-                    ]),
-                  ]),
-              ],
-            ),
-          ]),
+                  ],
+                ),
+            ]),
         ]),
       ],
     );
