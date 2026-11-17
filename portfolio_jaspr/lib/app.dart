@@ -16,7 +16,7 @@ class App extends StatelessComponent {
   Component build(BuildContext context) {
     return div(
       classes:
-          'min-h-screen bg-[#0A0A0C] text-[#F4F4F6] font-sans antialiased selection:bg-[#AB4AFF] selection:text-white',
+          'min-h-screen bg-[#020204] text-[#F4F4F6] font-sans antialiased selection:bg-[#AB4AFF] selection:text-white',
       [
         Router(routes: [
           Route(

@@ -109,10 +109,10 @@ class HeroSection extends StatelessComponent {
                 classes:
                     'lg:col-span-5 flex justify-center lg:justify-end relative',
                 [
-                  // Ambient Purple Glow behind the circle
+                  // Ambient Purple Glow behind the circle (Subtle, focused halo)
                   div(
                     classes:
-                        'absolute -inset-10 bg-gradient-to-tr from-[#AB4AFF]/40 via-[#7C3AED]/30 to-[#38BDF8]/20 rounded-full blur-3xl opacity-75 -z-10 animate-pulse',
+                        'absolute -inset-4 bg-gradient-to-tr from-[#AB4AFF]/30 via-[#7C3AED]/20 to-transparent rounded-full blur-2xl opacity-50 -z-10',
                     [],
                   ),
 

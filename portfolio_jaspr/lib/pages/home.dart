@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
   Component build(BuildContext context) {
     return div(
       classes:
-          'min-h-screen bg-[#0A0A0C] text-[#F4F4F6] relative selection:bg-[#AB4AFF] selection:text-white',
+          'min-h-screen bg-[#020204] text-[#F4F4F6] relative selection:bg-[#AB4AFF] selection:text-white',
       [
         // Living Ambient Animated Canvas
         const AmbientBackground(),

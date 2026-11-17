@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    background-color: #040407;
+    background-color: #020204;
     color: #F4F4F6;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     overflow-x: hidden;
@@ -13,63 +13,60 @@
 
 /* --- Deep Cosmic Space & Starfield Animations --- */
 
-/* Cosmic Deep Space Background with Nebulas */
+/* Cosmic Deep Space Background - Dark Void with Subtle Ambient Depth */
 .bg-deep-space {
   background: 
-    radial-gradient(circle at 85% 25%, rgba(171, 74, 255, 0.20) 0%, transparent 45%),
-    radial-gradient(circle at 15% 65%, rgba(99, 102, 241, 0.16) 0%, transparent 40%),
-    radial-gradient(circle at 50% 90%, rgba(139, 92, 246, 0.14) 0%, transparent 50%),
-    #040407;
+    radial-gradient(circle at 85% 25%, rgba(171, 74, 255, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 15% 65%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+    #020204;
 }
 
-/* Twinkling & Floating Stars Animations with Energetic Shimmer */
+/* Twinkling & Floating Stars Animations - Crisp, Pinpoint Shimmer */
 @keyframes starDriftFast {
   0%, 100% {
-    opacity: 0.55;
+    opacity: 0.45;
     transform: translate(0px, 0px) scale(0.9);
   }
   50% {
     opacity: 1;
-    transform: translate(-14px, 16px) scale(1.45);
-    filter: drop-shadow(0 0 4px #fff);
+    transform: translate(-12px, 14px) scale(1.35);
+    filter: drop-shadow(0 0 2px #fff);
   }
 }
 
 @keyframes starDriftSlow {
   0%, 100% {
-    opacity: 0.45;
+    opacity: 0.35;
     transform: translate(0px, 0px) scale(0.95);
   }
   50% {
-    opacity: 1;
-    transform: translate(12px, -15px) scale(1.35);
-    filter: drop-shadow(0 0 3px #fff);
+    opacity: 0.95;
+    transform: translate(10px, -12px) scale(1.25);
+    filter: drop-shadow(0 0 1.5px #fff);
   }
 }
 
 @keyframes starDriftPulse {
   0%, 100% {
-    opacity: 0.6;
+    opacity: 0.5;
     transform: translate(0px, 0px) scale(1);
-    filter: drop-shadow(0 0 2px #fff);
   }
   50% {
     opacity: 1;
-    transform: translate(10px, 12px) scale(1.65);
-    filter: drop-shadow(0 0 8px #AB4AFF) drop-shadow(0 0 16px #C084FC);
+    transform: translate(8px, 10px) scale(1.45);
+    filter: drop-shadow(0 0 4px #AB4AFF) drop-shadow(0 0 8px #C084FC);
   }
 }
 
 @keyframes starSparkle {
   0%, 100% {
-    opacity: 0.5;
+    opacity: 0.4;
     transform: scale(0.8) rotate(0deg);
-    filter: drop-shadow(0 0 2px #fff);
   }
   50% {
     opacity: 1;
-    transform: scale(1.7) rotate(45deg);
-    filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 18px #38BDF8);
+    transform: scale(1.5) rotate(45deg);
+    filter: drop-shadow(0 0 4px #fff) drop-shadow(0 0 8px #38BDF8);
   }
 }
 
@@ -239,11 +236,11 @@
 /* Glowing Halo around Circular Photo */
 @keyframes circularHaloPulse {
   0%, 100% {
-    box-shadow: 0 0 50px 10px rgba(171, 74, 255, 0.35), 0 0 100px 25px rgba(171, 74, 255, 0.15);
+    box-shadow: 0 0 30px 4px rgba(171, 74, 255, 0.4), 0 0 60px 10px rgba(171, 74, 255, 0.15);
     border-color: rgba(171, 74, 255, 0.5);
   }
   50% {
-    box-shadow: 0 0 75px 18px rgba(171, 74, 255, 0.55), 0 0 130px 35px rgba(171, 74, 255, 0.25);
+    box-shadow: 0 0 45px 8px rgba(171, 74, 255, 0.55), 0 0 80px 16px rgba(171, 74, 255, 0.2);
     border-color: rgba(192, 132, 252, 0.85);
   }
 }
