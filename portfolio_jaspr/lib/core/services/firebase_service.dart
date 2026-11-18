@@ -7,6 +7,32 @@ import '../../models/site_data.dart';
 import '../../data/portfolio_data.dart';
 import '../utils/drive_utils.dart';
 
+class AuthResult {
+  final String idToken;
+  final String refreshToken;
+  final String email;
+
+  const AuthResult({
+    required this.idToken,
+    required this.refreshToken,
+    required this.email,
+  });
+}
+
+class SaveResult {
+  final bool success;
+  final String? errorMessage;
+  final int statusCode;
+  final String? refreshedToken;
+
+  const SaveResult({
+    required this.success,
+    this.errorMessage,
+    this.statusCode = 200,
+    this.refreshedToken,
+  });
+}
+
 class FirebaseService {
   static const String apiKey = 'AIzaSyC4JMX3TvMpBdZ1I3-tIV9ETbDIQ4PHaKY';
   static const String projectId = 'imilham-portfolio';
@@ -19,9 +45,12 @@ class FirebaseService {
   static const String authEndpoint =
       'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$apiKey';
 
+  static const String tokenEndpoint =
+      'https://securetoken.googleapis.com/v1/token?key=$apiKey';
+
   /// Sign in with Firebase email and password via Firebase Auth REST API.
-  /// Returns the idToken on success, or throws an exception on error.
-  static Future<String> signInWithEmailAndPassword(
+  /// Returns AuthResult (idToken, refreshToken, email) on success, or throws on error.
+  static Future<AuthResult> signInWithEmailAndPassword(
       String email, String password) async {
     final response = await http.post(
       Uri.parse(authEndpoint),
@@ -35,12 +64,32 @@ class FirebaseService {
 
     final data = jsonDecode(response.body) as Map<String, dynamic>;
     if (response.statusCode == 200 && data.containsKey('idToken')) {
-      return data['idToken'] as String;
+      return AuthResult(
+        idToken: data['idToken'] as String,
+        refreshToken: data['refreshToken'] as String? ?? '',
+        email: data['email'] as String? ?? email.trim(),
+      );
     } else {
       final errorMap = data['error'] as Map<String, dynamic>?;
       final message = errorMap?['message']?.toString() ?? 'Invalid credentials';
       throw Exception(message);
     }
+  }
+
+  /// Exchange a Firebase refresh token for a fresh idToken.
+  static Future<String?> refreshIdToken(String refreshToken) async {
+    try {
+      final response = await http.post(
+        Uri.parse(tokenEndpoint),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'grant_type=refresh_token&refresh_token=$refreshToken',
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        return data['id_token'] as String?;
+      }
+    } catch (_) {}
+    return null;
   }
 
   /// Fetch the latest site data from Firestore.
@@ -65,8 +114,12 @@ class FirebaseService {
     return defaultSiteData;
   }
 
-  /// Save full SiteData to Firestore via REST PATCH.
-  static Future<bool> saveSiteData(SiteData data, {String? idToken}) async {
+  /// Save full SiteData to Firestore via REST PATCH with automatic token refresh.
+  static Future<SaveResult> saveSiteData(
+    SiteData data, {
+    String? idToken,
+    String? refreshToken,
+  }) async {
     final fieldsMap = <String, dynamic>{
       'profile': _toFirestoreValue(data.profile.toJson()),
       'education': _toFirestoreValue(data.education.map((e) => e.toJson()).toList()),
@@ -76,20 +129,66 @@ class FirebaseService {
       'blog': _toFirestoreValue(data.blog.map((b) => b.toJson()).toList()),
     };
 
-    final headers = <String, String>{
-      'Content-Type': 'application/json',
-    };
-    if (idToken != null && idToken.isNotEmpty) {
-      headers['Authorization'] = 'Bearer $idToken';
+    final patchUrl =
+        '$firestoreEndpoint&updateMask.fieldPaths=profile&updateMask.fieldPaths=education&updateMask.fieldPaths=experience&updateMask.fieldPaths=projects&updateMask.fieldPaths=gallery&updateMask.fieldPaths=blog';
+
+    String? currentToken = idToken;
+    String? newlyRefreshedToken;
+
+    Future<http.Response> doPatch(String? token) {
+      final headers = <String, String>{
+        'Content-Type': 'application/json',
+      };
+      if (token != null && token.isNotEmpty) {
+        headers['Authorization'] = 'Bearer $token';
+      }
+      return http.patch(
+        Uri.parse(patchUrl),
+        headers: headers,
+        body: jsonEncode({'fields': fieldsMap}),
+      );
     }
 
-    final response = await http.patch(
-      Uri.parse(firestoreEndpoint),
-      headers: headers,
-      body: jsonEncode({'fields': fieldsMap}),
-    );
+    var response = await doPatch(currentToken);
 
-    return response.statusCode == 200;
+    // If unauthorized (token expired) and refreshToken is provided, attempt auto-refresh and retry once
+    if ((response.statusCode == 401 || response.statusCode == 403) &&
+        refreshToken != null &&
+        refreshToken.isNotEmpty) {
+      final fresh = await refreshIdToken(refreshToken);
+      if (fresh != null && fresh.isNotEmpty) {
+        newlyRefreshedToken = fresh;
+        currentToken = fresh;
+        response = await doPatch(fresh);
+      }
+    }
+
+    if (response.statusCode == 200) {
+      return SaveResult(
+        success: true,
+        refreshedToken: newlyRefreshedToken,
+      );
+    }
+
+    String errorMsg = 'Failed to save (Status ${response.statusCode})';
+    try {
+      final Map<String, dynamic> bodyJson = jsonDecode(response.body);
+      final errorMap = bodyJson['error'] as Map<String, dynamic>?;
+      if (errorMap != null && errorMap.containsKey('message')) {
+        errorMsg = errorMap['message'].toString();
+      }
+    } catch (_) {}
+
+    if (response.statusCode == 401 || response.statusCode == 403) {
+      errorMsg = 'Session expired or insufficient permissions. Please log in again.';
+    }
+
+    return SaveResult(
+      success: false,
+      errorMessage: errorMsg,
+      statusCode: response.statusCode,
+      refreshedToken: newlyRefreshedToken,
+    );
   }
 
   static dynamic _toFirestoreValue(dynamic val) {
@@ -109,16 +208,19 @@ class FirebaseService {
       return {'stringValue': val};
     }
     if (val is List) {
+      if (val.isEmpty) {
+        return {'arrayValue': {}};
+      }
       return {
         'arrayValue': {
           'values': val.map(_toFirestoreValue).toList(),
         }
       };
     }
-    if (val is Map<String, dynamic>) {
+    if (val is Map) {
       final fields = <String, dynamic>{};
       for (final entry in val.entries) {
-        fields[entry.key] = _toFirestoreValue(entry.value);
+        fields[entry.key.toString()] = _toFirestoreValue(entry.value);
       }
       return {
         'mapValue': {'fields': fields}

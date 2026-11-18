@@ -25,6 +25,7 @@ class _AdminPageState extends State<AdminPage> {
   bool _isAuthLoading = false;
   String _authError = '';
   String _idToken = '';
+  String _refreshToken = '';
 
   // Login form inputs
   String _loginEmail = '';
@@ -49,6 +50,14 @@ class _AdminPageState extends State<AdminPage> {
     super.initState();
     if (kIsWeb) {
       final savedToken = web.window.localStorage.getItem('admin_id_token');
+      final savedRefreshToken = web.window.localStorage.getItem('admin_refresh_token');
+      final savedEmail = web.window.localStorage.getItem('admin_email');
+      if (savedEmail != null && savedEmail.isNotEmpty) {
+        _loginEmail = savedEmail;
+      }
+      if (savedRefreshToken != null && savedRefreshToken.isNotEmpty) {
+        _refreshToken = savedRefreshToken;
+      }
       if (savedToken != null && savedToken.isNotEmpty) {
         _idToken = savedToken;
         _isAuthenticated = true;
@@ -85,18 +94,26 @@ class _AdminPageState extends State<AdminPage> {
     });
 
     try {
-      final token = await FirebaseService.signInWithEmailAndPassword(
+      final authResult = await FirebaseService.signInWithEmailAndPassword(
         _loginEmail.trim(),
         _loginPassword,
       );
       if (kIsWeb) {
-        web.window.localStorage.setItem('admin_id_token', token);
+        web.window.localStorage.setItem('admin_id_token', authResult.idToken);
+        if (authResult.refreshToken.isNotEmpty) {
+          web.window.localStorage.setItem('admin_refresh_token', authResult.refreshToken);
+        }
+        web.window.localStorage.setItem('admin_email', authResult.email);
       }
       if (mounted) {
         setState(() {
-          _idToken = token;
+          _idToken = authResult.idToken;
+          if (authResult.refreshToken.isNotEmpty) {
+            _refreshToken = authResult.refreshToken;
+          }
           _isAuthenticated = true;
           _isAuthLoading = false;
+          _authError = '';
         });
         _showToast('Logged in successfully!');
       }
@@ -126,10 +143,12 @@ class _AdminPageState extends State<AdminPage> {
   void _handleLogout() {
     if (kIsWeb) {
       web.window.localStorage.removeItem('admin_id_token');
+      web.window.localStorage.removeItem('admin_refresh_token');
     }
     setState(() {
       _isAuthenticated = false;
       _idToken = '';
+      _refreshToken = '';
       _loginPassword = '';
     });
   }
@@ -137,13 +156,22 @@ class _AdminPageState extends State<AdminPage> {
   void _saveAllChanges() async {
     setState(() => _isSaving = true);
     try {
-      final success = await FirebaseService.saveSiteData(
+      final result = await FirebaseService.saveSiteData(
         _data,
         idToken: _idToken.isNotEmpty ? _idToken : null,
+        refreshToken: _refreshToken.isNotEmpty ? _refreshToken : null,
       );
       if (mounted) {
         setState(() => _isSaving = false);
-        if (success) {
+
+        if (result.refreshedToken != null && result.refreshedToken!.isNotEmpty) {
+          _idToken = result.refreshedToken!;
+          if (kIsWeb) {
+            web.window.localStorage.setItem('admin_id_token', _idToken);
+          }
+        }
+
+        if (result.success) {
           if (kIsWeb) {
             try {
               web.window.localStorage.setItem(
@@ -154,7 +182,13 @@ class _AdminPageState extends State<AdminPage> {
           }
           _showToast('All changes saved to Firestore!');
         } else {
-          _showToast('Failed to save to Firestore.');
+          _showToast(result.errorMessage ?? 'Failed to save to Firestore.');
+          if (result.statusCode == 401 || result.statusCode == 403) {
+            setState(() {
+              _isAuthenticated = false;
+              _authError = 'Your login session has expired. Please sign in again to save your changes.';
+            });
+          }
         }
       }
     } catch (e) {
