@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
         // Foreground Content
         const Navigation(),
         div(classes: 'relative z-10', [
-          HeroSection(profile: defaultSiteData.profile),
+          HeroSection(profile: _data.profile),
           AboutSection(
             profile: _data.profile,
             education: _data.education,
@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
           ),
           ProjectsSection(projects: _data.projects),
           GallerySection(gallery: _data.gallery),
-          ContactSection(profile: defaultSiteData.profile),
+          ContactSection(profile: _data.profile),
           const Footer(),
         ]),
       ],

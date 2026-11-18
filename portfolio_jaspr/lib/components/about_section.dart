@@ -40,33 +40,18 @@ class AboutSection extends StatelessComponent {
 
           // Main 2-column layout
           div(classes: 'grid grid-cols-1 lg:grid-cols-12 gap-12', [
-            // Left Column: Bio & Core Values
-            div(classes: 'lg:col-span-6 space-y-8', [
-              p(
-                classes: 'text-base sm:text-lg text-[#8A8A93] leading-relaxed',
-                [Component.text(profile.bio)],
-              ),
-
-              div(classes: 'space-y-4 pt-4', [
-                h3(classes: 'text-lg font-bold text-white', [
-                  Component.text('Core Engineering Values'),
-                ]),
-                ul(classes: 'space-y-3', [
-                  _valueItem(
-                    'Performance-First Architecture',
-                    'Optimizing frame rates, memory footprints, and asset bundles for maximum responsiveness.',
-                  ),
-                  _valueItem(
-                    'Clean & Testable Code',
-                    'Layered clean architecture separation with robust automated testing and dependency inversion.',
-                  ),
-                  _valueItem(
-                    'Ecosystem Agility',
-                    'Deep specialization in Flutter & Dart, coupled with modern web standards and cloud infrastructure.',
-                  ),
-                ]),
-              ]),
-            ]),
+            // Left Column: Bio
+            div(
+              classes: (profile.skills.isNotEmpty || profile.certifications.isNotEmpty)
+                  ? 'lg:col-span-6 space-y-6'
+                  : 'lg:col-span-12 space-y-6',
+              [
+                p(
+                  classes: 'text-base sm:text-lg text-[#A1A1AA] leading-relaxed',
+                  [Component.text(profile.bio)],
+                ),
+              ],
+            ),
 
             // Right Column: Skills & Certifications
             if (profile.skills.isNotEmpty || profile.certifications.isNotEmpty)
@@ -179,15 +164,5 @@ class AboutSection extends StatelessComponent {
         ]),
       ],
     );
-  }
-
-  Component _valueItem(String title, String desc) {
-    return li(classes: 'flex items-start gap-3', [
-      span(classes: 'text-[#AB4AFF] font-bold mt-0.5', [Component.text('▸')]),
-      div([
-        span(classes: 'text-sm font-semibold text-white', [Component.text('$title: ')]),
-        span(classes: 'text-sm text-[#8A8A93]', [Component.text(desc)]),
-      ]),
-    ]);
   }
 }
