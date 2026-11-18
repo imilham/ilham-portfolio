@@ -24,11 +24,15 @@ class _AnimatedRotatingTitleState extends State<AnimatedRotatingTitle> {
 
   List<String> get _activeTitles {
     final valid = component.titles.where((t) => t.trim().isNotEmpty).toList();
-    if (valid.isNotEmpty) return valid;
-    if (component.fallbackTagline.trim().isNotEmpty) {
-      return [component.fallbackTagline];
+    if (valid.length >= 2) return valid;
+    if (valid.length == 1) {
+      final single = valid.first;
+      if (single.contains('&')) {
+        final split = single.split('&').map((item) => item.trim()).where((item) => item.isNotEmpty).toList();
+        if (split.length >= 2) return split;
+      }
     }
-    return [
+    return const [
       'Senior Mobile Engineer',
       'Flutter Specialist',
       'Entrepreneur',
@@ -49,6 +53,10 @@ class _AnimatedRotatingTitleState extends State<AnimatedRotatingTitle> {
     final currentList = _activeTitles;
     if (_currentIndex >= currentList.length) {
       _currentIndex = 0;
+    }
+    // Restart animation cycle if it was idle or component refreshed
+    if (kIsWeb && (_cycleTimer == null || !_cycleTimer!.isActive)) {
+      _startAnimationCycle();
     }
   }
 
@@ -98,10 +106,12 @@ class _AnimatedRotatingTitleState extends State<AnimatedRotatingTitle> {
           'text-xl sm:text-2xl lg:text-3xl font-bold text-white pt-1 tracking-tight min-h-[2.25rem] sm:min-h-[2.75rem] flex items-center flex-wrap select-none',
       [
         span(
+          key: Key('title-word-$_currentIndex-$_isExiting'),
           classes: 'inline-flex items-center flex-wrap',
           [
             for (int i = 0; i < text.length; i++)
               span(
+                key: Key('char-$_currentIndex-$_isExiting-$i'),
                 classes: _isExiting ? 'anim-letter-out' : 'anim-letter-in',
                 attributes: {
                   'style': 'animation-delay: ${i * 35}ms;',

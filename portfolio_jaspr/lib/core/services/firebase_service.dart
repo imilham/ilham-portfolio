@@ -170,9 +170,10 @@ class FirebaseService {
         .toList();
 
     final rawCarousel = (profileMap['carouselTexts'] as List<dynamic>? ?? [])
-        .map((t) => t.toString())
+        .map((t) => t.toString().trim())
+        .where((t) => t.isNotEmpty)
         .toList();
-    final carouselTexts = (rawCarousel.isNotEmpty &&
+    final carouselTexts = (rawCarousel.length >= 2 &&
             !rawCarousel.contains('a Mobile Engineer'))
         ? rawCarousel
         : defaultSiteData.profile.carouselTexts;

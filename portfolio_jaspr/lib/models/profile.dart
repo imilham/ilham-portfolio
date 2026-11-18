@@ -16,6 +16,12 @@ class Profile {
   final List<String> certifications;
   final List<StatItem> stats;
 
+  static const List<String> defaultCarouselRoles = [
+    'Senior Mobile Engineer',
+    'Flutter Specialist',
+    'Entrepreneur',
+  ];
+
   const Profile({
     required this.name,
     required this.tagline,
@@ -29,13 +35,19 @@ class Profile {
     required this.siteTitle,
     required this.cvUrl,
     this.enableCarousel = true,
-    this.carouselTexts = const [],
+    this.carouselTexts = defaultCarouselRoles,
     this.skills = const [],
     this.certifications = const [],
     this.stats = const [],
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) {
+    final parsedCarousel = (json['carouselTexts'] as List<dynamic>?)
+            ?.map((e) => e.toString().trim())
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        [];
+
     return Profile(
       name: json['name'] as String? ?? '',
       tagline: json['tagline'] as String? ?? '',
@@ -49,7 +61,7 @@ class Profile {
       siteTitle: json['siteTitle'] as String? ?? '',
       cvUrl: json['cvUrl'] as String? ?? '',
       enableCarousel: json['enableCarousel'] as bool? ?? true,
-      carouselTexts: (json['carouselTexts'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+      carouselTexts: parsedCarousel.length >= 2 ? parsedCarousel : defaultCarouselRoles,
       skills: (json['skills'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
       certifications: (json['certifications'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
       stats: (json['stats'] as List<dynamic>?)
